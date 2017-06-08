@@ -7,15 +7,16 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.knowshare.enterprise.bean.Sum;
-import com.knowshare.enterprise.main.Main;
+
+import com.knowshare.enterprise.bean.ISum;
+import com.knowshare.test.config.ConfigComponentScan;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes=Main.class)
+@SpringBootTest(classes=ConfigComponentScan.class)
 public class SumTest {
 	
 	@Autowired
-	private Sum sum;
+	private ISum sum;
 
 	@Test()
 	public void testSum(){
