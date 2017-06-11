@@ -4,5 +4,5 @@ jdk:
 maven: 
   version: 3.3.9
 before_install:
-  - cp ./settings.xml ~/.m2/
+  - git clone --branch=$TRAVIS_BRANCH https://github.com/know-share/KS-Data.git
 script: mvn test -B
