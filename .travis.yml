@@ -3,4 +3,6 @@ jdk:
   - oraclejdk8
 maven: 
   version: 3.3.9
-script: mvn test -B --settings settings.xml
+before_install:
+  - cp ./settings.xml ~/.m2/
+script: mvn test -B
