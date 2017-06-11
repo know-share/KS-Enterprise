@@ -1,0 +1,18 @@
+<settings>
+  <profiles>
+    <profile>
+      <id>knowshare</id>
+      <repositories>
+        <repository>
+          <id>ks-repository</id>
+          <name>ks-repository</name>
+          <url>https://ks-repository.appspot.com</url>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
+
+  <activeProfiles>
+    <activeProfile>knowshare</activeProfile>
+  </activeProfiles>
+</settings>
