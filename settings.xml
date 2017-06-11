@@ -15,4 +15,14 @@
   <activeProfiles>
     <activeProfile>knowshare</activeProfile>
   </activeProfiles>
+
+  <servers>
+    <server>
+      <id>ks-repository</id>
+      <username>miguel</username>
+      <password>miguel</password>
+
+    </server>
+  </servers>
+
 </settings>
