@@ -15,7 +15,7 @@ import com.knowshare.entities.perfilusuario.Usuario;
 import com.knowshare.enums.TipoIdeaEnum;
 
 /**
- * @author HP
+ * @author pablo
  *
  */
 @Component
