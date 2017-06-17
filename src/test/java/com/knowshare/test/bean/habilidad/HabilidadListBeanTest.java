@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 
 import com.knowshare.enterprise.bean.habilidad.HabilidadListFacade;
 import com.knowshare.enterprise.repository.habilidad.HabilidadRepository;
@@ -19,6 +20,7 @@ import static org.mockito.Mockito.when;
  * @author miguel
  *
  */
+@Import({HabilidadRepository.class})
 public class HabilidadListBeanTest extends AbstractTest{
 	
 	@Autowired
