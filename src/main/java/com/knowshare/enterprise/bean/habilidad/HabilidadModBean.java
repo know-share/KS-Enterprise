@@ -23,6 +23,6 @@ public class HabilidadModBean implements HabilidadModFacade{
 	public void createHabilidad(String nombre) {
 		final Habilidad habilidad = new Habilidad();
 		habilidad.setNombre(nombre);
-		habilidadRepository.save(habilidad);
+		habilidadRepository.insert(habilidad);
 	}
 }

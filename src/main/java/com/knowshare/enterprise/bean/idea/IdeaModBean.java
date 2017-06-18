@@ -5,16 +5,20 @@ package com.knowshare.enterprise.bean.idea;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.knowshare.dto.idea.IdeaDTO;
 import com.knowshare.enterprise.repository.habilidad.IdeaRepository;
+import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.idea.Idea;
 import com.knowshare.entities.idea.OperacionIdea;
 import com.knowshare.entities.idea.Tag;
 import com.knowshare.entities.perfilusuario.Usuario;
 import com.knowshare.enums.TipoIdeaEnum;
+import com.knowshare.enums.TipoOperacionEnum;
 
 /**
  * @author HP
@@ -26,24 +30,18 @@ public class IdeaModBean implements IdeaModFacade{
 	@Autowired
 	private IdeaRepository ideaRep;
 	
-	public void crearIdea(String alcance,String contenido,String estado,Date fechaCreacion,ArrayList<Idea> ideas,String lugarEscritura,
-			int numeroEstudiantes, String problematica, Tag tag,TipoIdeaEnum tipo,Usuario usuario){
-		Idea idea = new Idea();
-		idea.setAlcance(alcance);
-		idea.setComentarios(new Long(0));
-		idea.setEstado(estado);
-		idea.setFechaCreacion(fechaCreacion);
-		idea.setIdeasProyecto(ideas);
-		idea.setLights(new Long(0));
-		idea.setLugarEscritura(lugarEscritura);
-		idea.setNumeroEstudiantes(numeroEstudiantes);
-		idea.setProblematica(problematica);
-		idea.setTags(tag);
-		idea.setTipo(tipo);
-		idea.setUsuario(usuario);
-		idea.setLights(new Long(0));
-		idea.setOperaciones(new OperacionIdea());
+	public void crearIdea(IdeaDTO dto) throws Exception{
+		ideaRep.insert(MapEntities.mapDtoToIdea(dto));
+	}
+	
+	public void agregarOperacion(IdeaDTO dto , OperacionIdea operacion) throws Exception{
+		Idea idea = MapEntities.mapDtoToIdea(dto);
+		idea.getOperaciones().add(operacion);
+		if(operacion.getTipo().equals(TipoOperacionEnum.COMENTARIO)){
+			idea.setComentarios(idea.getComentarios()+1);
+		}else
+			idea.setLights(idea.getLights()+1);
 		
-		ideaRep.insert(idea);
+		ideaRep.save(idea);
 	}
 }

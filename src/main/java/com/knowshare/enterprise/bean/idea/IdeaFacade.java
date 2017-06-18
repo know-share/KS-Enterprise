@@ -5,8 +5,11 @@ package com.knowshare.enterprise.bean.idea;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import com.knowshare.dto.idea.IdeaDTO;
 import com.knowshare.entities.idea.Idea;
+import com.knowshare.entities.idea.OperacionIdea;
 import com.knowshare.entities.idea.Tag;
 import com.knowshare.entities.perfilusuario.Usuario;
 import com.knowshare.enums.TipoIdeaEnum;
@@ -16,6 +19,9 @@ import com.knowshare.enums.TipoIdeaEnum;
  *
  */
 public interface IdeaFacade {
-	void crearIdea(String alcance,String contenido,String estado,Date fechaCreacion,ArrayList<Idea> ideas,String lugarEscritura,
-			int numeroEstudiantes, String problematica, Tag tag,TipoIdeaEnum tipo,Usuario usuario);
+	
+	public void crearIdea(IdeaDTO dto) throws Exception;
+	public void agregarOperacion(IdeaDTO dto, OperacionIdea operacion)throws Exception;
+	public List<IdeaDTO> find10();
+	
 }
