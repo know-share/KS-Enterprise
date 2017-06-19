@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.academia.CarreraDTO;
-import com.knowshare.enterprise.repository.carrera.CarreraRepository;
+import com.knowshare.dto.academia.EnfasisAreaConocimientoDTO;
+import com.knowshare.enterprise.repository.academia.CarreraRepository;
 import com.knowshare.enterprise.utils.MapEntities;
+import com.knowshare.entities.academia.Carrera;
 
 /**
  * @author miguel
@@ -25,6 +27,18 @@ public class CarreraListBean implements CarreraListFacade{
 	@Override
 	public List<CarreraDTO> getAllCarreras() {
 		return MapEntities.mapCarreraToDTO(carreraRepository.findAll());
+	}
+
+	@Override
+	public EnfasisAreaConocimientoDTO getEnfasisAreaConocimiento(String carrera) {
+		Carrera c = carreraRepository.findOne(carrera);
+		if(c == null)
+			return null;
+		
+		EnfasisAreaConocimientoDTO dto = new EnfasisAreaConocimientoDTO()
+				.setAreaConocimiento(c.getAreaConocimiento())
+				.setEnfasis(c.getEnfasis());
+		return dto;
 	}
 
 }

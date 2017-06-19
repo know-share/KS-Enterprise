@@ -4,16 +4,14 @@
 package com.knowshare.enterprise.utils;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import org.bson.types.ObjectId;
 
 import com.knowshare.dto.academia.CarreraDTO;
 import com.knowshare.dto.idea.IdeaDTO;
+import com.knowshare.dto.perfilusuario.HabilidadDTO;
 import com.knowshare.entities.academia.Carrera;
 import com.knowshare.entities.idea.Idea;
-import com.knowshare.entities.idea.OperacionIdea;
+import com.knowshare.entities.perfilusuario.Habilidad;
 
 /**
  * @author miguel
@@ -39,6 +37,14 @@ public class MapEntities {
 			carrerasNames.add(carrera.getNombre());
 		}
 		return carrerasNames;
+	}
+	
+	public static HabilidadDTO mapHabilidadToDTO(Habilidad habilidad){
+		return new HabilidadDTO()
+				.setId(habilidad.getId())
+				.setNombre(habilidad.getNombre())
+				.setTipo(habilidad.getTipo());
+		
 	}
 	
 	public static IdeaDTO mapIdeaToDTO (Idea idea){

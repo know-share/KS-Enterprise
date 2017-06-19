@@ -6,6 +6,7 @@ package com.knowshare.enterprise.bean.carrera;
 import java.util.List;
 
 import com.knowshare.dto.academia.CarreraDTO;
+import com.knowshare.dto.academia.EnfasisAreaConocimientoDTO;
 
 /**
  * @author miguel
@@ -14,5 +15,5 @@ import com.knowshare.dto.academia.CarreraDTO;
 public interface CarreraFacade {
 	
 	List<CarreraDTO> getAllCarreras();
-
+	EnfasisAreaConocimientoDTO getEnfasisAreaConocimiento(String carrera);
 }

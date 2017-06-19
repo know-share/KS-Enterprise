@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.knowshare.enterprise.repository.personalidad;
+package com.knowshare.enterprise.repository.perfilusuario;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

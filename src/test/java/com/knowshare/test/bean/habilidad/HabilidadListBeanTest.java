@@ -8,7 +8,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 
 import com.knowshare.enterprise.bean.habilidad.HabilidadListFacade;
-import com.knowshare.enterprise.repository.habilidad.HabilidadRepository;
+import com.knowshare.enterprise.repository.perfilusuario.HabilidadRepository;
 import com.knowshare.entities.perfilusuario.Habilidad;
 import com.knowshare.test.general.AbstractTest;
 

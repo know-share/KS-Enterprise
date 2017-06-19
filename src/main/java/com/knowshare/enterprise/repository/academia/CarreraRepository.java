@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.knowshare.enterprise.repository.carrera;
+package com.knowshare.enterprise.repository.academia;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
