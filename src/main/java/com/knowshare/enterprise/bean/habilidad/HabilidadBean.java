@@ -38,4 +38,9 @@ public class HabilidadBean implements HabilidadFacade{
 	public Page<Habilidad> getAll(){
 		return habilidadListBean.getAll();
 	}
+
+	@Override
+	public List<HabilidadDTO> getHabilidadesProfesionales(String carrera) {
+		return habilidadListBean.getHabilidadesProfesionales(carrera);
+	}
 }

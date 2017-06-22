@@ -36,8 +36,12 @@ public class CarreraListBean implements CarreraListFacade{
 			return null;
 		
 		EnfasisAreaConocimientoDTO dto = new EnfasisAreaConocimientoDTO()
-				.setAreaConocimiento(c.getAreaConocimiento())
 				.setEnfasis(c.getEnfasis());
+		
+		if(c.getAreaConocimiento() == null)
+			dto.setAreaConocimiento(c.getEnfasis());
+		else
+			dto.setAreaConocimiento(c.getAreaConocimiento());
 		return dto;
 	}
 

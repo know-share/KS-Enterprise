@@ -17,7 +17,10 @@ import com.knowshare.entities.perfilusuario.Habilidad;
 public interface HabilidadFacade {
 	
 	void createHabilidad(String nombre);
+	
 	List<HabilidadDTO> getHabilidades(String carrera);
+	
+	List<HabilidadDTO> getHabilidadesProfesionales(String carrera);
+	
 	Page<Habilidad> getAll();
-
 }

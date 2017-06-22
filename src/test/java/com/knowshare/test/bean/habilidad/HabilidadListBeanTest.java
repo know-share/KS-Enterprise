@@ -32,7 +32,7 @@ public class HabilidadListBeanTest extends AbstractTest{
 	@Test()
 	public void testFindOne(){
 		Habilidad toReturn = new Habilidad().setNombre("hola");
-		when(habilidadRepository.findOne(anyString())).thenReturn(toReturn);
+		when(habilidadRepository.findByNombre(anyString())).thenReturn(toReturn);
 		
 		Habilidad newOne = habilidadListBean.findOne("");
 		assertEquals("hola", newOne.getNombre());

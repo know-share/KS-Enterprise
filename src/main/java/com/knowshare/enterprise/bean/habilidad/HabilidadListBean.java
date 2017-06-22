@@ -25,14 +25,16 @@ public class HabilidadListBean implements HabilidadListFacade{
 	private HabilidadRepository habilidadRepository;
 	
 	public Habilidad findOne(String nombre){
-		return habilidadRepository.findOne(nombre);
+		return habilidadRepository.findByNombre(nombre);
 	}
 
 	@Override
 	public List<HabilidadDTO> getHabilidades(String carrera) {
 		final List<Habilidad> habilidades = habilidadRepository
 				.getHabilidades(carrera);
+
 		final List<HabilidadDTO> habilidadesDto = new ArrayList<>();
+		
 		for (Habilidad habilidad : habilidades) {
 			habilidadesDto.add(MapEntities.mapHabilidadToDTO(habilidad));
 		}
@@ -41,5 +43,18 @@ public class HabilidadListBean implements HabilidadListFacade{
 	
 	public Page<Habilidad> getAll(){
 		return habilidadRepository.findAll(new PageRequest(1, 10));
+	}
+
+	@Override
+	public List<HabilidadDTO> getHabilidadesProfesionales(String carrera) {
+		final List<Habilidad> habilidades = habilidadRepository
+				.getHabilidadesProfesionales(carrera);
+
+		final List<HabilidadDTO> habilidadesDto = new ArrayList<>();
+		
+		for (Habilidad habilidad : habilidades) {
+			habilidadesDto.add(MapEntities.mapHabilidadToDTO(habilidad));
+		}
+		return habilidadesDto;
 	}
 }
