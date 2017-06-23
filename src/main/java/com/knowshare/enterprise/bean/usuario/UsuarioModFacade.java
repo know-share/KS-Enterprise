@@ -9,9 +9,7 @@ import com.knowshare.dto.perfilusuario.UsuarioDTO;
  * @author miguel
  *
  */
-public interface UsuarioFacade {
-	
-	boolean isUsernameTaken(String username);
+public interface UsuarioModFacade {
 	
 	boolean crearUsuario(UsuarioDTO usuario);
 

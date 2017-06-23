@@ -21,7 +21,8 @@ public class UsuarioListBean implements UsuarioListFacade{
 
 	@Override
 	public boolean isUsernameTaken(String username) {
-		Usuario usuario = usuarioRepository.findOne(username.toLowerCase());
+		Usuario usuario = usuarioRepository
+				.findByUsernameIgnoreCase(username);
 		if(usuario != null)
 			return true;
 		return false;
