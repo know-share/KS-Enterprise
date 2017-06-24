@@ -8,16 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.idea.IdeaDTO;
 import com.knowshare.enterprise.repository.idea.IdeaRepository;
 import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.idea.Idea;
-import com.mongodb.DBCursor;
-
-
 
 /**
  * @author pablo
@@ -27,7 +23,7 @@ import com.mongodb.DBCursor;
 public class IdeaListBean implements IdeaListFacade{
 	
 	@Autowired
-	IdeaRepository ideaRep;
+	private IdeaRepository ideaRep;
 	
 	public List<IdeaDTO> find10(){
 		List<IdeaDTO> ret = new ArrayList<>();

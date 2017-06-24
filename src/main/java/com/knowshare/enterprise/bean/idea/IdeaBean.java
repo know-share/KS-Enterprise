@@ -3,21 +3,14 @@
  */
 package com.knowshare.enterprise.bean.idea;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.idea.IdeaDTO;
-import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.idea.Idea;
 import com.knowshare.entities.idea.OperacionIdea;
-import com.knowshare.entities.idea.Tag;
-import com.knowshare.entities.perfilusuario.Usuario;
-import com.knowshare.enums.TipoIdeaEnum;
-import com.knowshare.enums.TipoOperacionEnum;
 
 /**
  * @author pablo
@@ -32,12 +25,12 @@ public class IdeaBean implements IdeaFacade{
 	@Autowired
 	private IdeaListFacade ideaList;
 	
-	public void agregarOperacion(IdeaDTO dto, OperacionIdea operacion) throws Exception{
+	public void agregarOperacion(IdeaDTO dto, OperacionIdea operacion){
 		ideaMod.agregarOperacion(dto, operacion);
 	}
 	
-	public void crearIdea(IdeaDTO dto) throws Exception{
-		ideaMod.crearIdea(dto);
+	public Idea crearIdea(IdeaDTO dto){
+		return ideaMod.crearIdea(dto);
 	}
 	
 	public List<IdeaDTO> find10(){
