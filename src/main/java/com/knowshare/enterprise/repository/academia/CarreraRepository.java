@@ -15,4 +15,6 @@ import com.knowshare.entities.academia.Carrera;
 @Repository
 public interface CarreraRepository extends MongoRepository<Carrera, String>{
 	
+	Carrera findByNombreIgnoreCase(String nombre);
+	
 }
