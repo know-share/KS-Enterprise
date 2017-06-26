@@ -13,6 +13,6 @@ public interface UsuarioModFacade {
 	
 	boolean crearUsuario(UsuarioDTO usuario);
 	
-	public boolean seguir(String usernameSol, String usernameObj);
+	boolean seguir(String usernameSol, String usernameObj);
 
 }

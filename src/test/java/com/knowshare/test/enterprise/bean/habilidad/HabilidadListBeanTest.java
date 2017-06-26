@@ -1,9 +1,18 @@
 package com.knowshare.test.enterprise.bean.habilidad;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.knowshare.dto.perfilusuario.HabilidadDTO;
+import com.knowshare.enterprise.bean.habilidad.HabilidadListFacade;
+import com.knowshare.enums.TipoHabilidadEnum;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
 /**
@@ -13,23 +22,45 @@ import com.knowshare.test.enterprise.general.AbstractTest;
  */
 public class HabilidadListBeanTest extends AbstractTest{
 	
-	@Test
-	public void test(){
-		assertTrue(true);
+	@Autowired
+	private HabilidadListFacade habilidadListBean;
+
+	@Test()
+	public void getHabilidadesTest(){
+		List<HabilidadDTO> habilidades = habilidadListBean
+				.getHabilidades("Ingeniería de sistemas");
+		
+		List<HabilidadDTO> habilidadesPersonales = new ArrayList<>();
+		List<HabilidadDTO> habilidadesProfesionales = new ArrayList<>();
+		for (HabilidadDTO habilidadDTO : habilidades) {
+			habilidadMapTest(habilidadDTO);
+			if(habilidadDTO.getTipo().equals(TipoHabilidadEnum.PERSONALES))
+				habilidadesPersonales.add(habilidadDTO);
+			else
+				habilidadesProfesionales.add(habilidadDTO);
+		}
+		
+		assertTrue(habilidadesPersonales.size() == 3);
+		assertTrue(habilidadesProfesionales.size() == 2);
 	}
 	
-//	@Autowired
-//	private HabilidadListFacade habilidadListBean;
-//	
-//	@MockBean
-//	private HabilidadRepository habilidadRepository;
-//
-//	@Test()
-//	public void testFindOne(){
-//		Habilidad toReturn = new Habilidad().setNombre("hola");
-//		when(habilidadRepository.findByNombre("hola")).thenReturn(toReturn);
-//		
-//		Habilidad newOne = habilidadListBean.findOne("hola");
-//		assertEquals("hola", newOne.getNombre()); 
-//	}
+	@Test
+	public void getHabilidadesProfesionalesTest(){
+		List<HabilidadDTO> habilidades = habilidadListBean
+				.getHabilidadesProfesionales("Ingeniería civil");
+		
+		for (HabilidadDTO habilidadDTO : habilidades) {
+			habilidadMapTest(habilidadDTO);
+		}
+		
+		assertEquals(2, habilidades.size());
+	}
+	
+	private void habilidadMapTest(HabilidadDTO dto){
+		assertNotNull(dto.getId());
+		assertNotNull(dto.getNombre());
+		assertNotNull(dto.getTipo());
+		if(dto.getTipo().equals(TipoHabilidadEnum.PROFESIONALES))
+			assertNotNull(dto.getCarrera());
+	}
 }

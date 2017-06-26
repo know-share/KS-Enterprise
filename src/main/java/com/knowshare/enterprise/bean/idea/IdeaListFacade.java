@@ -6,6 +6,6 @@ import com.knowshare.dto.idea.IdeaDTO;
 
 public interface IdeaListFacade {
 	
-	public List<IdeaDTO> find10();
+	List<IdeaDTO> find10();
 
 }

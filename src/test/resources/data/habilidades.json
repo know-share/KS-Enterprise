@@ -1,0 +1,42 @@
+[
+	{
+		"nombre": "Habilidad Personal 1",
+		"tipo": "PERSONALES"
+	},
+	{
+		"nombre": "Habilidad Personal 2",
+		"tipo": "PERSONALES"
+	},
+	{
+		"nombre": "Habilidad Personal 3",
+		"tipo": "PERSONALES"
+	},
+	{
+		"nombre": "Habilidad Profesional sistemas 1",
+		"tipo": "PROFESIONALES",
+		"carrera": {
+			"nombre": "Ingeniería de sistemas"
+		}
+	},
+	{
+		"nombre": "Habilidad Profesional sistemas  2",
+		"tipo": "PROFESIONALES",
+		"carrera": {
+			"nombre": "Ingeniería de sistemas"
+		}
+	},
+	{
+		"nombre": "Habilidad Profesional civil 1",
+		"tipo": "PROFESIONALES",
+		"carrera": {
+			"nombre": "Ingeniería civil"
+		}
+	},
+	{
+		"nombre": "Habilidad Profesional civil 2",
+		"tipo": "PROFESIONALES",
+		"carrera": {
+			"nombre": "Ingeniería civil"
+		}
+	}
+]

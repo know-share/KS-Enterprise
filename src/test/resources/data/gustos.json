@@ -1,0 +1,18 @@
+[
+	{
+		"tipo": "GENERALES",
+		"imagePath": "imgGenerales.png"
+	},
+	{
+		"tipo": "GENERALES",
+		"imagePath": "imgGenerales.png"
+	},
+	{
+		"tipo": "DEPORTES",
+		"imagePath": "imgDeportes.png"
+	},
+	{
+		"tipo": "ARTES",
+		"imagePath": "imgArtes.png"
+	}
+]

@@ -20,5 +20,9 @@ public interface HabilidadListFacade {
 	
 	List<HabilidadDTO> getHabilidadesProfesionales(String carrera);
 	
+	/**
+	 * Method not tested, this is for testing purpose
+	 * @return
+	 */
 	Page<Habilidad> getAll();
 }
