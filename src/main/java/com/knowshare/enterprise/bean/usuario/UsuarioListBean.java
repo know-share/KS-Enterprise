@@ -3,10 +3,13 @@
  */
 package com.knowshare.enterprise.bean.usuario;
 
+import java.security.NoSuchAlgorithmException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.knowshare.enterprise.repository.perfilusuario.UsuarioRepository;
+import com.knowshare.enterprise.utils.UtilsPassword;
 import com.knowshare.entities.perfilusuario.Usuario;
 
 /**
@@ -25,6 +28,29 @@ public class UsuarioListBean implements UsuarioListFacade{
 				.findByUsernameIgnoreCase(username);
 		if(usuario != null)
 			return true;
+		return false;
+	}
+	
+	public boolean login(String username,String password){
+		Usuario usuario;
+		try {
+			usuario = usuarioRepository
+					.findByUsernameAndPassword(username, UtilsPassword.hashPassword(username, password));
+			if(usuario != null)
+				return true;
+		} catch (NoSuchAlgorithmException e) {
+			return false;
+		}
+		
+		return false;
+	}
+	
+	public boolean esSeguidor(String usernameSol,String usernameObj){
+		Usuario uSol = usuarioRepository.findByUsernameIgnoreCase(usernameSol);
+		Usuario uObj = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
+		if(uObj.getSeguidores().getAmigos().contains(uSol)){
+			return true;
+		}
 		return false;
 	}
 

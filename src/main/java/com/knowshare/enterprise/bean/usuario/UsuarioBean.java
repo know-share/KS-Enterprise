@@ -30,6 +30,14 @@ public class UsuarioBean implements UsuarioFacade {
 	public boolean crearUsuario(UsuarioDTO usuario){
 		return usuarioModBean.crearUsuario(usuario);
 	}
+
+	@Override
+	public boolean login(String username, String password) {
+		return usuarioListBean.login(username, password);
+	}
 	
+	public boolean seguir(String usernameSol,String usernameObj){
+		return usuarioModBean.seguir(usernameSol, usernameObj);
+	}
 	
 }

@@ -12,5 +12,7 @@ import com.knowshare.dto.perfilusuario.UsuarioDTO;
 public interface UsuarioModFacade {
 	
 	boolean crearUsuario(UsuarioDTO usuario);
+	
+	public boolean seguir(String usernameSol, String usernameObj);
 
 }

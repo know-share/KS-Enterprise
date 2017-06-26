@@ -17,5 +17,7 @@ import com.knowshare.entities.perfilusuario.Usuario;
 public interface UsuarioRepository extends MongoRepository<Usuario, ObjectId>{
 	
 	Usuario findByUsernameIgnoreCase(String username);
+	
+	Usuario findByUsernameAndPassword(String username,String password);
 
 }

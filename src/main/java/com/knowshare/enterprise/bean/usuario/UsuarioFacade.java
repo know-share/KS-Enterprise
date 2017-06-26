@@ -14,5 +14,9 @@ public interface UsuarioFacade {
 	boolean isUsernameTaken(String username);
 	
 	boolean crearUsuario(UsuarioDTO usuario);
-
+	
+	boolean seguir(String usernameSol,String usernameObj);
+	
+	boolean login(String username,String password);
+	
 }

@@ -3,6 +3,7 @@
  */
 package com.knowshare.enterprise.utils;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,18 +106,21 @@ public class MapEntities {
 		return idea;
 	}
 	
-	public static Usuario mapDtoToUsuario(UsuarioDTO dto){
+	public static Usuario mapDtoToUsuario(UsuarioDTO dto) throws NoSuchAlgorithmException{
 		final List<HabilidadAval> habilidades = new ArrayList<>();
 		for (HabilidadDTO habilidad : dto.getHabilidades()) {
 			habilidades.add(mapDtoToHabilidadAval(habilidad));
 		}
 		final List<Carrera> carreras = new ArrayList<>();
+		final String passwordHashed = UtilsPassword
+				.hashPassword(dto.getUsername(), dto.getPassword());
 		carreras.add(mapDtoToCarrera(dto.getCarrera()));
 		final Usuario usuario = new Usuario()
 				.setNombre(dto.getNombre())
 				.setApellido(dto.getApellido())
 				.setCorreo(dto.getEmail())
 				.setUsername(dto.getUsername())
+				.setPassword(passwordHashed)
 				.setPersonalidad(dto.getPersonalidad())
 				.setEnfasis(dto.getEnfasis())
 				.setAreasConocimiento(dto.getAreasConocimiento())
