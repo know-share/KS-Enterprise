@@ -26,7 +26,7 @@ public class CarreraListBean implements CarreraListFacade{
 
 	@Override
 	public List<CarreraDTO> getAllCarreras() {
-		return MapEntities.mapCarreraToDTO(carreraRepository.findAll());
+		return MapEntities.mapCarrerasToDTOs(carreraRepository.findAll());
 	}
 
 	@Override

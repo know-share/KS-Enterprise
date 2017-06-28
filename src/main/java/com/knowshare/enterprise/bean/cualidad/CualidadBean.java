@@ -8,7 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.knowshare.entities.perfilusuario.Cualidad;
+import com.knowshare.dto.perfilusuario.CualidadDTO;
 
 /**
  * @author miguel
@@ -21,7 +21,7 @@ public class CualidadBean implements CualidadFacade {
 	private CualidadListFacade cualidadListBean;
 
 	@Override
-	public List<Cualidad> getAll() {
+	public List<CualidadDTO> getAll() {
 		return cualidadListBean.getAll();
 	}
 

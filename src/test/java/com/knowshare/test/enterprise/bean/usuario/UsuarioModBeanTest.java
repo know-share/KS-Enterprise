@@ -9,7 +9,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,6 +19,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import com.knowshare.dto.academia.CarreraDTO;
+import com.knowshare.dto.perfilusuario.CualidadDTO;
 import com.knowshare.dto.perfilusuario.HabilidadDTO;
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.enterprise.bean.usuario.UsuarioModFacade;
@@ -60,11 +60,9 @@ public class UsuarioModBeanTest extends AbstractTest {
 		List<Gusto> gustos = mongoTemplate.findAll(Gusto.class);
 		List<Habilidad> habilidades = mongoTemplate.find(new Query().addCriteria(Criteria.where("tipo").is("PROFESIONALES")
 				.andOperator(Criteria.where("carrera.nombre").is("Ingeniería de sistemas"))), Habilidad.class);
-		List<HabilidadDTO> habilidadesDto = new ArrayList<>();
-		for (Habilidad habilidad : habilidades) {
-			habilidadesDto.add(MapEntities.mapHabilidadToDTO(habilidad));
-		}
-		usuarioProfesor = crearUsuarioProfesor(cualidades,habilidadesDto);
+		List<HabilidadDTO> habilidadesDto = MapEntities.mapHabilidadesToDTOs(habilidades);
+		
+		usuarioProfesor = crearUsuarioProfesor(MapEntities.mapCualidadesToDTOs(cualidades),habilidadesDto);
 		usuarioEgresado = crearUsuarioEgreado(habilidadesDto);
 		usuarioEstudiante = crearUsuarioEstudiante(habilidadesDto,gustos);
 	}
@@ -152,7 +150,7 @@ public class UsuarioModBeanTest extends AbstractTest {
 		assertEquals(TipoUsuariosEnum.ESTUDIANTE, usuarioDB.getTipo());
 	}
 
-	private UsuarioDTO crearUsuarioProfesor(List<Cualidad> cualidades, List<HabilidadDTO> habilidadesDto) {
+	private UsuarioDTO crearUsuarioProfesor(List<CualidadDTO> cualidades, List<HabilidadDTO> habilidadesDto) {
 		return new UsuarioDTO().setApellido("Apellido profesor inserted")
 				.setAreasConocimiento(Arrays.asList(
 						new AreaConocimiento().setCarrera("Ingeniería de sistemas").setNombre("AC sistemas 1")

@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.knowshare.dto.academia.CarreraDTO;
 import com.knowshare.dto.idea.IdeaDTO;
+import com.knowshare.dto.perfilusuario.CualidadDTO;
 import com.knowshare.dto.perfilusuario.HabilidadDTO;
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.entities.academia.Carrera;
@@ -28,7 +29,7 @@ import com.knowshare.enums.TipoHabilidadEnum;
  */
 public class MapEntities {
 	
-	public static List<CarreraDTO> mapCarreraToDTO(List<Carrera> carreras){
+	public static List<CarreraDTO> mapCarrerasToDTOs(List<Carrera> carreras){
 		final List<CarreraDTO> dtos = new ArrayList<>();
 		for (Carrera carrera : carreras) {
 			CarreraDTO dto = new CarreraDTO()
@@ -38,6 +39,13 @@ public class MapEntities {
 			dtos.add(dto);
 		}
 		return dtos;
+	}
+	
+	public static CarreraDTO mapCarreraToDTO(Carrera carrera){
+		return new CarreraDTO()
+				.setFacultad(carrera.getFacultad())
+				.setNombre(carrera.getNombre())
+				.setCarrerasAfines(carrerasAfinesNames(carrera.getCarrerasAfines()));
 	}
 	
 	public static Carrera mapDtoToCarrera(CarreraDTO dto){
@@ -50,6 +58,14 @@ public class MapEntities {
 			carrerasNames.add(carrera.getNombre());
 		}
 		return carrerasNames;
+	}
+	
+	public static List<HabilidadDTO> mapHabilidadesToDTOs(List<Habilidad> habilidades){
+		List<HabilidadDTO> dtos = new ArrayList<>();
+		for (Habilidad habilidad : habilidades) {
+			dtos.add(mapHabilidadToDTO(habilidad));
+		}
+		return dtos;
 	}
 	
 	public static HabilidadDTO mapHabilidadToDTO(Habilidad habilidad){
@@ -66,14 +82,28 @@ public class MapEntities {
 	
 	public static HabilidadAval mapDtoToHabilidadAval(HabilidadDTO habilidad){
 		return new HabilidadAval()
-				.setCantidad(0)
+				.setCantidad(habilidad.getAvales() == null ? 0 : habilidad.getAvales())
 				.setHabilidad(new Habilidad().setId(habilidad.getId()));
 	}
 	
-	public static CualidadAval mapCualidadToCualidadAval(Cualidad cualidad){
+	public static CualidadAval mapDtoToCualidadAval(CualidadDTO cualidad){
 		return new CualidadAval()
-				.setCantidad(0)
-				.setCualidad(cualidad);
+				.setCantidad(cualidad.getAvales() == null ? 0 : cualidad.getAvales())
+				.setCualidad(new Cualidad().setId(cualidad.getId()));
+	}
+	
+	public static CualidadDTO mapCualidadToDTO(Cualidad cualidad){
+		return new CualidadDTO().setId(cualidad.getId())
+				.setNombre(cualidad.getNombre())
+				.setTipo(cualidad.getTipo());
+	}
+	
+	public static List<CualidadDTO> mapCualidadesToDTOs(List<Cualidad> cualidades){
+		List<CualidadDTO> dtos = new ArrayList<>();
+		for (Cualidad cualidad : cualidades) {
+			dtos.add(mapCualidadToDTO(cualidad));
+		}
+		return dtos;
 	}
 	
 	public static IdeaDTO mapIdeaToDTO (Idea idea){
@@ -156,8 +186,8 @@ public class MapEntities {
 	
 	private static void mapProfesor(Usuario usuario, UsuarioDTO dto){
 		List<CualidadAval> cualidades = new ArrayList<>();
-		for (Cualidad cualidad: dto.getCualidades()) {
-			cualidades.add(mapCualidadToCualidadAval(cualidad));
+		for (CualidadDTO cualidad: dto.getCualidades()) {
+			cualidades.add(mapDtoToCualidadAval(cualidad));
 		}
 		usuario.setCualidadesProfesor(cualidades)
 			.setDisponibilidad(new String(""))
@@ -177,6 +207,55 @@ public class MapEntities {
 		if(dto.getSegundaCarrera() != null){
 			usuario.getCarreras().add(mapDtoToCarrera(dto.getSegundaCarrera()));
 		}
+	}
+	
+	public static List<HabilidadDTO> mapAvalesHabilidad(List<HabilidadAval> habilidadesAvales){
+		List<HabilidadDTO> dtos = new ArrayList<>();
+		for(HabilidadAval aval : habilidadesAvales){
+			HabilidadDTO dto = mapHabilidadToDTO(aval.getHabilidad());
+			dto.setAvales(aval.getCantidad());
+			dtos.add(dto);
+		}
+		return dtos;
+	}
+	
+	public static List<CualidadDTO> mapAvalesCualidad(List<CualidadAval> cualidadesAvales){
+		List<CualidadDTO> dtos = new ArrayList<>();
+		for (CualidadAval aval: cualidadesAvales) {
+			CualidadDTO dto = mapCualidadToDTO(aval.getCualidad());
+			dto.setAvales(aval.getCantidad());
+			dtos.add(dto);
+		}
+		return dtos;
+	}
+	
+	public static UsuarioDTO mapUsuarioToDTO(Usuario usuario){
+		UsuarioDTO dto = new UsuarioDTO();
+		dto.setApellido(usuario.getApellido())
+			.setCantidadAmigos(usuario.getAmigos().getCantidad())
+			.setCantidadSeguidores(usuario.getSeguidores().getCantidad())
+			.setCarrera(mapCarreraToDTO(usuario.getCarreras().get(0)))
+			.setUsername(usuario.getUsername())
+			.setTipoUsuario(usuario.getTipo())
+			.setPersonalidad(usuario.getPersonalidad())
+			.setHabilidades(mapAvalesHabilidad(usuario.getHabilidades()))
+			.setNombre(usuario.getNombre())
+			.setEnfasis(usuario.getEnfasis());
+		switch(usuario.getTipo()){
+			case PROFESOR:
+				dto.setCualidades(mapAvalesCualidad(usuario.getCualidadesProfesor()));
+				break;
+			case ESTUDIANTE:
+			case EGRESADO:
+				if(usuario.getCarreras().size() > 1)
+					dto.setSegundaCarrera(mapCarreraToDTO(usuario.getCarreras().get(1)));
+				break;
+			default:
+				break;
+			
+		}
+			
+		return dto;
 	}
 
 }

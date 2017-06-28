@@ -8,7 +8,9 @@ import java.security.NoSuchAlgorithmException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.enterprise.repository.perfilusuario.UsuarioRepository;
+import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.enterprise.utils.UtilsPassword;
 import com.knowshare.entities.perfilusuario.Usuario;
 
@@ -52,6 +54,14 @@ public class UsuarioListBean implements UsuarioListFacade{
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public UsuarioDTO getUsuario(String username) {
+		Usuario usuario = usuarioRepository.findByUsernameIgnoreCase(username);
+		if(usuario == null)
+			return null;
+		return MapEntities.mapUsuarioToDTO(usuario);
 	}
 
 }

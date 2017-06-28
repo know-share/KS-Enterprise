@@ -39,5 +39,10 @@ public class UsuarioBean implements UsuarioFacade {
 	public boolean seguir(String usernameSol,String usernameObj){
 		return usuarioModBean.seguir(usernameSol, usernameObj);
 	}
+
+	@Override
+	public UsuarioDTO getUsuario(String username) {
+		return usuarioListBean.getUsuario(username);
+	}
 	
 }

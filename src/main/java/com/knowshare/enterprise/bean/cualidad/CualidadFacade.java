@@ -5,7 +5,7 @@ package com.knowshare.enterprise.bean.cualidad;
 
 import java.util.List;
 
-import com.knowshare.entities.perfilusuario.Cualidad;
+import com.knowshare.dto.perfilusuario.CualidadDTO;
 
 /**
  * @author miguel
@@ -13,5 +13,5 @@ import com.knowshare.entities.perfilusuario.Cualidad;
  */
 public interface CualidadFacade {
 
-	List<Cualidad> getAll();
+	List<CualidadDTO> getAll();
 }

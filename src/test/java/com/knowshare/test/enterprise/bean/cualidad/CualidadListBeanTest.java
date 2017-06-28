@@ -10,8 +10,8 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.knowshare.dto.perfilusuario.CualidadDTO;
 import com.knowshare.enterprise.bean.cualidad.CualidadListFacade;
-import com.knowshare.entities.perfilusuario.Cualidad;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
 /**
@@ -25,7 +25,7 @@ public class CualidadListBeanTest extends AbstractTest {
 	
 	@Test
 	public void getAllTest(){
-		List<Cualidad> cualidades = cualidadListBean.getAll();
+		List<CualidadDTO> cualidades = cualidadListBean.getAll();
 		
 		assertEquals(5, cualidades.size());
 	}

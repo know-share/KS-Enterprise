@@ -8,8 +8,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.knowshare.dto.perfilusuario.CualidadDTO;
 import com.knowshare.enterprise.repository.perfilusuario.CualidadRepository;
-import com.knowshare.entities.perfilusuario.Cualidad;
+import com.knowshare.enterprise.utils.MapEntities;
 
 /**
  * @author miguel
@@ -22,8 +23,8 @@ public class CualidadListBean implements CualidadListFacade {
 	private CualidadRepository cualidadRepository;
 
 	@Override
-	public List<Cualidad> getAll() {
-		return this.cualidadRepository.findAll();
+	public List<CualidadDTO> getAll() {
+		return MapEntities.mapCualidadesToDTOs(this.cualidadRepository.findAll());
 	}
 
 }
