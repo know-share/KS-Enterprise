@@ -179,6 +179,7 @@ public class MapEntities {
 		// inicializaciones
 		usuario.setAmigos(new Amigos())
 			.setSeguidores(new Amigos())
+			.setSolicitudesAmistad(new Amigos())
 			.setPersonasAvaladas(new ArrayList<>())
 			.setInsignias(new ArrayList<>());
 		return usuario;
