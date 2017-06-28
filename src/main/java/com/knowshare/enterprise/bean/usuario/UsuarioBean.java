@@ -45,4 +45,8 @@ public class UsuarioBean implements UsuarioFacade {
 		return usuarioListBean.getUsuario(username);
 	}
 	
+	public boolean solicitudAmistad(String usernameSol,String usernameObj){
+		return usuarioModBean.solicitudAmistad(usernameSol, usernameObj);
+	}
+	
 }

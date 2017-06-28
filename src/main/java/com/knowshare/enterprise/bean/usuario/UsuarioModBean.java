@@ -60,4 +60,18 @@ public class UsuarioModBean implements UsuarioModFacade {
 		}
 		return false;
 	}
+	
+	@Override
+	public boolean solicitudAmistad(String usernameSol,String usernameObj){
+		Usuario solicitante = usuarioRepository.findByUsernameIgnoreCase(usernameSol);
+		Usuario objetivo = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
+		if(!usuarioListBean.estaSolicitud(usernameSol, usernameObj)){
+			objetivo.getSolicitudesAmistad().getAmigos().add(solicitante);
+			objetivo.getSolicitudesAmistad().setCantidad(objetivo.getSolicitudesAmistad().getCantidad());
+			if(usuarioRepository.save(objetivo)!=null){
+				return true;
+			}
+		}
+		return false;
+	}
 }

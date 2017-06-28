@@ -14,5 +14,7 @@ public interface UsuarioModFacade {
 	boolean crearUsuario(UsuarioDTO usuario);
 	
 	boolean seguir(String usernameSol, String usernameObj);
+	
+	boolean solicitudAmistad(String usernameSol,String usernameObj);
 
 }

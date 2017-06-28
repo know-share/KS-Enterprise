@@ -19,6 +19,8 @@ public interface UsuarioFacade {
 	
 	boolean login(String username,String password);
 	
+	boolean solicitudAmistad(String usernameSol,String usernameObj);
+	
 	UsuarioDTO getUsuario(String username);
 	
 }
