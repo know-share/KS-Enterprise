@@ -241,6 +241,7 @@ public class MapEntities {
 			.setPersonalidad(usuario.getPersonalidad())
 			.setHabilidades(mapAvalesHabilidad(usuario.getHabilidades()))
 			.setNombre(usuario.getNombre())
+			.setAreasConocimiento(usuario.getAreasConocimiento())
 			.setEnfasis(usuario.getEnfasis());
 		switch(usuario.getTipo()){
 			case PROFESOR:
