@@ -192,7 +192,8 @@ public class MapEntities {
 		}
 		usuario.setCualidadesProfesor(cualidades)
 			.setDisponibilidad(new String(""))
-			.setGrupoInvestigacion(new String(""));
+			.setGrupoInvestigacion(new String(""))
+			.setTrabajosGradoDirigidos(new ArrayList<>());
 	}
 	
 	private static void mapEstudiante(Usuario usuario, UsuarioDTO dto){

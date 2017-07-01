@@ -3,6 +3,8 @@
  */
 package com.knowshare.enterprise.bean.carrera;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,15 @@ public class CarreraListBean implements CarreraListFacade{
 
 	@Override
 	public List<CarreraDTO> getAllCarreras() {
-		return MapEntities.mapCarrerasToDTOs(carreraRepository.findAll());
+		List<CarreraDTO> carreras = MapEntities.mapCarrerasToDTOs(carreraRepository.findAll());
+		Collections.sort(carreras,new Comparator<CarreraDTO>() {
+
+			@Override
+			public int compare(CarreraDTO o1, CarreraDTO o2) {
+				return o1.getNombre().compareToIgnoreCase(o2.getNombre());
+			}
+		});
+		return carreras;
 	}
 
 	@Override
