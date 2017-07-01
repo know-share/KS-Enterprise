@@ -52,7 +52,7 @@ public class MapEntities {
 		return new Carrera().setNombre(dto.getNombre());
 	}
 	
-	private static List<String> carrerasAfinesNames(List<Carrera> carreras){
+	public static List<String> carrerasAfinesNames(List<Carrera> carreras){
 		final List<String> carrerasNames = new ArrayList<>();
 		for (Carrera carrera : carreras) {
 			carrerasNames.add(carrera.getNombre());
@@ -185,7 +185,7 @@ public class MapEntities {
 		return usuario;
 	}
 	
-	private static void mapProfesor(Usuario usuario, UsuarioDTO dto){
+	public static void mapProfesor(Usuario usuario, UsuarioDTO dto){
 		List<CualidadAval> cualidades = new ArrayList<>();
 		for (CualidadDTO cualidad: dto.getCualidades()) {
 			cualidades.add(mapDtoToCualidadAval(cualidad));
@@ -196,7 +196,7 @@ public class MapEntities {
 			.setTrabajosGradoDirigidos(new ArrayList<>());
 	}
 	
-	private static void mapEstudiante(Usuario usuario, UsuarioDTO dto){
+	public static void mapEstudiante(Usuario usuario, UsuarioDTO dto){
 		PreferenciasUsuario preferencias = usuario.getPreferencias();
 		preferencias
 			.setSeminario(dto.isSeminario())
