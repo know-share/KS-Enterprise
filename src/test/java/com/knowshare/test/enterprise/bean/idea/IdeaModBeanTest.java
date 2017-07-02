@@ -9,7 +9,9 @@ import static org.junit.Assert.assertNotNull;
 import java.util.Date;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.knowshare.dto.idea.IdeaDTO;
@@ -24,6 +26,7 @@ import com.knowshare.test.enterprise.general.AbstractTest;
  * @author miguel
  *
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class IdeaModBeanTest extends AbstractTest {
 
 	@Autowired
@@ -45,7 +48,7 @@ public class IdeaModBeanTest extends AbstractTest {
 	}
 	
 	@Test
-	public void crearIdeaTest() throws Exception{
+	public void test01CrearIdea() throws Exception{
 		Idea ideaNueva = ideaModBean.crearIdea(dto);
 		
 		assertNotNull(ideaNueva);
@@ -57,8 +60,8 @@ public class IdeaModBeanTest extends AbstractTest {
 		dto.setId(ideaNueva.getId());
 	}
 	
-	@Test
-	public void agregarOperacionTest(){
+	@Test()
+	public void test02AgregarOperacion(){
 		OperacionIdea operacion = new OperacionIdea()
 				.setContenido("Comentario")
 				.setFecha(new Date())
@@ -68,6 +71,7 @@ public class IdeaModBeanTest extends AbstractTest {
 		ideaModBean.agregarOperacion(dto, operacion);
 		
 		Idea idea = mongoTemplate.findById(dto.getId(), Idea.class);
+		assertNotNull(idea);
 		assertEquals(1, idea.getOperaciones().size());
 	}
 
