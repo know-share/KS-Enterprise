@@ -14,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
 public class UtilsPassword {
 
 	public static String hashPassword(String username, String password) throws NoSuchAlgorithmException{
-		String cadena = username + password;
+		String cadena = username.toLowerCase() + password;
 		String md5 = new String();
 		MessageDigest digest = MessageDigest.getInstance("MD5");
 		digest.update(cadena.getBytes(), 0, cadena.length());

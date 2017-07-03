@@ -37,7 +37,9 @@ public class UsuarioListBean implements UsuarioListFacade{
 		Usuario usuario;
 		try {
 			usuario = usuarioRepository
-					.findByUsernameAndPassword(username, UtilsPassword.hashPassword(username, password));
+					.findByPasswordAndUsernameIgnoreCase(
+							UtilsPassword.hashPassword(username, password),
+							username);
 			if(usuario != null)
 				return true;
 		} catch (NoSuchAlgorithmException e) {

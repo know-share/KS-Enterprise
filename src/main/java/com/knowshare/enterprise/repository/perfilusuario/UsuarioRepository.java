@@ -18,6 +18,6 @@ public interface UsuarioRepository extends MongoRepository<Usuario, ObjectId>{
 	
 	Usuario findByUsernameIgnoreCase(String username);
 	
-	Usuario findByUsernameAndPassword(String username,String password);
+	Usuario findByPasswordAndUsernameIgnoreCase(String password,String username);
 
 }
