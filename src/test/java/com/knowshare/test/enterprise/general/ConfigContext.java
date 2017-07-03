@@ -43,6 +43,7 @@ import com.knowshare.entities.perfilusuario.Cualidad;
 import com.knowshare.entities.perfilusuario.Gusto;
 import com.knowshare.entities.perfilusuario.Habilidad;
 import com.knowshare.entities.perfilusuario.Personalidad;
+import com.knowshare.entities.perfilusuario.Usuario;
 import com.mongodb.MongoClient;
 
 /**
@@ -75,12 +76,15 @@ public class ConfigContext {
 				ResourceUtils.getURL("classpath:data/gustos.json").openStream(),Gusto[].class);
 		Personalidad[] personalidades = mapper.readValue(
 				ResourceUtils.getURL("classpath:data/personalidades.json").openStream(),Personalidad[].class);
+		Usuario[] usuarios = mapper.readValue(
+				ResourceUtils.getURL("classpath:data/usuarios.json").openStream(),Usuario[].class);
 		
 		this.mongoTemplate().insertAll(Arrays.asList(carreras));
 		this.mongoTemplate().insertAll(Arrays.asList(habilidades));
 		this.mongoTemplate().insertAll(Arrays.asList(cualidades));
 		this.mongoTemplate().insertAll(Arrays.asList(gustos));
 		this.mongoTemplate().insertAll(Arrays.asList(personalidades));
+		this.mongoTemplate().insertAll(Arrays.asList(usuarios));
 	}
 	
 	@Bean

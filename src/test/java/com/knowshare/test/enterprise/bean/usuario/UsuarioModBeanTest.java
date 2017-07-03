@@ -149,23 +149,24 @@ public class UsuarioModBeanTest extends AbstractTest {
 		assertNotNull(usuarioDB.getPreferencias().isTemaTG());
 		assertEquals(TipoUsuariosEnum.ESTUDIANTE, usuarioDB.getTipo());
 	}
-
-	private UsuarioDTO crearUsuarioProfesor(List<CualidadDTO> cualidades, List<HabilidadDTO> habilidadesDto) {
-		return new UsuarioDTO().setApellido("Apellido profesor inserted")
+	
+	private UsuarioDTO crearUsuarioEstudiante(List<HabilidadDTO> habilidadesDto, List<Gusto> gustos) {
+		return new UsuarioDTO().setApellido("Apellido estudiante inserted")
 				.setAreasConocimiento(Arrays.asList(
-						new AreaConocimiento().setCarrera("Ingeniería de sistemas").setNombre("AC sistemas 1")
-								.setPorcentaje(20d),
 						new AreaConocimiento().setCarrera("Ingeniería de sistemas").setNombre("AC sistemas 2")
-								.setPorcentaje(30d)))
-				.setCarrera(new CarreraDTO().setNombre("Ingeniería de sistemas")).setCualidades(cualidades)
-				.setEmail("Email profesor inserted")
+								.setPorcentaje(0d),
+						new AreaConocimiento().setCarrera("Ingeniería de sistemas").setNombre("AC sistemas 3")
+								.setPorcentaje(0d)))
+				.setCarrera(new CarreraDTO().setNombre("Ingeniería de sistemas"))
+				.setEmail("Email estudiante inserted").setGustos(gustos)
 				.setEnfasis(Arrays.asList(
-						new Enfasis().setCarrera("Ingeniería de sistemas").setNombre("Enfasis sistemas 1"),
-						new Enfasis().setCarrera("Ingeniería de sistemas").setNombre("Enfasis sistemas 4")))
-				.setHabilidades(habilidadesDto).setNombre("Nombre profesor inserted").setPassword("PasswordProfesor1")
-				.setPersonalidad(new Personalidad().setNombre("INTJ"))
-				.setPreferenciaIdea(PreferenciaIdeaEnum.POR_RELEVANCIA).setTipoUsuario(TipoUsuariosEnum.PROFESOR)
-				.setUsername("Profesor1-Inserted");
+						new Enfasis().setCarrera("Ingeniería de sistemas").setNombre("Enfasis sistemas 2"),
+						new Enfasis().setCarrera("Ingeniería de sistemas").setNombre("Enfasis sistemas 3")))
+				.setHabilidades(habilidadesDto).setNombre("Nombre estudiante inserted").setPassword("PasswordEstudiante1")
+				.setPersonalidad(new Personalidad().setNombre("INTP"))
+				.setPreferenciaIdea(PreferenciaIdeaEnum.ORDEN_CRONOLOGICO).setTipoUsuario(TipoUsuariosEnum.ESTUDIANTE)
+				.setUsername("Estudiante1-Inserted")
+				.setSemestre(5).setSeminario(false).setTemaTG(false);
 	}
 	
 	private UsuarioDTO crearUsuarioEgreado(List<HabilidadDTO> habilidadesDto) {
@@ -186,23 +187,21 @@ public class UsuarioModBeanTest extends AbstractTest {
 				.setUsername("Egresado1-Inserted");
 	}
 	
-	private UsuarioDTO crearUsuarioEstudiante(List<HabilidadDTO> habilidadesDto, List<Gusto> gustos) {
-		return new UsuarioDTO().setApellido("Apellido estudiante inserted")
+	private UsuarioDTO crearUsuarioProfesor(List<CualidadDTO> cualidades, List<HabilidadDTO> habilidadesDto) {
+		return new UsuarioDTO().setApellido("Apellido profesor inserted")
 				.setAreasConocimiento(Arrays.asList(
+						new AreaConocimiento().setCarrera("Ingeniería de sistemas").setNombre("AC sistemas 1")
+								.setPorcentaje(20d),
 						new AreaConocimiento().setCarrera("Ingeniería de sistemas").setNombre("AC sistemas 2")
-								.setPorcentaje(0d),
-						new AreaConocimiento().setCarrera("Ingeniería de sistemas").setNombre("AC sistemas 3")
-								.setPorcentaje(0d)))
-				.setCarrera(new CarreraDTO().setNombre("Ingeniería de sistemas"))
-				.setEmail("Email estudiante inserted").setGustos(gustos)
+								.setPorcentaje(30d)))
+				.setCarrera(new CarreraDTO().setNombre("Ingeniería de sistemas")).setCualidades(cualidades)
+				.setEmail("Email profesor inserted")
 				.setEnfasis(Arrays.asList(
-						new Enfasis().setCarrera("Ingeniería de sistemas").setNombre("Enfasis sistemas 2"),
-						new Enfasis().setCarrera("Ingeniería de sistemas").setNombre("Enfasis sistemas 3")))
-				.setHabilidades(habilidadesDto).setNombre("Nombre estudiante inserted").setPassword("PasswordEstudiante1")
-				.setPersonalidad(new Personalidad().setNombre("INTP"))
-				.setPreferenciaIdea(PreferenciaIdeaEnum.ORDEN_CRONOLOGICO).setTipoUsuario(TipoUsuariosEnum.ESTUDIANTE)
-				.setUsername("Estudiante1-Inserted")
-				.setSemestre(5).setSeminario(false).setTemaTG(false);
+						new Enfasis().setCarrera("Ingeniería de sistemas").setNombre("Enfasis sistemas 1"),
+						new Enfasis().setCarrera("Ingeniería de sistemas").setNombre("Enfasis sistemas 4")))
+				.setHabilidades(habilidadesDto).setNombre("Nombre profesor inserted").setPassword("PasswordProfesor1")
+				.setPersonalidad(new Personalidad().setNombre("INTJ"))
+				.setPreferenciaIdea(PreferenciaIdeaEnum.POR_RELEVANCIA).setTipoUsuario(TipoUsuariosEnum.PROFESOR)
+				.setUsername("Profesor1-Inserted");
 	}
-
 }

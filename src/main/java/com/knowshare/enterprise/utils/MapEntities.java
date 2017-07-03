@@ -118,6 +118,7 @@ public class MapEntities {
 		dto.setProblematica(idea.getProblematica());
 		dto.setTags(idea.getTags());
 		dto.setTipo(idea.getTipo());
+		dto.setUsuario(mapUsuarioToDTO(idea.getUsuario()));
 		return dto;
 	}
 	
@@ -127,7 +128,7 @@ public class MapEntities {
 		idea.setAlcance(dto.getAlcance());
 		idea.setContenido(dto.getContenido());
 		idea.setEstado(dto.getEstado());
-		if(!dto.getTipo().equals(TipoIdeaEnum.PR)){
+		if(dto.getTipo().equals(TipoIdeaEnum.PR)){
 			for (IdeaDTO i : dto.getIdeasProyecto()) {
 				idea.getIdeasProyecto().add(mapDtoToIdea(i));
 			}
@@ -151,6 +152,7 @@ public class MapEntities {
 				.hashPassword(dto.getUsername(), dto.getPassword());
 		carreras.add(mapDtoToCarrera(dto.getCarrera()));
 		final Usuario usuario = new Usuario()
+				.setId(dto.getId())
 				.setNombre(dto.getNombre())
 				.setApellido(dto.getApellido())
 				.setCorreo(dto.getEmail())
@@ -239,6 +241,7 @@ public class MapEntities {
 	public static UsuarioDTO mapUsuarioToDTO(Usuario usuario){
 		UsuarioDTO dto = new UsuarioDTO();
 		dto.setApellido(usuario.getApellido())
+			.setId(usuario.getId())
 			.setCantidadAmigos(usuario.getAmigos().getCantidad())
 			.setCantidadSeguidores(usuario.getSeguidores().getCantidad())
 			.setCarrera(mapCarreraToDTO(usuario.getCarreras().get(0)))
@@ -248,6 +251,8 @@ public class MapEntities {
 			.setHabilidades(mapAvalesHabilidad(usuario.getHabilidades()))
 			.setNombre(usuario.getNombre())
 			.setAreasConocimiento(usuario.getAreasConocimiento())
+			.setSeminario(usuario.getPreferencias().isSeminario())
+			.setTemaTG(usuario.getPreferencias().isTemaTG())
 			.setEnfasis(usuario.getEnfasis());
 		switch(usuario.getTipo()){
 			case PROFESOR:

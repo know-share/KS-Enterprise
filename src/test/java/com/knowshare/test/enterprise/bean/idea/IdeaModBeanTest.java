@@ -13,12 +13,16 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import com.knowshare.dto.idea.IdeaDTO;
+import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.enterprise.bean.idea.IdeaModFacade;
 import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.idea.Idea;
 import com.knowshare.entities.idea.OperacionIdea;
+import com.knowshare.entities.perfilusuario.Usuario;
 import com.knowshare.enums.TipoIdeaEnum;
 import com.knowshare.enums.TipoOperacionEnum;
 import com.knowshare.test.enterprise.general.AbstractTest;
@@ -39,6 +43,11 @@ public class IdeaModBeanTest extends AbstractTest {
 	
 	@Before
 	public void init(){
+		Usuario usuario = (Usuario) mongoTemplate.findOne(new Query(
+				Criteria.where("username").is("MinMiguelM")), Usuario.class);
+		UsuarioDTO usuarioDto = MapEntities
+				.mapUsuarioToDTO(usuario);
+		
 		dto = new IdeaDTO()
 				.setAlcance("alcance")
 				.setComentarios(0L)
@@ -47,6 +56,7 @@ public class IdeaModBeanTest extends AbstractTest {
 				.setLights(0L)
 				.setNumeroEstudiantes(0)
 				.setProblematica("problematica")
+				.setUsuario(usuarioDto)
 				.setTipo(TipoIdeaEnum.PC);
 		
 		idea = new Idea()
@@ -55,6 +65,7 @@ public class IdeaModBeanTest extends AbstractTest {
 				.setEstado("no tg")
 				.setFechaCreacion(new Date())
 				.setLights(0L)
+				.setUsuario(usuario)
 				.setTipo(TipoIdeaEnum.PC);
 		
 		mongoTemplate.insert(idea);

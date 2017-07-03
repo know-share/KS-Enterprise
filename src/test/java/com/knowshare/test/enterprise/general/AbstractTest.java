@@ -17,5 +17,4 @@ public abstract class AbstractTest {
 	
 	@Autowired
 	protected MongoTemplate mongoTemplate;
-
 }

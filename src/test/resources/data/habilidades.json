@@ -1,17 +1,21 @@
 [
 	{
-		"nombre": "Habilidad Personal 1",
+		"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705635},
+		"nombre":"Habilidad Personal 1",
 		"tipo": "PERSONALES"
 	},
 	{
+		"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705636},
 		"nombre": "Habilidad Personal 2",
 		"tipo": "PERSONALES"
 	},
 	{
+		"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705637},
 		"nombre": "Habilidad Personal 3",
 		"tipo": "PERSONALES"
 	},
 	{
+		"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705638},
 		"nombre": "Habilidad Profesional sistemas 1",
 		"tipo": "PROFESIONALES",
 		"carrera": {
@@ -19,6 +23,7 @@
 		}
 	},
 	{
+		"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705639},
 		"nombre": "Habilidad Profesional sistemas  2",
 		"tipo": "PROFESIONALES",
 		"carrera": {
@@ -26,6 +31,7 @@
 		}
 	},
 	{
+		"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705640},
 		"nombre": "Habilidad Profesional civil 1",
 		"tipo": "PROFESIONALES",
 		"carrera": {
@@ -33,6 +39,7 @@
 		}
 	},
 	{
+		"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705641},
 		"nombre": "Habilidad Profesional civil 2",
 		"tipo": "PROFESIONALES",
 		"carrera": {
