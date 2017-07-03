@@ -25,8 +25,8 @@ public class IdeaBean implements IdeaFacade{
 	@Autowired
 	private IdeaListFacade ideaList;
 	
-	public void agregarOperacion(IdeaDTO dto, OperacionIdea operacion){
-		ideaMod.agregarOperacion(dto, operacion);
+	public Idea agregarOperacion(IdeaDTO dto, OperacionIdea operacion){
+		return ideaMod.agregarOperacion(dto, operacion);
 	}
 	
 	public Idea crearIdea(IdeaDTO dto){

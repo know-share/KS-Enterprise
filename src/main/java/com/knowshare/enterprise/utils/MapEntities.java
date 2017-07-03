@@ -22,6 +22,7 @@ import com.knowshare.entities.perfilusuario.Cualidad;
 import com.knowshare.entities.perfilusuario.Habilidad;
 import com.knowshare.entities.perfilusuario.Usuario;
 import com.knowshare.enums.TipoHabilidadEnum;
+import com.knowshare.enums.TipoIdeaEnum;
 
 /**
  * @author miguel
@@ -120,19 +121,23 @@ public class MapEntities {
 		return dto;
 	}
 	
-	public static Idea mapDtoToIdea(IdeaDTO dto){
+	public static Idea mapDtoToIdea(IdeaDTO dto) throws NoSuchAlgorithmException{
 		Idea idea = new Idea();
 		idea.setId(dto.getId());
 		idea.setAlcance(dto.getAlcance());
 		idea.setContenido(dto.getContenido());
 		idea.setEstado(dto.getEstado());
-		idea.setIdeasProyecto(dto.getIdeasProyecto());
+		if(!dto.getTipo().equals(TipoIdeaEnum.PR)){
+			for (IdeaDTO i : dto.getIdeasProyecto()) {
+				idea.getIdeasProyecto().add(mapDtoToIdea(i));
+			}
+		}
 		idea.setLugarEscritura(dto.getLugarEscritura());
 		idea.setNumeroEstudiantes(dto.getNumeroEstudiantes());
 		idea.setProblematica(dto.getProblematica());
 		idea.setTags(dto.getTags());
 		idea.setTipo(dto.getTipo());
-		idea.setUsuario(dto.getUsuario());
+		idea.setUsuario(mapDtoToUsuario(dto.getUsuario()));
 		return idea;
 	}
 	
