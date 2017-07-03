@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.knowshare.dto.idea.IdeaDTO;
 import com.knowshare.enterprise.bean.idea.IdeaModFacade;
+import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.idea.Idea;
 import com.knowshare.entities.idea.OperacionIdea;
 import com.knowshare.enums.TipoIdeaEnum;
@@ -34,6 +35,8 @@ public class IdeaModBeanTest extends AbstractTest {
 	
 	private IdeaDTO dto;
 	
+	private Idea idea;
+	
 	@Before
 	public void init(){
 		dto = new IdeaDTO()
@@ -45,6 +48,16 @@ public class IdeaModBeanTest extends AbstractTest {
 				.setNumeroEstudiantes(0)
 				.setProblematica("problematica")
 				.setTipo(TipoIdeaEnum.PC);
+		
+		idea = new Idea()
+				.setAlcance("alcance")
+				.setContenido("idea para continuar")
+				.setEstado("no tg")
+				.setFechaCreacion(new Date())
+				.setLights(0L)
+				.setTipo(TipoIdeaEnum.PC);
+		
+		mongoTemplate.insert(idea);
 	}
 	
 	@Test
@@ -68,11 +81,11 @@ public class IdeaModBeanTest extends AbstractTest {
 				.setTipo(TipoOperacionEnum.COMENTARIO)
 				.setUsername("username");
 		
-		ideaModBean.agregarOperacion(dto, operacion);
+		ideaModBean.agregarOperacion(MapEntities.mapIdeaToDTO(idea), operacion);
 		
-		Idea idea = mongoTemplate.findById(dto.getId(), Idea.class);
-		assertNotNull(idea);
-		assertEquals(1, idea.getOperaciones().size());
+		Idea ideaManaged = mongoTemplate.findById(idea.getId(), Idea.class);
+		assertNotNull(ideaManaged);
+		assertEquals(1, ideaManaged.getOperaciones().size());
 	}
 
 }

@@ -26,7 +26,7 @@ public class CarreraListBeanTest extends AbstractTest{
 	private CarreraListFacade carreraListBean;
 	
 	@Test
-	public void getAllCarrerasTest(){
+	public void test01GetAllCarreras(){
 		List<CarreraDTO> carreras = carreraListBean.getAllCarreras();
 		for (CarreraDTO carreraDTO : carreras) {
 			carreraMapTest(carreraDTO);
@@ -36,7 +36,7 @@ public class CarreraListBeanTest extends AbstractTest{
 	}
 	
 	@Test
-	public void getEnfasisAreaConocimientoTest(){
+	public void test02GetEnfasisAreaConocimiento(){
 		EnfasisAreaConocimientoDTO dto = carreraListBean
 				.getEnfasisAreaConocimiento("Ingeniería de sistemas");
 		assertEquals(4, dto.getEnfasis().size());

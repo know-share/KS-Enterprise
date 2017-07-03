@@ -68,7 +68,7 @@ public class UsuarioModBeanTest extends AbstractTest {
 	}
 
 	@Test
-	public void crearUsuarioProfesorTest() throws NoSuchAlgorithmException {
+	public void test01CrearUsuarioProfesor() throws NoSuchAlgorithmException {
 		boolean creacion = usuarioModBean.crearUsuario(usuarioProfesor);
 		assertTrue(creacion);
 		
@@ -97,7 +97,7 @@ public class UsuarioModBeanTest extends AbstractTest {
 	}
 	
 	@Test
-	public void crearUsuarioEgresadoTest() throws NoSuchAlgorithmException {
+	public void test02CrearUsuarioEgresado() throws NoSuchAlgorithmException {
 		boolean creacion = usuarioModBean.crearUsuario(usuarioEgresado);
 		assertTrue(creacion);
 		
@@ -122,7 +122,7 @@ public class UsuarioModBeanTest extends AbstractTest {
 	}
 	
 	@Test
-	public void crearUsuarioEstudianteTest() throws NoSuchAlgorithmException {
+	public void test03CrearUsuarioEstudiante() throws NoSuchAlgorithmException {
 		boolean creacion = usuarioModBean.crearUsuario(usuarioEstudiante);
 		assertTrue(creacion);
 		

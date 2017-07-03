@@ -24,7 +24,7 @@ public class CualidadListBeanTest extends AbstractTest {
 	private CualidadListFacade cualidadListBean;
 	
 	@Test
-	public void getAllTest(){
+	public void test01GetAll(){
 		List<CualidadDTO> cualidades = cualidadListBean.getAll();
 		
 		assertEquals(5, cualidades.size());

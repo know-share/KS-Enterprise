@@ -24,7 +24,7 @@ public class GustoListBeanTest extends AbstractTest {
 	private GustoListFacade gustoListBean;
 	
 	@Test
-	public void getAllGustosTest(){
+	public void test01GetAllGustos(){
 		List<Gusto> gustos = gustoListBean.getAllGustos();
 		assertEquals(4, gustos.size());
 	}
