@@ -24,7 +24,7 @@ public class PersonalidadListBeanTest extends AbstractTest{
 	private PersonalidadListFacade personalidadListBean;
 	
 	@Test
-	public void getAllPersonalidadesTest(){
+	public void test01GetAllPersonalidades(){
 		List<Personalidad> personalidades = personalidadListBean.getAllPersonalidades();
 		assertEquals(16, personalidades.size());
 	}

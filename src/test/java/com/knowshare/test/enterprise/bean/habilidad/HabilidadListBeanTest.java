@@ -25,8 +25,8 @@ public class HabilidadListBeanTest extends AbstractTest{
 	@Autowired
 	private HabilidadListFacade habilidadListBean;
 
-	@Test()
-	public void getHabilidadesTest(){
+	@Test
+	public void test01GetHabilidades(){
 		List<HabilidadDTO> habilidades = habilidadListBean
 				.getHabilidades("Ingeniería de sistemas");
 		
@@ -45,7 +45,7 @@ public class HabilidadListBeanTest extends AbstractTest{
 	}
 	
 	@Test
-	public void getHabilidadesProfesionalesTest(){
+	public void test02GetHabilidadesProfesionales(){
 		List<HabilidadDTO> habilidades = habilidadListBean
 				.getHabilidadesProfesionales("Ingeniería civil");
 		
