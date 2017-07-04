@@ -15,7 +15,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<knowshare.version>0.0.2</knowshare.version>
+		<knowshare.version>0.0.3</knowshare.version>
 	</properties>
 
 	<dependencies>
