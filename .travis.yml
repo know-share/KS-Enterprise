@@ -3,7 +3,9 @@ jdk:
   - oraclejdk8
 maven: 
   version: 3.3.9
+services:
+  - mongodb
 before_install:
   - git clone --branch=$TRAVIS_BRANCH https://github.com/know-share/KS-Data.git
   - cd KS-Data && mvn install
-script: mvn test -B
+script: cd $TRAVIS_BUILD_DIR/ && mvn test -B
