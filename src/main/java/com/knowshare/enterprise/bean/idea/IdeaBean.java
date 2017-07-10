@@ -29,7 +29,7 @@ public class IdeaBean implements IdeaFacade{
 		return ideaMod.agregarOperacion(dto, operacion);
 	}
 	
-	public Idea crearIdea(IdeaDTO dto){
+	public IdeaDTO crearIdea(IdeaDTO dto){
 		return ideaMod.crearIdea(dto);
 	}
 	

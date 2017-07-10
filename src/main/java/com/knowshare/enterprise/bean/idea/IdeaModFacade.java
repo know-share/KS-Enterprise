@@ -13,7 +13,7 @@ import com.knowshare.entities.idea.OperacionIdea;
  */
 public interface IdeaModFacade {
 	
-	Idea crearIdea(IdeaDTO dto);
+	IdeaDTO crearIdea(IdeaDTO dto);
 	Idea agregarOperacion(IdeaDTO dto, OperacionIdea operacion);
 
 }

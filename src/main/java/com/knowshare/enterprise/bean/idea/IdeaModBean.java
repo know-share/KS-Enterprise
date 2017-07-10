@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.idea.IdeaDTO;
 import com.knowshare.enterprise.repository.idea.IdeaRepository;
+import com.knowshare.enterprise.repository.perfilusuario.UsuarioRepository;
 import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.idea.Idea;
 import com.knowshare.entities.idea.OperacionIdea;
@@ -24,10 +25,15 @@ public class IdeaModBean implements IdeaModFacade{
 	
 	@Autowired
 	private IdeaRepository ideaRep;
+	 
+	@Autowired
+	private UsuarioRepository usuRep;
 	
-	public Idea crearIdea(IdeaDTO dto){
+	public IdeaDTO crearIdea(IdeaDTO dto){
 		try {
-			return ideaRep.insert(MapEntities.mapDtoToIdea(dto));
+			Idea creada = MapEntities.mapDtoToIdea(dto,usuRep.findByUsernameIgnoreCase(dto.getUsuario()));
+			ideaRep.insert(creada);
+			return MapEntities.mapIdeaToDTO(creada);
 		} catch (NoSuchAlgorithmException e) {
 			return null;
 		}
@@ -36,7 +42,7 @@ public class IdeaModBean implements IdeaModFacade{
 	public Idea agregarOperacion(IdeaDTO dto , OperacionIdea operacion){
 		Idea idea;
 		try {
-			idea = MapEntities.mapDtoToIdea(dto);
+			idea = MapEntities.mapDtoToIdea(dto,usuRep.findByUsernameIgnoreCase(dto.getUsuario()));
 		} catch (NoSuchAlgorithmException e) {
 			return null;
 		}

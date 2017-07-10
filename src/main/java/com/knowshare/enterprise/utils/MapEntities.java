@@ -117,11 +117,11 @@ public class MapEntities {
 		dto.setProblematica(idea.getProblematica());
 		dto.setTags(idea.getTags());
 		dto.setTipo(idea.getTipo());
-		dto.setUsuario(mapUsuarioToDTO(idea.getUsuario()));
+		dto.setUsuario(idea.getUsuario().getUsername());
 		return dto;
 	}
 	
-	public static Idea mapDtoToIdea(IdeaDTO dto) throws NoSuchAlgorithmException{
+	public static Idea mapDtoToIdea(IdeaDTO dto,Usuario usuario) throws NoSuchAlgorithmException{
 		Idea idea = new Idea();
 		idea.setId(dto.getId());
 		idea.setAlcance(dto.getAlcance());
@@ -129,7 +129,7 @@ public class MapEntities {
 		idea.setEstado(dto.getEstado());
 		if(dto.getTipo().equals(TipoIdeaEnum.PR)){
 			for (IdeaDTO i : dto.getIdeasProyecto()) {
-				idea.getIdeasProyecto().add(mapDtoToIdea(i));
+				idea.getIdeasProyecto().add(mapDtoToIdea(i,usuario));
 			}
 		}
 		idea.setLugarEscritura(dto.getLugarEscritura());
@@ -137,7 +137,7 @@ public class MapEntities {
 		idea.setProblematica(dto.getProblematica());
 		idea.setTags(dto.getTags());
 		idea.setTipo(dto.getTipo());
-		idea.setUsuario(mapDtoToUsuario(dto.getUsuario()));
+		idea.setUsuario(usuario);
 		return idea;
 	}
 	
