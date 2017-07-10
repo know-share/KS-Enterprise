@@ -44,18 +44,9 @@
 				"carrera": "Ingeniería de sistemas"
 			}
 		],
-		"amigos": {
-			"cantidad": 0,
-			"amigos": []
-		},
-		"seguidores": {
-			"cantidad": 0,
-			"amigos": []
-		},
-		"solicitudesAmistad": {
-			"cantidad": 0,
-			"amigos": []
-		},
+		"amigos": [],
+		"seguidores": [],
+		"solicitudesAmistad": [],
 		"preferencias": {
 			"seminario": false,
 			"temaTG": true

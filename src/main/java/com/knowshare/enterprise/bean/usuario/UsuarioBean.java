@@ -48,5 +48,15 @@ public class UsuarioBean implements UsuarioFacade {
 	public boolean solicitudAmistad(String usernameSol,String usernameObj){
 		return usuarioModBean.solicitudAmistad(usernameSol, usernameObj);
 	}
+
+	@Override
+	public boolean accionSolicitud(String username, String usernameObj, String action){
+		return this.usuarioModBean.accionSolicitud(username, usernameObj, action);
+	}
+
+	@Override
+	public boolean dejarSeguir(String usernameSol, String usernameObj) {
+		return this.usuarioModBean.dejarSeguir(usernameSol, usernameObj);
+	}
 	
 }

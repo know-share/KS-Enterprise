@@ -17,10 +17,14 @@ public interface UsuarioFacade {
 	
 	boolean seguir(String usernameSol,String usernameObj);
 	
+	boolean dejarSeguir(String usernameSol,String usernameObj);
+	
 	boolean login(String username,String password);
 	
 	boolean solicitudAmistad(String usernameSol,String usernameObj);
 	
 	UsuarioDTO getUsuario(String username);
+	
+	boolean accionSolicitud(String username, String usernameObj, String action);
 	
 }

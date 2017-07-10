@@ -52,8 +52,19 @@ public class UsuarioModBean implements UsuarioModFacade {
 		Usuario solicitante = usuarioRepository.findByUsernameIgnoreCase(usernameSol);
 		Usuario objetivo = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
 		if(!usuarioListBean.esSeguidor(usernameSol, usernameObj)){
-			objetivo.getSeguidores().getAmigos().add(solicitante);
-			objetivo.getSeguidores().setCantidad(objetivo.getSeguidores().getCantidad()+1);
+			objetivo.getSeguidores().add(solicitante.getUsername());
+			if(usuarioRepository.save(objetivo)!=null){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean dejarSeguir(String usernameSol,String usernameObj){
+		Usuario solicitante = usuarioRepository.findByUsernameIgnoreCase(usernameSol);
+		Usuario objetivo = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
+		if(usuarioListBean.esSeguidor(usernameSol, usernameObj)){
+			objetivo.getSeguidores().remove(solicitante.getUsername());
 			if(usuarioRepository.save(objetivo)!=null){
 				return true;
 			}
@@ -66,12 +77,30 @@ public class UsuarioModBean implements UsuarioModFacade {
 		Usuario solicitante = usuarioRepository.findByUsernameIgnoreCase(usernameSol);
 		Usuario objetivo = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
 		if(!usuarioListBean.estaSolicitud(usernameSol, usernameObj)){
-			objetivo.getSolicitudesAmistad().getAmigos().add(solicitante);
-			objetivo.getSolicitudesAmistad().setCantidad(objetivo.getSolicitudesAmistad().getCantidad());
+			objetivo.getSolicitudesAmistad().add(solicitante.getUsername());
 			if(usuarioRepository.save(objetivo)!=null){
 				return true;
 			}
 		}
+		return false;
+	}
+
+	@Override
+	public boolean accionSolicitud(String username, String usernameObj, String action) {
+		final Usuario actual = usuarioRepository.findByUsernameIgnoreCase(username);
+		final Usuario objetivo = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
+		
+		actual.getSolicitudesAmistad().remove(usernameObj);
+		
+		if(action.equalsIgnoreCase("accept")){
+			actual.getAmigos().add(objetivo.getUsername());
+			objetivo.getAmigos().add(actual.getUsername());
+			if(usuarioRepository.save(actual) != null && null != usuarioRepository.save(objetivo))
+				return true;
+			return false;
+		}
+		if(usuarioRepository.save(actual) != null)
+			return true;
 		return false;
 	}
 }

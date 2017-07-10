@@ -17,7 +17,6 @@ import com.knowshare.entities.app.PreferenciasUsuario;
 import com.knowshare.entities.idea.Idea;
 import com.knowshare.entities.ludificacion.CualidadAval;
 import com.knowshare.entities.ludificacion.HabilidadAval;
-import com.knowshare.entities.perfilusuario.Amigos;
 import com.knowshare.entities.perfilusuario.Cualidad;
 import com.knowshare.entities.perfilusuario.Habilidad;
 import com.knowshare.entities.perfilusuario.Usuario;
@@ -184,9 +183,9 @@ public class MapEntities {
 		}
 		
 		// inicializaciones
-		usuario.setAmigos(new Amigos())
-			.setSeguidores(new Amigos())
-			.setSolicitudesAmistad(new Amigos())
+		usuario.setAmigos(new ArrayList<>())
+			.setSeguidores(new ArrayList<>())
+			.setSolicitudesAmistad(new ArrayList<>())
 			.setPersonasAvaladas(new ArrayList<>())
 			.setInsignias(new ArrayList<>());
 		return usuario;
@@ -242,8 +241,8 @@ public class MapEntities {
 		UsuarioDTO dto = new UsuarioDTO();
 		dto.setApellido(usuario.getApellido())
 			.setId(usuario.getId())
-			.setCantidadAmigos(usuario.getAmigos().getCantidad())
-			.setCantidadSeguidores(usuario.getSeguidores().getCantidad())
+			.setCantidadAmigos(usuario.getAmigos().size())
+			.setCantidadSeguidores(usuario.getSeguidores().size())
 			.setCarrera(mapCarreraToDTO(usuario.getCarreras().get(0)))
 			.setUsername(usuario.getUsername())
 			.setTipoUsuario(usuario.getTipo())
@@ -253,7 +252,10 @@ public class MapEntities {
 			.setAreasConocimiento(usuario.getAreasConocimiento())
 			.setSeminario(usuario.getPreferencias().isSeminario())
 			.setTemaTG(usuario.getPreferencias().isTemaTG())
-			.setEnfasis(usuario.getEnfasis());
+			.setEnfasis(usuario.getEnfasis())
+			.setAmigos(usuario.getAmigos())
+			.setSeguidores(usuario.getSeguidores())
+			.setSolicitudesAmistad(usuario.getSolicitudesAmistad());
 		switch(usuario.getTipo()){
 			case PROFESOR:
 				dto.setCualidades(mapAvalesCualidad(usuario.getCualidadesProfesor()));

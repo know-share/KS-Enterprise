@@ -75,8 +75,8 @@ public class UsuarioModBeanTest extends AbstractTest {
 		Usuario usuarioDB = mongoTemplate.findOne(new Query()
 				.addCriteria(Criteria.where("username").is(usuarioProfesor.getUsername())),Usuario.class);
 		
-		assertEquals(0, usuarioDB.getAmigos().getCantidad().intValue());
-		assertEquals(0, usuarioDB.getSeguidores().getCantidad().intValue());
+		assertEquals(0, usuarioDB.getAmigos().size());
+		assertEquals(0, usuarioDB.getSeguidores().size());
 		assertEquals(0, usuarioDB.getInsignias().size());
 		//for hash
 		assertNotEquals(usuarioProfesor.getPassword(), usuarioDB.getPassword());
@@ -104,8 +104,8 @@ public class UsuarioModBeanTest extends AbstractTest {
 		Usuario usuarioDB = mongoTemplate.findOne(new Query()
 				.addCriteria(Criteria.where("username").is(usuarioEgresado.getUsername())),Usuario.class);
 		
-		assertEquals(0, usuarioDB.getAmigos().getCantidad().intValue());
-		assertEquals(0, usuarioDB.getSeguidores().getCantidad().intValue());
+		assertEquals(0, usuarioDB.getAmigos().size());
+		assertEquals(0, usuarioDB.getSeguidores().size());
 		assertEquals(0, usuarioDB.getInsignias().size());
 		//for hash
 		assertNotEquals(usuarioEgresado.getPassword(), usuarioDB.getPassword());
@@ -129,8 +129,8 @@ public class UsuarioModBeanTest extends AbstractTest {
 		Usuario usuarioDB = mongoTemplate.findOne(new Query()
 				.addCriteria(Criteria.where("username").is(usuarioEstudiante.getUsername())),Usuario.class);
 		
-		assertEquals(0, usuarioDB.getAmigos().getCantidad().intValue());
-		assertEquals(0, usuarioDB.getSeguidores().getCantidad().intValue());
+		assertEquals(0, usuarioDB.getAmigos().size());
+		assertEquals(0, usuarioDB.getSeguidores().size());
 		assertEquals(0, usuarioDB.getInsignias().size());
 		//for hash
 		assertNotEquals(usuarioEstudiante.getPassword(), usuarioDB.getPassword());

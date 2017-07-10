@@ -52,7 +52,7 @@ public class UsuarioListBean implements UsuarioListFacade{
 	public boolean esSeguidor(String usernameSol,String usernameObj){
 		Usuario uSol = usuarioRepository.findByUsernameIgnoreCase(usernameSol);
 		Usuario uObj = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
-		if(uObj.getSeguidores().getAmigos().contains(uSol)){
+		if(uObj.getSeguidores().contains(uSol.getUsername())){
 			return true;
 		}
 		return false;
@@ -61,7 +61,7 @@ public class UsuarioListBean implements UsuarioListFacade{
 	public boolean estaSolicitud(String usernameSol,String usernameObj){
 		Usuario uSol = usuarioRepository.findByUsernameIgnoreCase(usernameSol);
 		Usuario uObj = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
-		if(uObj.getSeguidores().getAmigos().contains(uSol) || uObj.getAmigos().getAmigos().contains(uSol)){
+		if(uObj.getSeguidores().contains(uSol.getUsername()) || uObj.getAmigos().contains(uSol.getUsername())){
 			return true;
 		}
 		return false;
