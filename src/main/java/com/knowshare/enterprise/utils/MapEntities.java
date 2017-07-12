@@ -187,7 +187,9 @@ public class MapEntities {
 			.setSeguidores(new ArrayList<>())
 			.setSolicitudesAmistad(new ArrayList<>())
 			.setPersonasAvaladas(new ArrayList<>())
-			.setInsignias(new ArrayList<>());
+			.setInsignias(new ArrayList<>())
+			.setTrabajosGrado(new ArrayList<>())
+			.setFormacionesAcademicas(new ArrayList<>());
 		return usuario;
 	}
 	
@@ -255,7 +257,9 @@ public class MapEntities {
 			.setEnfasis(usuario.getEnfasis())
 			.setAmigos(usuario.getAmigos())
 			.setSeguidores(usuario.getSeguidores())
-			.setSolicitudesAmistad(usuario.getSolicitudesAmistad());
+			.setSolicitudesAmistad(usuario.getSolicitudesAmistad())
+			.setTgDirigidos(usuario.getTrabajosGradoDirigidos())
+			.setFormacionAcademia(usuario.getFormacionesAcademicas());
 		switch(usuario.getTipo()){
 			case PROFESOR:
 				dto.setCualidades(mapAvalesCualidad(usuario.getCualidadesProfesor()));

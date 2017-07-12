@@ -4,6 +4,7 @@
 package com.knowshare.enterprise.bean.usuario;
 
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
+import com.knowshare.entities.academia.TrabajoGrado;
 
 /**
  * @author miguel
@@ -26,5 +27,7 @@ public interface UsuarioFacade {
 	UsuarioDTO getUsuario(String username);
 	
 	boolean accionSolicitud(String username, String usernameObj, String action);
+	
+	boolean agregarTGDirigido(TrabajoGrado tg, String username);
 	
 }

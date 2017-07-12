@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
+import com.knowshare.entities.academia.TrabajoGrado;
 
 /**
  * @author miguel
@@ -57,6 +58,11 @@ public class UsuarioBean implements UsuarioFacade {
 	@Override
 	public boolean dejarSeguir(String usernameSol, String usernameObj) {
 		return this.usuarioModBean.dejarSeguir(usernameSol, usernameObj);
+	}
+
+	@Override
+	public boolean agregarTGDirigido(TrabajoGrado tg, String username) {
+		return this.usuarioModBean.agregarTGDirigido(tg, username);
 	}
 	
 }

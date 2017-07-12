@@ -4,6 +4,8 @@
 package com.knowshare.enterprise.bean.usuario;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Component;
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.enterprise.repository.perfilusuario.UsuarioRepository;
 import com.knowshare.enterprise.utils.MapEntities;
+import com.knowshare.entities.academia.TrabajoGrado;
 import com.knowshare.entities.perfilusuario.Usuario;
 
 /**
@@ -102,5 +105,17 @@ public class UsuarioModBean implements UsuarioModFacade {
 		if(usuarioRepository.save(actual) != null)
 			return true;
 		return false;
+	}
+	
+	public boolean agregarTGDirigido(TrabajoGrado tg, String username){
+		final Usuario usuario = usuarioRepository.findByUsernameIgnoreCase(username);
+		if(null == usuario.getTrabajosGradoDirigidos()){
+			final List<TrabajoGrado> tgs = new ArrayList<>();
+			tgs.add(tg);
+			usuario.setTrabajosGradoDirigidos(tgs);
+		}else
+			usuario.getTrabajosGradoDirigidos().add(tg);
+		
+		return (null != usuarioRepository.save(usuario));
 	}
 }
