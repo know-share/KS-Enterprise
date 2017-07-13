@@ -12,22 +12,17 @@ import com.knowshare.enterprise.repository.idea.TagRepository;
 import com.knowshare.entities.idea.Tag;
 
 /**
- * @author Pablo Gaitan
+ * @author miguel
  *
  */
 @Component
-public class TagBean implements TagFacade{
-	
+public class TagListBean implements TagListFacade{
+
 	@Autowired
-	private TagListFacade tagListBean;
-	
-	@Autowired
-	private TagModFacade tagModBean;
+	private TagRepository tagRep;
 	
 	@Override
 	public List<Tag> findAll() {
-		return tagListBean.findAll();
+		return tagRep.findAll();
 	}
-
-	
 }

@@ -259,7 +259,7 @@ public class MapEntities {
 			.setSeguidores(usuario.getSeguidores())
 			.setSolicitudesAmistad(usuario.getSolicitudesAmistad())
 			.setTgDirigidos(usuario.getTrabajosGradoDirigidos())
-			.setFormacionAcademia(usuario.getFormacionesAcademicas());
+			.setFormacionAcademica(usuario.getFormacionesAcademicas());
 		switch(usuario.getTipo()){
 			case PROFESOR:
 				dto.setCualidades(mapAvalesCualidad(usuario.getCualidadesProfesor()));

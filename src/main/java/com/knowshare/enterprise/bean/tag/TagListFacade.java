@@ -8,10 +8,11 @@ import java.util.List;
 import com.knowshare.entities.idea.Tag;
 
 /**
- * @author Pablo Gaitan
+ * @author miguel
  *
  */
-public interface TagFacade {
+public interface TagListFacade {
 	
 	List<Tag> findAll();
+
 }

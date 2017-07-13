@@ -4,6 +4,7 @@
 package com.knowshare.enterprise.bean.usuario;
 
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
+import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
 
 /**
@@ -23,4 +24,8 @@ public interface UsuarioModFacade {
 	boolean accionSolicitud(String username, String usernameObj, String action);
 	
 	boolean agregarTGDirigido(TrabajoGrado tg, String username);
+	
+	boolean agregarFormacionAcademica(FormacionAcademica formacion, String username);
+	
+	boolean eliminarAmigo(String username, String usernameEliminar);
 }

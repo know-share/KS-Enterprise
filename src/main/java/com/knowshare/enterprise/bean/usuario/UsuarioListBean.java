@@ -12,6 +12,7 @@ import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.enterprise.repository.perfilusuario.UsuarioRepository;
 import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.enterprise.utils.UtilsPassword;
+import com.knowshare.entities.perfilusuario.InfoUsuario;
 import com.knowshare.entities.perfilusuario.Usuario;
 
 /**
@@ -50,9 +51,12 @@ public class UsuarioListBean implements UsuarioListFacade{
 	}
 	
 	public boolean esSeguidor(String usernameSol,String usernameObj){
-		Usuario uSol = usuarioRepository.findByUsernameIgnoreCase(usernameSol);
-		Usuario uObj = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
-		if(uObj.getSeguidores().contains(uSol.getUsername())){
+		final Usuario uSol = usuarioRepository.findByUsernameIgnoreCase(usernameSol);
+		final Usuario uObj = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
+		final InfoUsuario info = new InfoUsuario()
+				.setNombre(uSol.getNombre()+" "+uSol.getApellido())
+				.setUsername(uSol.getUsername());
+		if(uObj.getSeguidores().contains(info)){
 			return true;
 		}
 		return false;
