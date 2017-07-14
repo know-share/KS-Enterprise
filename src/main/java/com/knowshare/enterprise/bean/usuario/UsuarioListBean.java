@@ -4,6 +4,8 @@
 package com.knowshare.enterprise.bean.usuario;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,6 +16,7 @@ import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.enterprise.utils.UtilsPassword;
 import com.knowshare.entities.perfilusuario.InfoUsuario;
 import com.knowshare.entities.perfilusuario.Usuario;
+import com.knowshare.enums.TipoUsuariosEnum;
 
 /**
  * @author miguel
@@ -77,6 +80,18 @@ public class UsuarioListBean implements UsuarioListFacade{
 		if(usuario == null)
 			return null;
 		return MapEntities.mapUsuarioToDTO(usuario);
+	}
+
+	@Override
+	public List<UsuarioDTO> getAllEstudiantesExceptOne(String username) {
+		final List<Usuario> usuarios = usuarioRepository.findAll();
+		final List<UsuarioDTO> usuarioRet = new ArrayList<>();
+		for (Usuario usuario : usuarios) {
+			if(!usuario.getUsername().equalsIgnoreCase(username) && 
+					usuario.getTipo() == TipoUsuariosEnum.ESTUDIANTE)
+				usuarioRet.add(MapEntities.mapUsuarioToDTO(usuario));
+		}
+		return usuarioRet;
 	}
 
 }

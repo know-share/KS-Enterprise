@@ -3,6 +3,8 @@
  */
 package com.knowshare.enterprise.bean.usuario;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -74,6 +76,11 @@ public class UsuarioBean implements UsuarioFacade {
 	@Override
 	public boolean eliminarAmigo(String username, String usernameEliminar) {
 		return this.usuarioModBean.eliminarAmigo(username, usernameEliminar);
+	}
+
+	@Override
+	public List<UsuarioDTO> getAllEstudiantesExceptOne(String username) {
+		return this.usuarioListBean.getAllEstudiantesExceptOne(username);
 	}
 	
 }

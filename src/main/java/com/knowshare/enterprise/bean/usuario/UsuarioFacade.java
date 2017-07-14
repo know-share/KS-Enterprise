@@ -3,6 +3,8 @@
  */
 package com.knowshare.enterprise.bean.usuario;
 
+import java.util.List;
+
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
@@ -34,4 +36,6 @@ public interface UsuarioFacade {
 	boolean agregarFormacionAcademica(FormacionAcademica formacion, String username);
 	
 	boolean eliminarAmigo(String username, String usernameEliminar);
+	
+	List<UsuarioDTO> getAllEstudiantesExceptOne(String username);
 }
