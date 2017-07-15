@@ -8,6 +8,8 @@ import java.util.List;
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
+import com.knowshare.entities.perfilusuario.Usuario;
+import com.knowshare.enums.TipoUsuariosEnum;
 
 /**
  * @author miguel
@@ -23,7 +25,7 @@ public interface UsuarioFacade {
 	
 	boolean dejarSeguir(String usernameSol,String usernameObj);
 	
-	boolean login(String username,String password);
+	Usuario login(String username,String password);
 	
 	boolean solicitudAmistad(String usernameSol,String usernameObj);
 	
@@ -37,5 +39,5 @@ public interface UsuarioFacade {
 	
 	boolean eliminarAmigo(String username, String usernameEliminar);
 	
-	List<UsuarioDTO> getAllEstudiantesExceptOne(String username);
+	List<UsuarioDTO> getMyNoConnections(String username,TipoUsuariosEnum tipo);
 }

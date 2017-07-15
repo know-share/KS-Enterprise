@@ -265,6 +265,7 @@ public class MapEntities {
 				dto.setCualidades(mapAvalesCualidad(usuario.getCualidadesProfesor()));
 				break;
 			case ESTUDIANTE:
+				dto.setGustos(usuario.getGustos());
 			case EGRESADO:
 				if(usuario.getCarreras().size() > 1)
 					dto.setSegundaCarrera(mapCarreraToDTO(usuario.getCarreras().get(1)));

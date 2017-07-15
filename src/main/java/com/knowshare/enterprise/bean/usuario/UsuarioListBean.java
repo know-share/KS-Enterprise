@@ -37,20 +37,17 @@ public class UsuarioListBean implements UsuarioListFacade{
 		return false;
 	}
 	
-	public boolean login(String username,String password){
+	public Usuario login(String username,String password){
 		Usuario usuario;
 		try {
 			usuario = usuarioRepository
 					.findByPasswordAndUsernameIgnoreCase(
 							UtilsPassword.hashPassword(username, password),
 							username);
-			if(usuario != null)
-				return true;
+			return usuario;
 		} catch (NoSuchAlgorithmException e) {
-			return false;
+			return null;
 		}
-		
-		return false;
 	}
 	
 	public boolean esSeguidor(String usernameSol,String usernameObj){
@@ -82,15 +79,16 @@ public class UsuarioListBean implements UsuarioListFacade{
 		return MapEntities.mapUsuarioToDTO(usuario);
 	}
 
+	/**
+	 * El username se asume que llega igual como está en la base de datos, ya que
+	 * este es sacado del token.
+	 */
 	@Override
-	public List<UsuarioDTO> getAllEstudiantesExceptOne(String username) {
-		final List<Usuario> usuarios = usuarioRepository.findAll();
+	public List<UsuarioDTO> getMyNoConnections(String username,TipoUsuariosEnum tipo) {
+		final List<Usuario> usuarios = usuarioRepository.findMyNoConnections(username,tipo);
 		final List<UsuarioDTO> usuarioRet = new ArrayList<>();
-		for (Usuario usuario : usuarios) {
-			if(!usuario.getUsername().equalsIgnoreCase(username) && 
-					usuario.getTipo() == TipoUsuariosEnum.ESTUDIANTE)
-				usuarioRet.add(MapEntities.mapUsuarioToDTO(usuario));
-		}
+		for (Usuario usuario : usuarios)
+			usuarioRet.add(MapEntities.mapUsuarioToDTO(usuario));
 		return usuarioRet;
 	}
 

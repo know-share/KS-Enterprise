@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
+import com.knowshare.entities.perfilusuario.Usuario;
+import com.knowshare.enums.TipoUsuariosEnum;
 
 /**
  * @author miguel
@@ -36,7 +38,7 @@ public class UsuarioBean implements UsuarioFacade {
 	}
 
 	@Override
-	public boolean login(String username, String password) {
+	public Usuario login(String username, String password) {
 		return usuarioListBean.login(username, password);
 	}
 	
@@ -79,8 +81,8 @@ public class UsuarioBean implements UsuarioFacade {
 	}
 
 	@Override
-	public List<UsuarioDTO> getAllEstudiantesExceptOne(String username) {
-		return this.usuarioListBean.getAllEstudiantesExceptOne(username);
+	public List<UsuarioDTO> getMyNoConnections(String username,TipoUsuariosEnum tipo) {
+		return this.usuarioListBean.getMyNoConnections(username, tipo);
 	}
 	
 }
