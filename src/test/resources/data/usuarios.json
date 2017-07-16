@@ -68,5 +68,145 @@
 		"personalidad": {
 			"nombre":"ISFJ"
 		}
+	},{
+		"username": "pablo.gaitan",
+		"password": "8e21d61d91c6c6e1f3137b783a1b524d",
+		"nombre": "Pablo",
+		"apellido": "Gaitán",
+		"correo": "pablo@mail.com",
+		"tipo": "ESTUDIANTE",
+		"semestre": 10,
+		"habilidades": [
+			{
+				"cantidad": 0,
+				"habilidad": {
+					"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705637}
+				}
+			},
+			{
+				"cantidad": 0,
+				"habilidad": {
+					"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705639}
+				}
+			}
+		],
+		"personasAvaladas": [],
+		"enfasis": [
+			{
+				"nombre": "Enfasis sistemas 1",
+				"carrera": "Ingeniería de sistemas"
+			},
+			{
+				"nombre": "Enfasis sistemas 4",
+				"carrera": "Ingeniería de sistemas"
+			}
+		],
+		"areasConocimiento": [
+			{
+				"nombre": "AC sistemas 1",
+				"porcentaje": 0,
+				"carrera": "Ingeniería de sistemas"
+			}
+		],
+		"amigos": [],
+		"seguidores": [],
+		"solicitudesAmistad": [
+			"Felipe-Bautista"
+		],
+		"preferencias": {
+			"seminario": false,
+			"temaTG": true
+		},
+		"gustos": [
+			{
+				"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705631}
+			},
+			{
+				"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705632}
+			}
+		],
+		"carreras": [
+			{
+				"nombre":"Ingeniería de sistemas"
+			}
+		],
+		"insignias": [],
+		"personalidad": {
+			"nombre":"ENTP"
+		}
+	},{
+		"username": "Felipe-Bautista",
+		"password": "8e21d61d91c6c6e1f3137b783a1b524d",
+		"nombre": "Felipe",
+		"apellido": "Bautista",
+		"correo": "felipe@mail.com",
+		"tipo": "ESTUDIANTE",
+		"semestre": 9,
+		"habilidades": [
+			{
+				"cantidad": 0,
+				"habilidad": {
+					"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705637}
+				}
+			},
+			{
+				"cantidad": 0,
+				"habilidad": {
+					"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705639}
+				}
+			}
+		],
+		"personasAvaladas": [],
+		"enfasis": [
+			{
+				"nombre": "Enfasis civil 1",
+				"carrera": "Ingeniería civil"
+			},
+			null
+		],
+		"areasConocimiento": [
+			{
+				"nombre": "AC civil 1",
+				"porcentaje": 0,
+				"carrera": "Ingeniería civil"
+			},{
+				"nombre": "AC civil 2",
+				"porcentaje": 0,
+				"carrera": "Ingeniería civil"
+			},{
+				"nombre": "AC civil 3",
+				"porcentaje": 0,
+				"carrera": "Ingeniería civil"
+			}
+		],
+		"amigos": [],
+		"seguidores": [
+			{
+				"username": "MinMiguelM",
+				"nombre": "Miguel Montañez"
+			}
+		],
+		"solicitudesAmistad": [],
+		"preferencias": {
+			"seminario": false,
+			"temaTG": true
+		},
+		"gustos": [
+			{
+				"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705631}
+			},
+			{
+				"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705632}
+			}
+		],
+		"carreras": [
+			{
+				"nombre":"Ingeniería civil"
+			}
+		],
+		"insignias": [],
+		"personalidad": {
+			"nombre":"ESFJ"
+		}
 	}
 ]

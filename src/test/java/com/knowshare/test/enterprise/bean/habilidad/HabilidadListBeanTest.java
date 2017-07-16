@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -62,5 +63,9 @@ public class HabilidadListBeanTest extends AbstractTest{
 		assertNotNull(dto.getTipo());
 		if(dto.getTipo().equals(TipoHabilidadEnum.PROFESIONALES))
 			assertNotNull(dto.getCarrera());
+	}
+	
+	@AfterClass
+	public static void tearDown(){
 	}
 }

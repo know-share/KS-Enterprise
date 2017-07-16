@@ -14,6 +14,6 @@ import com.knowshare.entities.idea.OperacionIdea;
 public interface IdeaModFacade {
 	
 	IdeaDTO crearIdea(IdeaDTO dto);
+	
 	Idea agregarOperacion(IdeaDTO dto, OperacionIdea operacion);
-
 }

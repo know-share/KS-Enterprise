@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,5 +29,9 @@ public class CualidadListBeanTest extends AbstractTest {
 		List<CualidadDTO> cualidades = cualidadListBean.getAll();
 		
 		assertEquals(5, cualidades.size());
+	}
+	
+	@AfterClass
+	public static void tearDown(){
 	}
 }

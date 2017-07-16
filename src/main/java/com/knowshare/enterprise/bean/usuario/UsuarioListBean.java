@@ -50,23 +50,28 @@ public class UsuarioListBean implements UsuarioListFacade{
 		}
 	}
 	
-	public boolean esSeguidor(String usernameSol,String usernameObj){
-		final Usuario uSol = usuarioRepository.findByUsernameIgnoreCase(usernameSol);
-		final Usuario uObj = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
-		final InfoUsuario info = new InfoUsuario()
-				.setNombre(uSol.getNombre()+" "+uSol.getApellido())
-				.setUsername(uSol.getUsername());
-		if(uObj.getSeguidores().contains(info)){
-			return true;
+	public boolean esSeguidor(Usuario uSol,Usuario uObj){
+		if(null != uSol && null != uObj){
+			final InfoUsuario info = new InfoUsuario()
+					.setNombre(uSol.getNombre()+" "+uSol.getApellido())
+					.setUsername(uSol.getUsername());
+			if(uObj.getSeguidores().contains(info)){
+				return true;
+			}
 		}
 		return false;
 	}
 	
-	public boolean estaSolicitud(String usernameSol,String usernameObj){
-		Usuario uSol = usuarioRepository.findByUsernameIgnoreCase(usernameSol);
-		Usuario uObj = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
-		if(uObj.getSeguidores().contains(uSol.getUsername()) || uObj.getAmigos().contains(uSol.getUsername())){
-			return true;
+	public boolean estaSolicitud(Usuario uSol,Usuario uObj){
+		if(null != uSol && null != uObj){
+			final InfoUsuario info = new InfoUsuario()
+					.setNombre(uSol.getNombre()+" "+uSol.getApellido())
+					.setUsername(uSol.getUsername());
+			if(uObj.getSeguidores().contains(info) 
+					|| uObj.getAmigos().contains(info)
+					|| uObj.getSolicitudesAmistad().contains(uSol.getUsername())){
+				return true;
+			}
 		}
 		return false;
 	}

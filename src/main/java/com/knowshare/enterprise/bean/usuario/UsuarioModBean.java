@@ -60,7 +60,7 @@ public class UsuarioModBean implements UsuarioModFacade {
 	public boolean seguir(String usernameSol, String usernameObj){
 		Usuario solicitante = usuarioRepository.findByUsernameIgnoreCase(usernameSol);
 		Usuario objetivo = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
-		if(!usuarioListBean.esSeguidor(usernameSol, usernameObj)){
+		if(!usuarioListBean.esSeguidor(solicitante, objetivo)){
 			final InfoUsuario sol = new InfoUsuario()
 					.setUsername(solicitante.getUsername())
 					.setNombre(solicitante.getNombre() +" "+ solicitante.getApellido());
@@ -75,7 +75,7 @@ public class UsuarioModBean implements UsuarioModFacade {
 	public boolean dejarSeguir(String usernameSol,String usernameObj){
 		Usuario solicitante = usuarioRepository.findByUsernameIgnoreCase(usernameSol);
 		Usuario objetivo = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
-		if(usuarioListBean.esSeguidor(usernameSol, usernameObj)){
+		if(usuarioListBean.esSeguidor(solicitante, objetivo)){
 			objetivo.getSeguidores().removeIf(usu -> usu.equals(solicitante.getUsername()));
 			if(usuarioRepository.save(objetivo)!=null){
 				return true;
@@ -88,7 +88,7 @@ public class UsuarioModBean implements UsuarioModFacade {
 	public boolean solicitudAmistad(String usernameSol,String usernameObj){
 		Usuario solicitante = usuarioRepository.findByUsernameIgnoreCase(usernameSol);
 		Usuario objetivo = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
-		if(!usuarioListBean.estaSolicitud(usernameSol, usernameObj)){
+		if(!usuarioListBean.estaSolicitud(solicitante, objetivo)){
 			objetivo.getSolicitudesAmistad().add(solicitante.getUsername());
 			if(usuarioRepository.save(objetivo)!=null){
 				return true;
@@ -102,7 +102,7 @@ public class UsuarioModBean implements UsuarioModFacade {
 		final Usuario actual = usuarioRepository.findByUsernameIgnoreCase(username);
 		final Usuario objetivo = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
 		
-		actual.getSolicitudesAmistad().remove(usernameObj);
+		actual.getSolicitudesAmistad().remove(objetivo.getUsername());
 		
 		if(action.equalsIgnoreCase("accept")){
 			final InfoUsuario obj = new InfoUsuario()

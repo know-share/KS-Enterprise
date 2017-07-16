@@ -8,6 +8,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -48,4 +49,7 @@ public class CarreraListBeanTest extends AbstractTest{
 		assertNotNull(dto.getNombre());
 	}
 
+	@AfterClass
+	public static void tearDown(){
+	}
 }

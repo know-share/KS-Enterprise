@@ -4,20 +4,27 @@
 package com.knowshare.test.enterprise.bean.usuario;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.knowshare.dto.academia.CarreraDTO;
 import com.knowshare.dto.perfilusuario.CualidadDTO;
 import com.knowshare.dto.perfilusuario.HabilidadDTO;
@@ -26,6 +33,8 @@ import com.knowshare.enterprise.bean.usuario.UsuarioModFacade;
 import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.enterprise.utils.UtilsPassword;
 import com.knowshare.entities.academia.AreaConocimiento;
+import com.knowshare.entities.academia.FormacionAcademica;
+import com.knowshare.entities.academia.TrabajoGrado;
 import com.knowshare.entities.ludificacion.CualidadAval;
 import com.knowshare.entities.ludificacion.HabilidadAval;
 import com.knowshare.entities.perfilusuario.Cualidad;
@@ -44,6 +53,7 @@ import com.knowshare.test.enterprise.general.AbstractTest;
  * @author miguel
  *
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UsuarioModBeanTest extends AbstractTest {
 
 	@Autowired
@@ -54,7 +64,7 @@ public class UsuarioModBeanTest extends AbstractTest {
 	private UsuarioDTO usuarioEgresado;
 
 	@Before
-	public void setup(){
+	public void setup() throws JsonParseException, JsonMappingException, FileNotFoundException, IOException{
 		List<Cualidad> cualidades = mongoTemplate.find(new Query(
 				new Criteria().orOperator(Criteria.where("nombre").is("Cualidad 1"),Criteria.where("nombre").is("Cualidad 2"))), Cualidad.class);
 		List<Gusto> gustos = mongoTemplate.findAll(Gusto.class);
@@ -148,6 +158,101 @@ public class UsuarioModBeanTest extends AbstractTest {
 		assertNotNull(usuarioDB.getPreferencias().isSeminario());
 		assertNotNull(usuarioDB.getPreferencias().isTemaTG());
 		assertEquals(TipoUsuariosEnum.ESTUDIANTE, usuarioDB.getTipo());
+	}
+	
+	@Test
+	public void test04Seguir(){
+		boolean res = usuarioModBean.seguir("minmiguelm", "felipe-bautista");
+		assertFalse(res);
+		
+		res = usuarioModBean.seguir("minmiguelm", "pablo.gaitan");
+		assertTrue(res);
+	}
+	
+	@Test
+	public void test05DejarSeguir(){
+		boolean res = usuarioModBean.dejarSeguir("minmiguelm","felipe-bautista");
+		assertTrue(res);
+		
+		res = usuarioModBean.dejarSeguir("minmiguelm","felipe-bautista");
+		assertFalse(res);
+	}
+	
+	@Test
+	public void test06SolicitudAmistad(){
+		boolean res = usuarioModBean.solicitudAmistad("felipe-bautista","pablo.gaitan");
+		assertFalse(res);
+		
+		res = usuarioModBean.solicitudAmistad("pablo.gaitan","minmiguelm");
+		assertTrue(res);
+	}
+	
+	@Test
+	public void test07AccionSolicitud(){
+		boolean res = usuarioModBean.accionSolicitud("pablo.gaitan","felipe-bautista", "reject");
+		assertTrue(res);
+		
+		Usuario usuario = ((List<Usuario>) mongoTemplate.find(new Query(Criteria.where("username").is("pablo.gaitan")), Usuario.class)).get(0);
+		assertNotNull(usuario);
+		assertEquals(0, usuario.getSolicitudesAmistad().size());
+		assertEquals(0, usuario.getAmigos().size());
+		
+		usuarioModBean.solicitudAmistad("pablo.gaitan","felipe-bautista");
+		
+		res = usuarioModBean.accionSolicitud("felipe-bautista","pablo.gaitan", "accept");
+		assertTrue(res);
+		
+		usuario = ((List<Usuario>)mongoTemplate.find(new Query(Criteria.where("username").is("pablo.gaitan")), Usuario.class)).get(0);
+		assertNotNull(usuario);
+		assertEquals(0, usuario.getSolicitudesAmistad().size());
+		assertEquals(1, usuario.getAmigos().size());
+	}
+	
+	@Test
+	public void test08AgregarTGDirigido(){
+		final TrabajoGrado tg = new TrabajoGrado()
+				.setDescripción(Arrays.asList("TAG1","TAG2","TAG5"))
+				.setNombre("TG for Profesor-Inserted")
+				.setNumEstudiantes(5)
+				.setPeriodoFin("2017-3")
+				.setResumen("Summary for TG inserted.");
+		boolean res = usuarioModBean.agregarTGDirigido(tg, usuarioProfesor.getUsername());
+		assertTrue(res);
+		
+		Usuario usuario = ((List<Usuario>)mongoTemplate
+				.find(new Query(Criteria.where("username").is(usuarioProfesor.getUsername())), Usuario.class)).get(0);
+		assertNotNull(usuario);
+		assertEquals(1, usuario.getTrabajosGradoDirigidos().size());
+	}
+	
+	@Test
+	public void test09AgregarFormacionAcademica(){
+		final FormacionAcademica fa = new FormacionAcademica()
+				.setAnio(2016)
+				.setTitulo("Titulo pregrado")
+				.setTituloTG("Titulo de TG")
+				.setUniversidad("Universidad para profesor inserted");
+		boolean res = usuarioModBean.agregarFormacionAcademica(fa, usuarioProfesor.getUsername());
+		assertTrue(res);
+		
+		Usuario usuario = ((List<Usuario>)mongoTemplate
+				.find(new Query(Criteria.where("username").is(usuarioProfesor.getUsername())), Usuario.class)).get(0);
+		assertNotNull(usuario);
+		assertEquals(1, usuario.getFormacionesAcademicas().size());
+	}
+	
+	@Test
+	public void test10EliminarAmigo(){
+		boolean res = usuarioModBean.eliminarAmigo("felipe-bautista", "minmiguelm");
+		assertFalse(res);
+		
+		res = usuarioModBean.eliminarAmigo("felipe-bautista", "pablo.gaitan");
+		assertTrue(res);
+		
+		Usuario usuario = ((List<Usuario>)mongoTemplate
+				.find(new Query(Criteria.where("username").is("pablo.gaitan")), Usuario.class)).get(0);
+		assertNotNull(usuario);
+		assertEquals(0, usuario.getAmigos().size());
 	}
 	
 	private UsuarioDTO crearUsuarioEstudiante(List<HabilidadDTO> habilidadesDto, List<Gusto> gustos) {

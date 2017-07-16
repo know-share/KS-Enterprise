@@ -16,9 +16,14 @@ import com.knowshare.enums.TipoUsuariosEnum;
 public interface UsuarioListFacade {
 	
 	boolean isUsernameTaken(String username);
+	
 	Usuario login(String username,String password);
-	boolean esSeguidor(String usernameSol,String usernameObj);
-	boolean estaSolicitud(String usernameSol,String usernameObj);
+	
+	boolean esSeguidor(Usuario uSol,Usuario uObj);
+	
+	boolean estaSolicitud(Usuario uSol,Usuario uObj);
+	
 	UsuarioDTO getUsuario(String username);
+	
 	List<UsuarioDTO> getMyNoConnections(String username,TipoUsuariosEnum tipo);
 }

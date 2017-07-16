@@ -41,7 +41,7 @@ public class IdeaModBeanTest extends AbstractTest {
 	private Idea idea;
 	
 	@Before
-	public void init(){
+	public void setup(){
 		Usuario usuario = (Usuario) mongoTemplate.findOne(new Query(
 				Criteria.where("username").is("MinMiguelM")), Usuario.class);
 		
