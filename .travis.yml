@@ -9,7 +9,8 @@ before_install:
   - echo "deb [ arch=amd64 ] http://repo.mongodb.org/apt/ubuntu precise/mongodb-org/3.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list
   - sudo apt-get update
   - sudo apt-get install -y mongodb-org
-  - sudo service mongod start
+  - mongo -version
+  - mkdir ~/data/db && mongod --dbpath ~/data/db
   - git clone --branch=$TRAVIS_BRANCH https://github.com/know-share/KS-Data.git
   - cd KS-Data && mvn install
 script: cd $TRAVIS_BUILD_DIR/ && mvn test -B
