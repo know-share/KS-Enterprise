@@ -6,6 +6,7 @@ package com.knowshare.enterprise.repository.idea;
 import org.springframework.stereotype.Repository;
 
 import com.knowshare.entities.idea.Idea;
+import com.knowshare.entities.perfilusuario.Usuario;
 
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface IdeaRepository extends MongoRepository<Idea,String>{
 	
 	@Query("{$limit: 10}")
 	public List<Idea> find10();
+	
+	public List<Idea> findIdeaByUsuario(Usuario u);
 }
