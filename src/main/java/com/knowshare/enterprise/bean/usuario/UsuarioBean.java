@@ -84,5 +84,10 @@ public class UsuarioBean implements UsuarioFacade {
 	public List<UsuarioDTO> getMyNoConnections(String username,TipoUsuariosEnum tipo) {
 		return this.usuarioListBean.getMyNoConnections(username, tipo);
 	}
+
+	@Override
+	public boolean actualizarInfoAcademica(UsuarioDTO usuario) {
+		return this.usuarioModBean.actualizarInfoAcademica(usuario);
+	}
 	
 }

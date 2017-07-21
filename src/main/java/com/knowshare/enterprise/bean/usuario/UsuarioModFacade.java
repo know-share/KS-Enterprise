@@ -28,4 +28,6 @@ public interface UsuarioModFacade {
 	boolean agregarFormacionAcademica(FormacionAcademica formacion, String username);
 	
 	boolean eliminarAmigo(String username, String usernameEliminar);
+	
+	boolean actualizarInfoAcademica(UsuarioDTO usuario);
 }
