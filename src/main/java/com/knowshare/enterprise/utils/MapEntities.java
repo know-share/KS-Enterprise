@@ -5,6 +5,7 @@ package com.knowshare.enterprise.utils;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.knowshare.dto.academia.CarreraDTO;
@@ -42,6 +43,8 @@ public class MapEntities {
 	}
 	
 	public static CarreraDTO mapCarreraToDTO(Carrera carrera){
+		if(null == carrera)
+			return null;
 		return new CarreraDTO()
 				.setFacultad(carrera.getFacultad())
 				.setNombre(carrera.getNombre())
@@ -49,14 +52,17 @@ public class MapEntities {
 	}
 	
 	public static Carrera mapDtoToCarrera(CarreraDTO dto){
-		return new Carrera().setNombre(dto.getNombre());
+		if(null != dto)
+			return new Carrera().setNombre(dto.getNombre());
+		return null;
 	}
 	
 	public static List<String> carrerasAfinesNames(List<Carrera> carreras){
 		final List<String> carrerasNames = new ArrayList<>();
-		for (Carrera carrera : carreras) {
-			carrerasNames.add(carrera.getNombre());
-		}
+		if(null != carreras)
+			for (Carrera carrera : carreras) {
+				carrerasNames.add(carrera.getNombre());
+			}
 		return carrerasNames;
 	}
 	
@@ -190,6 +196,29 @@ public class MapEntities {
 			.setInsignias(new ArrayList<>())
 			.setTrabajosGrado(new ArrayList<>())
 			.setFormacionesAcademicas(new ArrayList<>());
+		return usuario;
+	}
+	
+	public static Usuario mapDtoToUsuarioPartial(UsuarioDTO dto){
+		final List<HabilidadAval> habilidades = new ArrayList<>();
+		for (HabilidadDTO habilidad : dto.getHabilidades()) {
+			habilidades.add(mapDtoToHabilidadAval(habilidad));
+		}
+		final Usuario usuario = new Usuario()
+				.setCarreras(Arrays.asList(mapDtoToCarrera(dto.getCarrera())))
+				.setEnfasis(dto.getEnfasis())
+				.setAreasConocimiento(dto.getAreasConocimiento())
+				.setHabilidades(habilidades);
+		switch(dto.getTipoUsuario()){
+			case ESTUDIANTE:
+			case EGRESADO:
+				if(dto.getSegundaCarrera() != null){
+					usuario.getCarreras().add(mapDtoToCarrera(dto.getSegundaCarrera()));
+				}
+				break;
+			default:
+				break;
+		}
 		return usuario;
 	}
 	

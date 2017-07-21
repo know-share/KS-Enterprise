@@ -40,4 +40,6 @@ public interface UsuarioFacade {
 	boolean eliminarAmigo(String username, String usernameEliminar);
 	
 	List<UsuarioDTO> getMyNoConnections(String username,TipoUsuariosEnum tipo);
+	
+	boolean actualizarInfoAcademica(UsuarioDTO usuario);
 }

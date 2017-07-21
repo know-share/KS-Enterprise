@@ -10,6 +10,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
@@ -38,6 +42,9 @@ public class UsuarioModBean implements UsuarioModFacade {
 	
 	@Autowired
 	private UsuarioListFacade usuarioListBean;
+	
+	@Autowired
+	private MongoTemplate mongoTemplate;
 
 	@Override
 	public boolean crearUsuario(UsuarioDTO usuario) {
@@ -156,5 +163,28 @@ public class UsuarioModBean implements UsuarioModFacade {
 		if(!eliminar.getAmigos().removeIf(usu -> usu.equals(username)))
 			return false;
 		return (null != usuarioRepository.save(actual) && null != usuarioRepository.save(eliminar));
+	}
+
+	@Override
+	public boolean actualizarInfoAcademica(UsuarioDTO usuario) {
+		Update update = new Update();
+		final Query query = Query
+				.query( Criteria.where("_id").is(usuario.getId()));
+		Usuario usuarioUpdate = MapEntities.mapDtoToUsuarioPartial(usuario);
+		switch(usuario.getTipoUsuario()){
+			case ESTUDIANTE:
+				update.set("carreras", usuarioUpdate.getCarreras())
+					.set("enfasis", usuarioUpdate.getEnfasis())
+					.set("areasConocimiento", usuarioUpdate.getAreasConocimiento())
+					.set("habilidades",usuarioUpdate.getHabilidades());
+				break;
+			case PROFESOR:
+				break;
+			case EGRESADO:
+				break;
+			default:
+				break;
+		}
+		return mongoTemplate.updateFirst(query, update, Usuario.class).getN() > 0;
 	}
 }
