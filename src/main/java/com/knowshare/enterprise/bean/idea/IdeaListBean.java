@@ -40,13 +40,13 @@ public class IdeaListBean implements IdeaListFacade{
 	}
 	
 	public List<IdeaDTO> findByUsuario(String username){
-		List<IdeaDTO> ret = new ArrayList<>();
-		Usuario u = usuRep.findByUsernameIgnoreCase(username);
-		List<Idea> lista = ideaRep.findIdeaByUsuario(u);
-		for (Idea idea : lista) {
-			ret.add(MapEntities.mapIdeaToDTO(idea));
+		Usuario usu = usuRep.findByUsernameIgnoreCase(username);
+		List<Idea> idea =  ideaRep.findIdeaByUsuario(usu.getId());
+		List<IdeaDTO> dots = new ArrayList<>();
+		for (Idea ide : idea) {
+			dots.add(MapEntities.mapIdeaToDTO(ide));
 		}
-		return ret;
+		return dots;
 	}
 	
 
