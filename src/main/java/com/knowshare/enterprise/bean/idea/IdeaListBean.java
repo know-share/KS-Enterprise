@@ -40,7 +40,7 @@ public class IdeaListBean implements IdeaListFacade{
 	}
 	
 	public List<IdeaDTO> findByUsuario(String username){
-		Usuario usu = usuRep.findByUsernameIgnoreCase(username);
+		final Usuario usu = usuRep.findByUsernameIgnoreCase(username);
 		List<Idea> idea =  ideaRep.findIdeaByUsuario(usu.getId());
 		List<IdeaDTO> dots = new ArrayList<>();
 		for (Idea ide : idea) {

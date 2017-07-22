@@ -26,6 +26,7 @@ import com.knowshare.entities.perfilusuario.InfoUsuario;
 import com.knowshare.entities.perfilusuario.Usuario;
 
 /**
+ * {@link UsuarioModFacade}
  * @author miguel
  *
  */
@@ -65,14 +66,19 @@ public class UsuarioModBean implements UsuarioModFacade {
 	
 	@Override
 	public boolean seguir(String usernameSol, String usernameObj){
-		Usuario solicitante = usuarioRepository.findByUsernameIgnoreCase(usernameSol);
-		Usuario objetivo = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
+		final Usuario solicitante = usuarioRepository.findByUsernameIgnoreCase(usernameSol);
+		final Usuario objetivo = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
 		if(!usuarioListBean.esSeguidor(solicitante, objetivo)){
 			final InfoUsuario sol = new InfoUsuario()
 					.setUsername(solicitante.getUsername())
 					.setNombre(solicitante.getNombre() +" "+ solicitante.getApellido());
+			final InfoUsuario obj = new InfoUsuario()
+					.setUsername(objetivo.getUsername())
+					.setNombre(objetivo.getNombre() +" "+ objetivo.getApellido());
 			objetivo.getSeguidores().add(sol);
-			if(usuarioRepository.save(objetivo)!=null){
+			solicitante.getSiguiendo().add(obj);
+			if(usuarioRepository.save(objetivo)!=null && 
+					null != usuarioRepository.save(solicitante)){
 				return true;
 			}
 		}
@@ -80,11 +86,13 @@ public class UsuarioModBean implements UsuarioModFacade {
 	}
 	
 	public boolean dejarSeguir(String usernameSol,String usernameObj){
-		Usuario solicitante = usuarioRepository.findByUsernameIgnoreCase(usernameSol);
-		Usuario objetivo = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
+		final Usuario solicitante = usuarioRepository.findByUsernameIgnoreCase(usernameSol);
+		final Usuario objetivo = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
 		if(usuarioListBean.esSeguidor(solicitante, objetivo)){
 			objetivo.getSeguidores().removeIf(usu -> usu.equals(solicitante.getUsername()));
-			if(usuarioRepository.save(objetivo)!=null){
+			solicitante.getSiguiendo().removeIf(usu -> usu.equals(objetivo.getUsername()));
+			if(usuarioRepository.save(objetivo)!=null &&
+					null != usuarioRepository.save(solicitante)){
 				return true;
 			}
 		}
@@ -93,8 +101,8 @@ public class UsuarioModBean implements UsuarioModFacade {
 	
 	@Override
 	public boolean solicitudAmistad(String usernameSol,String usernameObj){
-		Usuario solicitante = usuarioRepository.findByUsernameIgnoreCase(usernameSol);
-		Usuario objetivo = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
+		final Usuario solicitante = usuarioRepository.findByUsernameIgnoreCase(usernameSol);
+		final Usuario objetivo = usuarioRepository.findByUsernameIgnoreCase(usernameObj);
 		if(!usuarioListBean.estaSolicitud(solicitante, objetivo)){
 			objetivo.getSolicitudesAmistad().add(solicitante.getUsername());
 			if(usuarioRepository.save(objetivo)!=null){
@@ -167,20 +175,64 @@ public class UsuarioModBean implements UsuarioModFacade {
 
 	@Override
 	public boolean actualizarInfoAcademica(UsuarioDTO usuario) {
-		Update update = new Update();
+		final Update update = new Update();
 		final Query query = Query
 				.query( Criteria.where("_id").is(usuario.getId()));
 		Usuario usuarioUpdate = MapEntities.mapDtoToUsuarioPartial(usuario);
 		switch(usuario.getTipoUsuario()){
+			case EGRESADO:
 			case ESTUDIANTE:
+			case PROFESOR:
 				update.set("carreras", usuarioUpdate.getCarreras())
 					.set("enfasis", usuarioUpdate.getEnfasis())
 					.set("areasConocimiento", usuarioUpdate.getAreasConocimiento())
 					.set("habilidades",usuarioUpdate.getHabilidades());
 				break;
-			case PROFESOR:
+			default:
 				break;
+		}
+		return mongoTemplate.updateFirst(query, update, Usuario.class).getN() > 0;
+	}
+
+	@Override
+	public boolean actualizarHabilidadCualidad(UsuarioDTO usuario) {
+		final Update update = new Update();
+		final Query query = Query
+				.query( Criteria.where("_id").is(usuario.getId()));
+		switch(usuario.getTipoUsuario()){
 			case EGRESADO:
+			case ESTUDIANTE:
+				update.set("habilidades", MapEntities
+						.mapDtosToHabilidadAval(usuario.getHabilidades()));
+				break;
+			case PROFESOR:
+				update.set("cualidadesProfesor", MapEntities
+						.mapDtosToCualidadAval(usuario.getCualidades()));
+				break;
+			default:
+				break;
+		}
+		return mongoTemplate.updateFirst(query, update, Usuario.class).getN() > 0;
+	}
+
+	@Override
+	public boolean actualizarBasis(UsuarioDTO usuario) {
+		final Update update = new Update();
+		final Query query = Query
+				.query( Criteria.where("_id").is(usuario.getId()));
+		switch(usuario.getTipoUsuario()){
+			case ESTUDIANTE:
+				update.set("nombre",usuario.getNombre())
+					.set("apellido", usuario.getApellido())
+					.set("correo", usuario.getEmail())
+					.set("semestre", usuario.getSemestre());
+				break;
+			case PROFESOR:
+				update.set("grupoInvestigacion", "-");
+			case EGRESADO:
+				update.set("nombre",usuario.getNombre())
+					.set("apellido", usuario.getApellido())
+					.set("correo", usuario.getEmail());
 				break;
 			default:
 				break;

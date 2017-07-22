@@ -12,12 +12,16 @@ import com.knowshare.entities.perfilusuario.Usuario;
 import com.knowshare.enums.TipoUsuariosEnum;
 
 /**
+ * Reune los métodos de negocio de una entidad. Operaciones de
+ * listado y de modificaciones.
  * @author miguel
  *
  */
 public interface UsuarioFacade {
 	
 	boolean isUsernameTaken(String username);
+	
+	boolean isCorreoTaken(String correo);
 	
 	boolean crearUsuario(UsuarioDTO usuario);
 	
@@ -42,4 +46,8 @@ public interface UsuarioFacade {
 	List<UsuarioDTO> getMyNoConnections(String username,TipoUsuariosEnum tipo);
 	
 	boolean actualizarInfoAcademica(UsuarioDTO usuario);
+	
+	boolean actualizarHabilidadCualidad(UsuarioDTO usuario);
+	
+	boolean actualizarBasis(UsuarioDTO usuario);
 }

@@ -22,6 +22,8 @@ public interface UsuarioRepository extends MongoRepository<Usuario, ObjectId>{
 	
 	Usuario findByUsernameIgnoreCase(String username);
 	
+	Usuario findByCorreoIgnoreCase(String correo);
+	
 	Usuario findByPasswordAndUsernameIgnoreCase(String password,String username);
 	
 	@Query("{'username':{$ne:?0},"

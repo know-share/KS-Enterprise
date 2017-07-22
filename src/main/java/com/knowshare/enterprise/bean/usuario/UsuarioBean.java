@@ -15,6 +15,7 @@ import com.knowshare.entities.perfilusuario.Usuario;
 import com.knowshare.enums.TipoUsuariosEnum;
 
 /**
+ * {@link UsuarioFacade}
  * @author miguel
  *
  */
@@ -88,6 +89,21 @@ public class UsuarioBean implements UsuarioFacade {
 	@Override
 	public boolean actualizarInfoAcademica(UsuarioDTO usuario) {
 		return this.usuarioModBean.actualizarInfoAcademica(usuario);
+	}
+
+	@Override
+	public boolean actualizarHabilidadCualidad(UsuarioDTO usuario) {
+		return this.usuarioModBean.actualizarHabilidadCualidad(usuario);
+	}
+
+	@Override
+	public boolean actualizarBasis(UsuarioDTO usuario) {
+		return this.usuarioModBean.actualizarBasis(usuario);
+	}
+
+	@Override
+	public boolean isCorreoTaken(String correo) {
+		return this.usuarioListBean.isCorreoTaken(correo);
 	}
 	
 }

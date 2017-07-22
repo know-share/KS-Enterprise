@@ -8,6 +8,8 @@ import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
 
 /**
+ * Se encarga de operaciones que hagan modificaciones sobre
+ * la entidad Usuario.
  * @author miguel
  *
  */
@@ -30,4 +32,8 @@ public interface UsuarioModFacade {
 	boolean eliminarAmigo(String username, String usernameEliminar);
 	
 	boolean actualizarInfoAcademica(UsuarioDTO usuario);
+	
+	boolean actualizarHabilidadCualidad(UsuarioDTO usuario);
+	
+	boolean actualizarBasis(UsuarioDTO usuario);
 }
