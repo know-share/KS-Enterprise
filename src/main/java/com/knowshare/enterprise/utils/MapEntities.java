@@ -5,7 +5,6 @@ package com.knowshare.enterprise.utils;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.knowshare.dto.academia.CarreraDTO;
@@ -204,8 +203,10 @@ public class MapEntities {
 		for (HabilidadDTO habilidad : dto.getHabilidades()) {
 			habilidades.add(mapDtoToHabilidadAval(habilidad));
 		}
+		final List<Carrera> carreras = new ArrayList<>();
+		carreras.add(mapDtoToCarrera(dto.getCarrera()));
 		final Usuario usuario = new Usuario()
-				.setCarreras(Arrays.asList(mapDtoToCarrera(dto.getCarrera())))
+				.setCarreras(carreras)
 				.setEnfasis(dto.getEnfasis())
 				.setAreasConocimiento(dto.getAreasConocimiento())
 				.setHabilidades(habilidades);
