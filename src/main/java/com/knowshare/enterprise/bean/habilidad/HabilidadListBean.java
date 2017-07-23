@@ -41,8 +41,8 @@ public class HabilidadListBean implements HabilidadListFacade{
 		return habilidadesDto;
 	}
 	
-	public Page<Habilidad> getAll(){
-		return habilidadRepository.findAll(new PageRequest(1, 10));
+	public Page<Habilidad> getAll(Integer page){
+		return habilidadRepository.findAll(new PageRequest(page, 10));
 	}
 
 	@Override
