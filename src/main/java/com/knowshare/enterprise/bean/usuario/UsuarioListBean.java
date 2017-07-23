@@ -97,4 +97,9 @@ public class UsuarioListBean implements UsuarioListFacade{
 		return usuarioRet;
 	}
 
+	@Override
+	public boolean isCorreoTaken(String correo) {
+		return usuarioRepository.findByCorreoIgnoreCase(correo) != null;
+	}
+
 }

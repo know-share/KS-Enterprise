@@ -17,6 +17,8 @@ public interface UsuarioListFacade {
 	
 	boolean isUsernameTaken(String username);
 	
+	boolean isCorreoTaken(String correo);
+	
 	Usuario login(String username,String password);
 	
 	boolean esSeguidor(Usuario uSol,Usuario uObj);

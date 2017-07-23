@@ -46,6 +46,12 @@
 		],
 		"amigos": [],
 		"seguidores": [],
+		"siguiendo": [
+			{
+				"username": "Felipe-Bautista",
+				"nombre": "Felipe Bautista"
+			}
+		],
 		"solicitudesAmistad": [],
 		"preferencias": {
 			"seminario": false,
@@ -110,6 +116,7 @@
 		],
 		"amigos": [],
 		"seguidores": [],
+		"siguiendo": [],
 		"solicitudesAmistad": [
 			"Felipe-Bautista"
 		],
@@ -186,6 +193,7 @@
 				"nombre": "Miguel Montañez"
 			}
 		],
+		"siguiendo": [],
 		"solicitudesAmistad": [],
 		"preferencias": {
 			"seminario": false,

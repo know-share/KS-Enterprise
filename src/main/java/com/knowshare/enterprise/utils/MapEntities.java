@@ -5,7 +5,6 @@ package com.knowshare.enterprise.utils;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.knowshare.dto.academia.CarreraDTO;
@@ -90,6 +89,20 @@ public class MapEntities {
 		return new HabilidadAval()
 				.setCantidad(habilidad.getAvales() == null ? 0 : habilidad.getAvales())
 				.setHabilidad(new Habilidad().setId(habilidad.getId()));
+	}
+	
+	public static List<HabilidadAval> mapDtosToHabilidadAval(List<HabilidadDTO> dtos){
+		final List<HabilidadAval> habilidades = new ArrayList<>();
+		for(HabilidadDTO dto: dtos)
+			habilidades.add(mapDtoToHabilidadAval(dto));
+		return habilidades;
+	}
+	
+	public static List<CualidadAval> mapDtosToCualidadAval(List<CualidadDTO> dtos){
+		final List<CualidadAval> cualidades = new ArrayList<>();
+		for(CualidadDTO dto: dtos)
+			cualidades.add(mapDtoToCualidadAval(dto));
+		return cualidades;
 	}
 	
 	public static CualidadAval mapDtoToCualidadAval(CualidadDTO cualidad){
@@ -195,6 +208,7 @@ public class MapEntities {
 			.setPersonasAvaladas(new ArrayList<>())
 			.setInsignias(new ArrayList<>())
 			.setTrabajosGrado(new ArrayList<>())
+			.setSiguiendo(new ArrayList<>())
 			.setFormacionesAcademicas(new ArrayList<>());
 		return usuario;
 	}
@@ -204,8 +218,10 @@ public class MapEntities {
 		for (HabilidadDTO habilidad : dto.getHabilidades()) {
 			habilidades.add(mapDtoToHabilidadAval(habilidad));
 		}
+		final List<Carrera> carreras = new ArrayList<>();
+		carreras.add(mapDtoToCarrera(dto.getCarrera()));
 		final Usuario usuario = new Usuario()
-				.setCarreras(Arrays.asList(mapDtoToCarrera(dto.getCarrera())))
+				.setCarreras(carreras)
 				.setEnfasis(dto.getEnfasis())
 				.setAreasConocimiento(dto.getAreasConocimiento())
 				.setHabilidades(habilidades);
@@ -272,6 +288,8 @@ public class MapEntities {
 		UsuarioDTO dto = new UsuarioDTO();
 		dto.setApellido(usuario.getApellido())
 			.setId(usuario.getId())
+			.setEmail(usuario.getCorreo())
+			.setSemestre(usuario.getSemestre())
 			.setCantidadAmigos(usuario.getAmigos().size())
 			.setCantidadSeguidores(usuario.getSeguidores().size())
 			.setCarrera(mapCarreraToDTO(usuario.getCarreras().get(0)))
@@ -286,6 +304,7 @@ public class MapEntities {
 			.setEnfasis(usuario.getEnfasis())
 			.setAmigos(usuario.getAmigos())
 			.setSeguidores(usuario.getSeguidores())
+			.setSiguiendo(usuario.getSiguiendo())
 			.setSolicitudesAmistad(usuario.getSolicitudesAmistad())
 			.setTgDirigidos(usuario.getTrabajosGradoDirigidos())
 			.setFormacionAcademica(usuario.getFormacionesAcademicas());
