@@ -22,5 +22,5 @@ public interface HabilidadFacade {
 	
 	List<HabilidadDTO> getHabilidadesProfesionales(String carrera);
 	
-	Page<Habilidad> getAll();
+	Page<Habilidad> getAll(Integer page);
 }

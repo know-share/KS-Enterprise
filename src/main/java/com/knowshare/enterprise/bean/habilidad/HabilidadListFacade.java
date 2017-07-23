@@ -24,5 +24,5 @@ public interface HabilidadListFacade {
 	 * Method not tested, this is for testing purpose
 	 * @return
 	 */
-	Page<Habilidad> getAll();
+	Page<Habilidad> getAll(Integer page);
 }
