@@ -17,7 +17,6 @@ import com.knowshare.entities.app.PreferenciasUsuario;
 import com.knowshare.entities.idea.Idea;
 import com.knowshare.entities.ludificacion.CualidadAval;
 import com.knowshare.entities.ludificacion.HabilidadAval;
-import com.knowshare.entities.perfilusuario.Amigos;
 import com.knowshare.entities.perfilusuario.Cualidad;
 import com.knowshare.entities.perfilusuario.Habilidad;
 import com.knowshare.entities.perfilusuario.Usuario;
@@ -43,6 +42,8 @@ public class MapEntities {
 	}
 	
 	public static CarreraDTO mapCarreraToDTO(Carrera carrera){
+		if(null == carrera)
+			return null;
 		return new CarreraDTO()
 				.setFacultad(carrera.getFacultad())
 				.setNombre(carrera.getNombre())
@@ -50,14 +51,17 @@ public class MapEntities {
 	}
 	
 	public static Carrera mapDtoToCarrera(CarreraDTO dto){
-		return new Carrera().setNombre(dto.getNombre());
+		if(null != dto)
+			return new Carrera().setNombre(dto.getNombre());
+		return null;
 	}
 	
 	public static List<String> carrerasAfinesNames(List<Carrera> carreras){
 		final List<String> carrerasNames = new ArrayList<>();
-		for (Carrera carrera : carreras) {
-			carrerasNames.add(carrera.getNombre());
-		}
+		if(null != carreras)
+			for (Carrera carrera : carreras) {
+				carrerasNames.add(carrera.getNombre());
+			}
 		return carrerasNames;
 	}
 	
@@ -85,6 +89,20 @@ public class MapEntities {
 		return new HabilidadAval()
 				.setCantidad(habilidad.getAvales() == null ? 0 : habilidad.getAvales())
 				.setHabilidad(new Habilidad().setId(habilidad.getId()));
+	}
+	
+	public static List<HabilidadAval> mapDtosToHabilidadAval(List<HabilidadDTO> dtos){
+		final List<HabilidadAval> habilidades = new ArrayList<>();
+		for(HabilidadDTO dto: dtos)
+			habilidades.add(mapDtoToHabilidadAval(dto));
+		return habilidades;
+	}
+	
+	public static List<CualidadAval> mapDtosToCualidadAval(List<CualidadDTO> dtos){
+		final List<CualidadAval> cualidades = new ArrayList<>();
+		for(CualidadDTO dto: dtos)
+			cualidades.add(mapDtoToCualidadAval(dto));
+		return cualidades;
 	}
 	
 	public static CualidadAval mapDtoToCualidadAval(CualidadDTO cualidad){
@@ -118,11 +136,11 @@ public class MapEntities {
 		dto.setProblematica(idea.getProblematica());
 		dto.setTags(idea.getTags());
 		dto.setTipo(idea.getTipo());
-		dto.setUsuario(mapUsuarioToDTO(idea.getUsuario()));
+		dto.setUsuario(idea.getUsuario().getUsername());
 		return dto;
 	}
 	
-	public static Idea mapDtoToIdea(IdeaDTO dto) throws NoSuchAlgorithmException{
+	public static Idea mapDtoToIdea(IdeaDTO dto,Usuario usuario) throws NoSuchAlgorithmException{
 		Idea idea = new Idea();
 		idea.setId(dto.getId());
 		idea.setAlcance(dto.getAlcance());
@@ -130,7 +148,7 @@ public class MapEntities {
 		idea.setEstado(dto.getEstado());
 		if(dto.getTipo().equals(TipoIdeaEnum.PR)){
 			for (IdeaDTO i : dto.getIdeasProyecto()) {
-				idea.getIdeasProyecto().add(mapDtoToIdea(i));
+				idea.getIdeasProyecto().add(mapDtoToIdea(i,usuario));
 			}
 		}
 		idea.setLugarEscritura(dto.getLugarEscritura());
@@ -138,7 +156,7 @@ public class MapEntities {
 		idea.setProblematica(dto.getProblematica());
 		idea.setTags(dto.getTags());
 		idea.setTipo(dto.getTipo());
-		idea.setUsuario(mapDtoToUsuario(dto.getUsuario()));
+		idea.setUsuario(usuario);
 		return idea;
 	}
 	
@@ -184,11 +202,39 @@ public class MapEntities {
 		}
 		
 		// inicializaciones
-		usuario.setAmigos(new Amigos())
-			.setSeguidores(new Amigos())
-			.setSolicitudesAmistad(new Amigos())
+		usuario.setAmigos(new ArrayList<>())
+			.setSeguidores(new ArrayList<>())
+			.setSolicitudesAmistad(new ArrayList<>())
 			.setPersonasAvaladas(new ArrayList<>())
-			.setInsignias(new ArrayList<>());
+			.setInsignias(new ArrayList<>())
+			.setTrabajosGrado(new ArrayList<>())
+			.setSiguiendo(new ArrayList<>())
+			.setFormacionesAcademicas(new ArrayList<>());
+		return usuario;
+	}
+	
+	public static Usuario mapDtoToUsuarioPartial(UsuarioDTO dto){
+		final List<HabilidadAval> habilidades = new ArrayList<>();
+		for (HabilidadDTO habilidad : dto.getHabilidades()) {
+			habilidades.add(mapDtoToHabilidadAval(habilidad));
+		}
+		final List<Carrera> carreras = new ArrayList<>();
+		carreras.add(mapDtoToCarrera(dto.getCarrera()));
+		final Usuario usuario = new Usuario()
+				.setCarreras(carreras)
+				.setEnfasis(dto.getEnfasis())
+				.setAreasConocimiento(dto.getAreasConocimiento())
+				.setHabilidades(habilidades);
+		switch(dto.getTipoUsuario()){
+			case ESTUDIANTE:
+			case EGRESADO:
+				if(dto.getSegundaCarrera() != null){
+					usuario.getCarreras().add(mapDtoToCarrera(dto.getSegundaCarrera()));
+				}
+				break;
+			default:
+				break;
+		}
 		return usuario;
 	}
 	
@@ -242,8 +288,10 @@ public class MapEntities {
 		UsuarioDTO dto = new UsuarioDTO();
 		dto.setApellido(usuario.getApellido())
 			.setId(usuario.getId())
-			.setCantidadAmigos(usuario.getAmigos().getCantidad())
-			.setCantidadSeguidores(usuario.getSeguidores().getCantidad())
+			.setEmail(usuario.getCorreo())
+			.setSemestre(usuario.getSemestre())
+			.setCantidadAmigos(usuario.getAmigos().size())
+			.setCantidadSeguidores(usuario.getSeguidores().size())
 			.setCarrera(mapCarreraToDTO(usuario.getCarreras().get(0)))
 			.setUsername(usuario.getUsername())
 			.setTipoUsuario(usuario.getTipo())
@@ -253,12 +301,19 @@ public class MapEntities {
 			.setAreasConocimiento(usuario.getAreasConocimiento())
 			.setSeminario(usuario.getPreferencias().isSeminario())
 			.setTemaTG(usuario.getPreferencias().isTemaTG())
-			.setEnfasis(usuario.getEnfasis());
+			.setEnfasis(usuario.getEnfasis())
+			.setAmigos(usuario.getAmigos())
+			.setSeguidores(usuario.getSeguidores())
+			.setSiguiendo(usuario.getSiguiendo())
+			.setSolicitudesAmistad(usuario.getSolicitudesAmistad())
+			.setTgDirigidos(usuario.getTrabajosGradoDirigidos())
+			.setFormacionAcademica(usuario.getFormacionesAcademicas());
 		switch(usuario.getTipo()){
 			case PROFESOR:
 				dto.setCualidades(mapAvalesCualidad(usuario.getCualidadesProfesor()));
 				break;
 			case ESTUDIANTE:
+				dto.setGustos(usuario.getGustos());
 			case EGRESADO:
 				if(usuario.getCarreras().size() > 1)
 					dto.setSegundaCarrera(mapCarreraToDTO(usuario.getCarreras().get(1)));
