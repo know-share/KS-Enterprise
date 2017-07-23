@@ -15,7 +15,9 @@ import com.knowshare.enterprise.repository.idea.IdeaRepository;
 import com.knowshare.enterprise.repository.perfilusuario.UsuarioRepository;
 import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.idea.Idea;
+import com.knowshare.entities.idea.OperacionIdea;
 import com.knowshare.entities.perfilusuario.Usuario;
+import com.knowshare.enums.TipoOperacionEnum;
 
 /**
  * @author pablo
@@ -48,6 +50,18 @@ public class IdeaListBean implements IdeaListFacade{
 		}
 		return dots;
 	}
+	
+	public OperacionIdea isLight(Idea idea, String username){
+		for (OperacionIdea o : idea.getOperaciones()) {
+			if(o.getTipo().equals(TipoOperacionEnum.LIGHT))
+				if(o.getUsername().equals(username))
+					return o;
+		}
+		return null;
+	}
+
+
+
 	
 
 }

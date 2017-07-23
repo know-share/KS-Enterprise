@@ -25,7 +25,7 @@ public class IdeaBean implements IdeaFacade{
 	@Autowired
 	private IdeaListFacade ideaList;
 	
-	public Idea agregarOperacion(IdeaDTO dto, OperacionIdea operacion){
+	public IdeaDTO agregarOperacion(IdeaDTO dto, OperacionIdea operacion){
 		return ideaMod.agregarOperacion(dto, operacion);
 	}
 	
@@ -40,4 +40,6 @@ public class IdeaBean implements IdeaFacade{
 	public List<IdeaDTO> findByUsuario(String username){
 		return ideaList.findByUsuario(username);
 	}
+	
+	
 }

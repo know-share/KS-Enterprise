@@ -15,5 +15,5 @@ public interface IdeaModFacade {
 	
 	IdeaDTO crearIdea(IdeaDTO dto);
 	
-	Idea agregarOperacion(IdeaDTO dto, OperacionIdea operacion);
+	IdeaDTO agregarOperacion(IdeaDTO dto, OperacionIdea operacion);
 }

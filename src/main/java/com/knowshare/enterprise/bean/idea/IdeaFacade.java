@@ -16,7 +16,7 @@ import com.knowshare.entities.idea.OperacionIdea;
 public interface IdeaFacade {
 	
 	IdeaDTO crearIdea(IdeaDTO dto);
-	Idea agregarOperacion(IdeaDTO dto, OperacionIdea operacion);
+	IdeaDTO agregarOperacion(IdeaDTO dto, OperacionIdea operacion);
 	List<IdeaDTO> find10();
 	List<IdeaDTO> findByUsuario(String username);
 }
