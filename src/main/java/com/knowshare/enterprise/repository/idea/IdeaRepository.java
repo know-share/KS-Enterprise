@@ -21,8 +21,8 @@ import org.springframework.data.mongodb.repository.Query;
 @Repository
 public interface IdeaRepository extends MongoRepository<Idea,ObjectId>{
 	
-	@Query("{$limit: 10}")
-	List<Idea> find10();
+	//@Query("{$limit: 10}")
+	List<Idea> findAll();
 	
 	@Query("{'usuario.$id' : ?0}")
 	List<Idea> findIdeaByUsuario(ObjectId username);

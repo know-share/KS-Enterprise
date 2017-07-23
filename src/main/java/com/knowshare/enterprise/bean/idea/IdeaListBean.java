@@ -32,7 +32,7 @@ public class IdeaListBean implements IdeaListFacade{
 	
 	public List<IdeaDTO> find10(){
 		List<IdeaDTO> ret = new ArrayList<>();
-		List<Idea> lista = ideaRep.find10();
+		List<Idea> lista = ideaRep.findAll();
 		for (Idea idea : lista) {
 			ret.add(MapEntities.mapIdeaToDTO(idea));
 		}
