@@ -30,6 +30,8 @@ import com.knowshare.enterprise.bean.gusto.GustoListBean;
 import com.knowshare.enterprise.bean.gusto.GustoListFacade;
 import com.knowshare.enterprise.bean.habilidad.HabilidadListBean;
 import com.knowshare.enterprise.bean.habilidad.HabilidadListFacade;
+import com.knowshare.enterprise.bean.idea.IdeaListBean;
+import com.knowshare.enterprise.bean.idea.IdeaListFacade;
 import com.knowshare.enterprise.bean.idea.IdeaModBean;
 import com.knowshare.enterprise.bean.idea.IdeaModFacade;
 import com.knowshare.enterprise.bean.personalidad.PersonalidadListBean;
@@ -107,6 +109,11 @@ public class ConfigContext {
 	@Bean
 	public IdeaModFacade getIdeaModFacade() {
 		return new IdeaModBean();
+	}
+	
+	@Bean
+	public IdeaListFacade getIdeaListFacade(){
+		return new IdeaListBean();
 	}
 	
 	@Bean
