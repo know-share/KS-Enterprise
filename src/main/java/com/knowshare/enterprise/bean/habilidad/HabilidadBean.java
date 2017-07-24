@@ -35,8 +35,8 @@ public class HabilidadBean implements HabilidadFacade{
 		return habilidadListBean.getHabilidades(carrera);
 	}
 	
-	public Page<Habilidad> getAll(){
-		return habilidadListBean.getAll();
+	public Page<Habilidad> getAll(Integer page){
+		return habilidadListBean.getAll(page);
 	}
 
 	@Override

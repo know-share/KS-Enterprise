@@ -30,6 +30,8 @@ import com.knowshare.enterprise.bean.gusto.GustoListBean;
 import com.knowshare.enterprise.bean.gusto.GustoListFacade;
 import com.knowshare.enterprise.bean.habilidad.HabilidadListBean;
 import com.knowshare.enterprise.bean.habilidad.HabilidadListFacade;
+import com.knowshare.enterprise.bean.idea.IdeaListBean;
+import com.knowshare.enterprise.bean.idea.IdeaListFacade;
 import com.knowshare.enterprise.bean.idea.IdeaModBean;
 import com.knowshare.enterprise.bean.idea.IdeaModFacade;
 import com.knowshare.enterprise.bean.personalidad.PersonalidadListBean;
@@ -85,6 +87,10 @@ public class ConfigContext {
 		this.mongoTemplate().insertAll(Arrays.asList(gustos));
 		this.mongoTemplate().insertAll(Arrays.asList(personalidades));
 		this.mongoTemplate().insertAll(Arrays.asList(usuarios));
+		
+		String command = "mongodump --host " +env.getProperty("db.host") + " --port " + env.getProperty("db.port")
+	            + " -d " + env.getProperty("db.name") +" -o \""+ ResourceUtils.getURL("classpath:").getPath() +"\"";
+		Runtime.getRuntime().exec(command);
 	}
 	
 	@Bean
@@ -103,6 +109,11 @@ public class ConfigContext {
 	@Bean
 	public IdeaModFacade getIdeaModFacade() {
 		return new IdeaModBean();
+	}
+	
+	@Bean
+	public IdeaListFacade getIdeaListFacade(){
+		return new IdeaListBean();
 	}
 	
 	@Bean
@@ -136,7 +147,7 @@ public class ConfigContext {
 	}
 	
 	@PreDestroy
-	public void destroy(){
+	public void destroy() throws IOException{
 		this.mongoTemplate().getDb().dropDatabase();
 	}
 }

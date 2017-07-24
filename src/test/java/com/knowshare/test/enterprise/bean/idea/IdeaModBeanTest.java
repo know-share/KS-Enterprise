@@ -17,7 +17,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import com.knowshare.dto.idea.IdeaDTO;
-import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.enterprise.bean.idea.IdeaModFacade;
 import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.idea.Idea;
@@ -42,11 +41,9 @@ public class IdeaModBeanTest extends AbstractTest {
 	private Idea idea;
 	
 	@Before
-	public void init(){
+	public void setup(){
 		Usuario usuario = (Usuario) mongoTemplate.findOne(new Query(
 				Criteria.where("username").is("MinMiguelM")), Usuario.class);
-		UsuarioDTO usuarioDto = MapEntities
-				.mapUsuarioToDTO(usuario);
 		
 		dto = new IdeaDTO()
 				.setAlcance("alcance")
@@ -56,7 +53,7 @@ public class IdeaModBeanTest extends AbstractTest {
 				.setLights(0L)
 				.setNumeroEstudiantes(0)
 				.setProblematica("problematica")
-				.setUsuario(usuarioDto)
+				.setUsuario("MinMiguelM")
 				.setTipo(TipoIdeaEnum.PC);
 		
 		idea = new Idea()
@@ -73,7 +70,8 @@ public class IdeaModBeanTest extends AbstractTest {
 	
 	@Test
 	public void test01CrearIdea() throws Exception{
-		Idea ideaNueva = ideaModBean.crearIdea(dto);
+		
+		IdeaDTO ideaNueva = ideaModBean.crearIdea(dto);
 		
 		assertNotNull(ideaNueva);
 		assertNotNull(ideaNueva.getId());

@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,5 +28,9 @@ public class PersonalidadListBeanTest extends AbstractTest{
 	public void test01GetAllPersonalidades(){
 		List<Personalidad> personalidades = personalidadListBean.getAllPersonalidades();
 		assertEquals(16, personalidades.size());
+	}
+	
+	@AfterClass
+	public static void tearDown(){
 	}
 }
