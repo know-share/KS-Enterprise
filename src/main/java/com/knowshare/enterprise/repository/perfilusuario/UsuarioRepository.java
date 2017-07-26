@@ -28,7 +28,8 @@ public interface UsuarioRepository extends MongoRepository<Usuario, ObjectId>{
 	@Query("{'username':{$ne:?0},"
 			+ "'seguidores.username':{$ne:?0},"
 			+ "'amigos.username':{$ne:?0},"
-			+ "'solicitudesAmistad':{$ne:?0}}")
+			+ "'solicitudesAmistad':{$ne:?0},"
+			+ "'tipo':{$ne:'ADMIN'}}")
 	List<Usuario> findMyNoConnections(String username);
 
 }
