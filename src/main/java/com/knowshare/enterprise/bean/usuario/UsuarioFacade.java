@@ -9,7 +9,6 @@ import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
 import com.knowshare.entities.perfilusuario.Usuario;
-import com.knowshare.enums.TipoUsuariosEnum;
 
 /**
  * Reune los métodos de negocio de una entidad. Operaciones de
@@ -43,7 +42,7 @@ public interface UsuarioFacade {
 	
 	boolean eliminarAmigo(String username, String usernameEliminar);
 	
-	List<UsuarioDTO> getMyNoConnections(String username,TipoUsuariosEnum tipo);
+	List<UsuarioDTO> getMyNoConnections(String username);
 	
 	boolean actualizarInfoAcademica(UsuarioDTO usuario);
 	

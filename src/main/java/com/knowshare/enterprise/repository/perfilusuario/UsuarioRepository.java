@@ -11,7 +11,6 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.knowshare.entities.perfilusuario.Usuario;
-import com.knowshare.enums.TipoUsuariosEnum;
 
 /**
  * @author miguel
@@ -29,7 +28,7 @@ public interface UsuarioRepository extends MongoRepository<Usuario, ObjectId>{
 	@Query("{'username':{$ne:?0},"
 			+ "'seguidores.username':{$ne:?0},"
 			+ "'amigos.username':{$ne:?0},"
-			+ "'tipo':?1}")
-	List<Usuario> findMyNoConnections(String username,TipoUsuariosEnum tipo);
+			+ "'solicitudesAmistad':{$ne:?0}}")
+	List<Usuario> findMyNoConnections(String username);
 
 }

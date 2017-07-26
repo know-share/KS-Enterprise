@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.entities.perfilusuario.Usuario;
-import com.knowshare.enums.TipoUsuariosEnum;
 
 /**
  * @author miguel
@@ -27,5 +26,5 @@ public interface UsuarioListFacade {
 	
 	UsuarioDTO getUsuario(String username);
 	
-	List<UsuarioDTO> getMyNoConnections(String username,TipoUsuariosEnum tipo);
+	List<UsuarioDTO> getMyNoConnections(String username);
 }

@@ -16,7 +16,6 @@ import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.enterprise.utils.UtilsPassword;
 import com.knowshare.entities.perfilusuario.InfoUsuario;
 import com.knowshare.entities.perfilusuario.Usuario;
-import com.knowshare.enums.TipoUsuariosEnum;
 
 /**
  * @author miguel
@@ -89,8 +88,8 @@ public class UsuarioListBean implements UsuarioListFacade{
 	 * este es sacado del token.
 	 */
 	@Override
-	public List<UsuarioDTO> getMyNoConnections(String username,TipoUsuariosEnum tipo) {
-		final List<Usuario> usuarios = usuarioRepository.findMyNoConnections(username,tipo);
+	public List<UsuarioDTO> getMyNoConnections(String username) {
+		final List<Usuario> usuarios = usuarioRepository.findMyNoConnections(username);
 		final List<UsuarioDTO> usuarioRet = new ArrayList<>();
 		for (Usuario usuario : usuarios)
 			usuarioRet.add(MapEntities.mapUsuarioToDTO(usuario));

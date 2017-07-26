@@ -12,7 +12,6 @@ import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
 import com.knowshare.entities.perfilusuario.Usuario;
-import com.knowshare.enums.TipoUsuariosEnum;
 
 /**
  * {@link UsuarioFacade}
@@ -82,8 +81,8 @@ public class UsuarioBean implements UsuarioFacade {
 	}
 
 	@Override
-	public List<UsuarioDTO> getMyNoConnections(String username,TipoUsuariosEnum tipo) {
-		return this.usuarioListBean.getMyNoConnections(username, tipo);
+	public List<UsuarioDTO> getMyNoConnections(String username) {
+		return this.usuarioListBean.getMyNoConnections(username);
 	}
 
 	@Override

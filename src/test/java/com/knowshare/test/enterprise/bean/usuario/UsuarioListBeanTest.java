@@ -20,7 +20,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.enterprise.bean.usuario.UsuarioListFacade;
 import com.knowshare.entities.perfilusuario.Usuario;
-import com.knowshare.enums.TipoUsuariosEnum;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
 /**
@@ -123,17 +122,17 @@ public class UsuarioListBeanTest extends AbstractTest{
 	
 	@Test
 	public void test06GetMyNoConnections(){
-		List<UsuarioDTO> noConnections = usuarioListBean.getMyNoConnections("MinMiguelM",TipoUsuariosEnum.ESTUDIANTE);
+		List<UsuarioDTO> noConnections = usuarioListBean.getMyNoConnections("MinMiguelM");
 		assertNotNull(noConnections);
 		assertEquals(1, noConnections.size());
 		
-		noConnections = usuarioListBean.getMyNoConnections("pablo.gaitan",TipoUsuariosEnum.ESTUDIANTE);
+		noConnections = usuarioListBean.getMyNoConnections("pablo.gaitan");
 		assertNotNull(noConnections);
 		assertEquals(2, noConnections.size());
 		
-		noConnections = usuarioListBean.getMyNoConnections("Felipe-Bautista",TipoUsuariosEnum.ESTUDIANTE);
+		noConnections = usuarioListBean.getMyNoConnections("Felipe-Bautista");
 		assertNotNull(noConnections);
-		assertEquals(2, noConnections.size());
+		assertEquals(1, noConnections.size());
 	}
 	
 	@AfterClass
