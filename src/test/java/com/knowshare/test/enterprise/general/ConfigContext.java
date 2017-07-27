@@ -89,7 +89,7 @@ public class ConfigContext {
 		this.mongoTemplate().insertAll(Arrays.asList(usuarios));
 		
 		String command = "mongodump --host " +env.getProperty("db.host") + " --port " + env.getProperty("db.port")
-	            + " -d " + env.getProperty("db.name") +" -o \""+ ResourceUtils.getURL("classpath:").getPath() +"\"";
+	            + " -d " + env.getProperty("db.name") +" -o \"./target/\"";
 		Runtime.getRuntime().exec(command);
 	}
 	
