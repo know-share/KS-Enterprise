@@ -19,7 +19,7 @@ import org.springframework.data.mongodb.repository.Query;
  *
  */
 @Repository
-public interface IdeaRepository extends MongoRepository<Idea,ObjectId>{
+public interface IdeaRepository extends MongoRepository<Idea,String>{
 	
 	//@Query("{$limit: 10}")
 	List<Idea> findAll();

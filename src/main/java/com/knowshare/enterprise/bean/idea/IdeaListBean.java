@@ -7,6 +7,7 @@ package com.knowshare.enterprise.bean.idea;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,11 +33,17 @@ public class IdeaListBean implements IdeaListFacade{
 	@Autowired
 	private UsuarioRepository usuRep;
 	
-	public List<IdeaDTO> find10(){
+	public List<IdeaDTO> find10(String username){
 		List<IdeaDTO> ret = new ArrayList<>();
 		List<Idea> lista = ideaRep.findAll();
+		IdeaDTO dto = new IdeaDTO();
 		for (Idea idea : lista) {
-			ret.add(MapEntities.mapIdeaToDTO(idea));
+			dto = MapEntities.mapIdeaToDTO(idea);
+			if(isLight(idea, username)!=null)
+				dto.setIsLight(true);
+			else
+				dto.setIsLight(false);
+			ret.add(dto);
 		}
 		return ret;
 	}
@@ -45,8 +52,14 @@ public class IdeaListBean implements IdeaListFacade{
 		final Usuario usu = usuRep.findByUsernameIgnoreCase(username);
 		List<Idea> idea =  ideaRep.findIdeaByUsuario(usu.getId());
 		List<IdeaDTO> dots = new ArrayList<>();
+		IdeaDTO dto = new IdeaDTO();
 		for (Idea ide : idea) {
-			dots.add(MapEntities.mapIdeaToDTO(ide));
+			dto = MapEntities.mapIdeaToDTO(ide);
+			if(isLight(ide, username)!=null)
+				dto.setIsLight(true);
+			else
+				dto.setIsLight(false);
+			dots.add(dto);
 		}
 		return dots;
 	}
@@ -54,14 +67,24 @@ public class IdeaListBean implements IdeaListFacade{
 	public OperacionIdea isLight(Idea idea, String username){
 		for (OperacionIdea o : idea.getOperaciones()) {
 			if(o.getTipo().equals(TipoOperacionEnum.LIGHT))
-				if(o.getUsername().equals(username))
+				if(o.getUsername().equalsIgnoreCase(username))
 					return o;
 		}
 		return null;
 	}
 
-
-
+	@Override
+	public IdeaDTO findById(String id, String username) {
+		Idea idea = ideaRep.findOne(id);
+		IdeaDTO dto = MapEntities.mapIdeaToDTO(idea);
+		if(isLight(idea, username)!=null)
+			dto.setIsLight(true);
+		else
+			dto.setIsLight(false);
+		return dto;
+	}
+	
+	
 	
 
 }

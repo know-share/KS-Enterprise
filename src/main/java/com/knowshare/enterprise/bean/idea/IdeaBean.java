@@ -5,6 +5,7 @@ package com.knowshare.enterprise.bean.idea;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,12 +33,17 @@ public class IdeaBean implements IdeaFacade{
 		return ideaMod.crearIdea(dto);
 	}
 	
-	public List<IdeaDTO> find10(){
-		return ideaList.find10();
+	public List<IdeaDTO> find10(String username){
+		return ideaList.find10(username);
 	}
 	
 	public List<IdeaDTO> findByUsuario(String username){
 		return ideaList.findByUsuario(username);
+	}
+
+	@Override
+	public IdeaDTO findById(String id, String username) {
+		return ideaList.findById(id, username);
 	}
 	
 	
