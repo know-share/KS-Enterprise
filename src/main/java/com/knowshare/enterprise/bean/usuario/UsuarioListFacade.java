@@ -27,4 +27,6 @@ public interface UsuarioListFacade {
 	UsuarioDTO getUsuario(String username);
 	
 	List<UsuarioDTO> getMyNoConnections(String username);
+	
+	List<UsuarioDTO> buscarPorNombre(UsuarioDTO usuarioActual,String param);
 }

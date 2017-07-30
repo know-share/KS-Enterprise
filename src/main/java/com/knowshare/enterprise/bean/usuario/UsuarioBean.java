@@ -104,5 +104,10 @@ public class UsuarioBean implements UsuarioFacade {
 	public boolean isCorreoTaken(String correo) {
 		return this.usuarioListBean.isCorreoTaken(correo);
 	}
+
+	@Override
+	public List<UsuarioDTO> buscarPorNombre(UsuarioDTO usuarioActual, String param) {
+		return this.usuarioListBean.buscarPorNombre(usuarioActual,param);
+	}
 	
 }

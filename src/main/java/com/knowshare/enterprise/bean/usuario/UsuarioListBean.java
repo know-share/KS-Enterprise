@@ -101,4 +101,14 @@ public class UsuarioListBean implements UsuarioListFacade{
 		return usuarioRepository.findByCorreoIgnoreCase(correo) != null;
 	}
 
+	@Override
+	public List<UsuarioDTO> buscarPorNombre(UsuarioDTO usuarioActual, String param) {
+		final List<Usuario> usuarios = usuarioRepository.searchByNombreOrApellido(param);
+		final List<UsuarioDTO> usuarioRet = new ArrayList<>();
+		for (Usuario usuario : usuarios)
+			if(!usuario.getUsername().equalsIgnoreCase(usuarioActual.getUsername()))
+				usuarioRet.add(MapEntities.mapUsuarioToDTO(usuario));
+		return usuarioRet;
+	}
+
 }

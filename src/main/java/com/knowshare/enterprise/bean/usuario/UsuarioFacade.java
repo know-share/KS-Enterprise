@@ -49,4 +49,6 @@ public interface UsuarioFacade {
 	boolean actualizarHabilidadCualidad(UsuarioDTO usuario);
 	
 	boolean actualizarBasis(UsuarioDTO usuario);
+	
+	List<UsuarioDTO> buscarPorNombre(UsuarioDTO usuarioActual,String param);
 }

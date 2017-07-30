@@ -13,7 +13,9 @@ import org.springframework.stereotype.Repository;
 import com.knowshare.entities.perfilusuario.Usuario;
 
 /**
- * @author miguel
+ * Repositorio de usuario. Permite consultas y operaciones
+ * con la entidad {@link Usuario} ante la base de datos.
+ * @author Miguel Montañez
  *
  */
 @Repository
@@ -31,5 +33,8 @@ public interface UsuarioRepository extends MongoRepository<Usuario, ObjectId>{
 			+ "'solicitudesAmistad':{$ne:?0},"
 			+ "'tipo':{$ne:'ADMIN'}}")
 	List<Usuario> findMyNoConnections(String username);
+	
+	@Query("{$text:{$search:?0,$diacriticSensitive:false}}")
+	List<Usuario> searchByNombreOrApellido(String param);
 
 }

@@ -5,7 +5,6 @@ package com.knowshare.enterprise.bean.idea;
 
 import java.util.List;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +12,7 @@ import com.knowshare.dto.idea.IdeaDTO;
 import com.knowshare.entities.idea.OperacionIdea;
 
 /**
- * @author pablo
+ * @author Pablo Gaitan
  *
  */
 @Component
