@@ -36,5 +36,4 @@ public interface UsuarioRepository extends MongoRepository<Usuario, ObjectId>{
 	
 	@Query("{$text:{$search:?0,$diacriticSensitive:false}}")
 	List<Usuario> searchByNombreOrApellido(String param);
-
 }

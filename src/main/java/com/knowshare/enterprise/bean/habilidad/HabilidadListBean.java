@@ -3,9 +3,14 @@ package com.knowshare.enterprise.bean.habilidad;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.perfilusuario.HabilidadDTO;
@@ -13,9 +18,13 @@ import com.knowshare.enterprise.repository.perfilusuario.HabilidadRepository;
 import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.perfilusuario.Habilidad;
 
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.match;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.project;
+
 /**
  * 
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 @Component
@@ -23,6 +32,9 @@ public class HabilidadListBean implements HabilidadListFacade{
 	
 	@Autowired
 	private HabilidadRepository habilidadRepository;
+	
+	@Autowired
+	private MongoTemplate mongoTemplate;
 	
 	public Habilidad findOne(String nombre){
 		return habilidadRepository.findByNombre(nombre);
@@ -56,5 +68,18 @@ public class HabilidadListBean implements HabilidadListFacade{
 			habilidadesDto.add(MapEntities.mapHabilidadToDTO(habilidad));
 		}
 		return habilidadesDto;
+	}
+
+	@Override
+	public List<ObjectId> buscarPorNombre(String nombre) {
+		final Aggregation agg = newAggregation(
+					match(TextCriteria.forDefaultLanguage().matching(nombre)),
+					project("id")
+				);
+		AggregationResults<HabilidadDTO> result = mongoTemplate
+				.aggregate(agg, Habilidad.class, HabilidadDTO.class);
+		final List<ObjectId> ids = new ArrayList<>();
+		result.getMappedResults().forEach(r -> ids.add(r.getId()));
+		return ids;
 	}
 }

@@ -4,6 +4,7 @@
 package com.knowshare.enterprise.bean.usuario;
 
 import java.util.List;
+import java.util.Map;
 
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.entities.academia.FormacionAcademica;
@@ -51,4 +52,7 @@ public interface UsuarioFacade {
 	boolean actualizarBasis(UsuarioDTO usuario);
 	
 	List<UsuarioDTO> buscarPorNombre(UsuarioDTO usuarioActual,String param);
+	
+	@SuppressWarnings("rawtypes")
+	List<Map> buscarPorHabilidad(UsuarioDTO usuarioActual, String param);
 }

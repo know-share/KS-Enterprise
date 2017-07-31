@@ -28,8 +28,12 @@ import com.knowshare.enterprise.bean.cualidad.CualidadListBean;
 import com.knowshare.enterprise.bean.cualidad.CualidadListFacade;
 import com.knowshare.enterprise.bean.gusto.GustoListBean;
 import com.knowshare.enterprise.bean.gusto.GustoListFacade;
+import com.knowshare.enterprise.bean.habilidad.HabilidadBean;
+import com.knowshare.enterprise.bean.habilidad.HabilidadFacade;
 import com.knowshare.enterprise.bean.habilidad.HabilidadListBean;
 import com.knowshare.enterprise.bean.habilidad.HabilidadListFacade;
+import com.knowshare.enterprise.bean.habilidad.HabilidadModBean;
+import com.knowshare.enterprise.bean.habilidad.HabilidadModFacade;
 import com.knowshare.enterprise.bean.idea.IdeaListBean;
 import com.knowshare.enterprise.bean.idea.IdeaListFacade;
 import com.knowshare.enterprise.bean.idea.IdeaModBean;
@@ -104,6 +108,16 @@ public class ConfigContext {
 	@Bean
 	public HabilidadListFacade getHabilidadListFacade() {
 		return new HabilidadListBean();
+	}
+	
+	@Bean
+	public HabilidadModFacade getHabilidadModFacade() {
+		return new HabilidadModBean();
+	}
+	
+	@Bean
+	public HabilidadFacade getHabilidadFacade(){
+		return new HabilidadBean();
 	}
 
 	@Bean
