@@ -6,19 +6,33 @@ package com.knowshare.enterprise.bean.usuario;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
+import com.knowshare.enterprise.bean.habilidad.HabilidadFacade;
 import com.knowshare.enterprise.repository.perfilusuario.UsuarioRepository;
 import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.enterprise.utils.UtilsPassword;
 import com.knowshare.entities.perfilusuario.InfoUsuario;
 import com.knowshare.entities.perfilusuario.Usuario;
 
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.group;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.match;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.sort;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.unwind;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+
 /**
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 @Component
@@ -26,6 +40,12 @@ public class UsuarioListBean implements UsuarioListFacade{
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private HabilidadFacade habilidadBean;
+	
+	@Autowired
+	private MongoTemplate mongoTemplate;
 
 	@Override
 	public boolean isUsernameTaken(String username) {
@@ -99,6 +119,50 @@ public class UsuarioListBean implements UsuarioListFacade{
 	@Override
 	public boolean isCorreoTaken(String correo) {
 		return usuarioRepository.findByCorreoIgnoreCase(correo) != null;
+	}
+
+	@Override
+	public List<UsuarioDTO> buscarPorNombre(UsuarioDTO usuarioActual, String param) {
+		final List<Usuario> usuarios = usuarioRepository.searchByNombreOrApellido(param);
+		final List<UsuarioDTO> usuarioRet = new ArrayList<>();
+		for (Usuario usuario : usuarios)
+			if(!usuario.getUsername().equalsIgnoreCase(usuarioActual.getUsername()))
+				usuarioRet.add(MapEntities.mapUsuarioToDTO(usuario));
+		return usuarioRet;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public List<Map> buscarPorHabilidad(String param){
+		final List<ObjectId> idsHabilidades = habilidadBean.buscarPorNombre(param);
+		
+		final Aggregation agg = newAggregation(
+					unwind("habilidades"),
+					match(where("habilidades.habilidad.$id").in(idsHabilidades)),
+					group("username","nombre","apellido","carreras")
+						.max("habilidades.cantidad").as("maximo"),
+					sort(Sort.Direction.DESC,"maximo")
+				);
+		
+		AggregationResults<Map> result = 
+				mongoTemplate.aggregate(agg, Usuario.class, Map.class);
+		
+		return result.getMappedResults();
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public List<Map> buscarPorAreaConocimiento( String param){
+		final Aggregation agg = newAggregation(
+				unwind("areasConocimiento"),
+				match(where("areasConocimiento.nombre").regex(param,"i")),
+				group("username","nombre","apellido","carreras")
+					.max("areasConocimiento.porcentaje").as("maximo"),
+				sort(Sort.Direction.DESC,"maximo")
+			);
+	
+		AggregationResults<Map> result = 
+				mongoTemplate.aggregate(agg, Usuario.class, Map.class);
+		
+		return result.getMappedResults();
 	}
 
 }

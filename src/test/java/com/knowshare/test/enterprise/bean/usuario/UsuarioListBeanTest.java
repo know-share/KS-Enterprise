@@ -23,7 +23,7 @@ import com.knowshare.entities.perfilusuario.Usuario;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
 /**
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 public class UsuarioListBeanTest extends AbstractTest{

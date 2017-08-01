@@ -71,10 +71,12 @@ public class UsuarioModBean implements UsuarioModFacade {
 		if(!usuarioListBean.esSeguidor(solicitante, objetivo)){
 			final InfoUsuario sol = new InfoUsuario()
 					.setUsername(solicitante.getUsername())
-					.setNombre(solicitante.getNombre() +" "+ solicitante.getApellido());
+					.setNombre(solicitante.getNombre() +" "+ solicitante.getApellido())
+					.setCarrera(solicitante.getCarreras().get(0).getNombre());
 			final InfoUsuario obj = new InfoUsuario()
 					.setUsername(objetivo.getUsername())
-					.setNombre(objetivo.getNombre() +" "+ objetivo.getApellido());
+					.setNombre(objetivo.getNombre() +" "+ objetivo.getApellido())
+					.setCarrera(objetivo.getCarreras().get(0).getNombre());
 			objetivo.getSeguidores().add(sol);
 			solicitante.getSiguiendo().add(obj);
 			if(usuarioRepository.save(objetivo)!=null && 
@@ -122,10 +124,12 @@ public class UsuarioModBean implements UsuarioModFacade {
 		if(action.equalsIgnoreCase("accept")){
 			final InfoUsuario obj = new InfoUsuario()
 					.setUsername(objetivo.getUsername())
-					.setNombre(objetivo.getNombre() +" "+objetivo.getApellido());
+					.setNombre(objetivo.getNombre() +" "+objetivo.getApellido())
+					.setCarrera(objetivo.getCarreras().get(0).getNombre());
 			final InfoUsuario act = new InfoUsuario()
 					.setUsername(actual.getUsername())
-					.setNombre(actual.getNombre()+" "+actual.getApellido());
+					.setNombre(actual.getNombre()+" "+actual.getApellido())
+					.setCarrera(actual.getCarreras().get(0).getNombre());
 			actual.getAmigos().add(obj);
 			objetivo.getAmigos().add(act);
 			if(usuarioRepository.save(actual) != null && null != usuarioRepository.save(objetivo))
@@ -228,7 +232,7 @@ public class UsuarioModBean implements UsuarioModFacade {
 					.set("semestre", usuario.getSemestre());
 				break;
 			case PROFESOR:
-				update.set("grupoInvestigacion", "-");
+				update.set("grupoInvestigacion", usuario.getGrupoInvestigacion());
 			case EGRESADO:
 				update.set("nombre",usuario.getNombre())
 					.set("apellido", usuario.getApellido())

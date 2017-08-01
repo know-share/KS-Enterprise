@@ -4,6 +4,7 @@
 package com.knowshare.enterprise.bean.usuario;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -103,6 +104,23 @@ public class UsuarioBean implements UsuarioFacade {
 	@Override
 	public boolean isCorreoTaken(String correo) {
 		return this.usuarioListBean.isCorreoTaken(correo);
+	}
+
+	@Override
+	public List<UsuarioDTO> buscarPorNombre(UsuarioDTO usuarioActual, String param) {
+		return this.usuarioListBean.buscarPorNombre(usuarioActual,param);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public List<Map> buscarPorHabilidad(String param) {
+		return this.usuarioListBean.buscarPorHabilidad(param);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public List<Map> buscarPorAreaConocimiento(String param) {
+		return this.usuarioListBean.buscarPorAreaConocimiento(param);
 	}
 	
 }

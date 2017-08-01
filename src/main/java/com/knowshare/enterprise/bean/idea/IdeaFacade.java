@@ -5,13 +5,11 @@ package com.knowshare.enterprise.bean.idea;
 
 import java.util.List;
 
-import org.bson.types.ObjectId;
-
 import com.knowshare.dto.idea.IdeaDTO;
 import com.knowshare.entities.idea.OperacionIdea;
 
 /**
- * @author HP
+ * @author Pablo Gaitan
  *
  */
 public interface IdeaFacade {
