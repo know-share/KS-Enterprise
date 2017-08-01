@@ -43,7 +43,7 @@ public abstract class AbstractTest {
 	public static void tearDown() throws IOException {
 		mongoTemplateStatic.getDb().dropDatabase();
 		String command = "mongorestore --host " +envStatic.getProperty("db.host") + " --port " + envStatic.getProperty("db.port")
-        	+ " -d " + envStatic.getProperty("db.name") +" ./target/"+envStatic.getProperty("db.name");
+        	+ " -d " + envStatic.getProperty("db.name") +" \"./target/"+envStatic.getProperty("db.name")+"\"";
 		Process p = Runtime.getRuntime().exec(command);
 		while(p.isAlive());
 	}
