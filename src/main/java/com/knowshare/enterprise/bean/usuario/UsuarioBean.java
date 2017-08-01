@@ -113,8 +113,14 @@ public class UsuarioBean implements UsuarioFacade {
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public List<Map> buscarPorHabilidad(UsuarioDTO usuarioActual, String param) {
-		return this.usuarioListBean.buscarPorHabilidad(usuarioActual, param);
+	public List<Map> buscarPorHabilidad(String param) {
+		return this.usuarioListBean.buscarPorHabilidad(param);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public List<Map> buscarPorAreaConocimiento(String param) {
+		return this.usuarioListBean.buscarPorAreaConocimiento(param);
 	}
 	
 }

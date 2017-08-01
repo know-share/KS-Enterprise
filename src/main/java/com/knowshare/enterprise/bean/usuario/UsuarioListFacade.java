@@ -32,5 +32,8 @@ public interface UsuarioListFacade {
 	List<UsuarioDTO> buscarPorNombre(UsuarioDTO usuarioActual,String param);
 	
 	@SuppressWarnings("rawtypes")
-	List<Map> buscarPorHabilidad(UsuarioDTO usuarioActual, String param);
+	List<Map> buscarPorHabilidad(String param);
+	
+	@SuppressWarnings("rawtypes")
+	List<Map> buscarPorAreaConocimiento(String param);
 }

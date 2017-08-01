@@ -20,6 +20,7 @@ import com.knowshare.entities.ludificacion.HabilidadAval;
 import com.knowshare.entities.perfilusuario.Cualidad;
 import com.knowshare.entities.perfilusuario.Habilidad;
 import com.knowshare.entities.perfilusuario.Usuario;
+import com.knowshare.enums.PreferenciaIdeaEnum;
 import com.knowshare.enums.TipoHabilidadEnum;
 import com.knowshare.enums.TipoIdeaEnum;
 
@@ -176,13 +177,14 @@ public class MapEntities {
 				.setCorreo(dto.getEmail())
 				.setUsername(dto.getUsername())
 				.setPassword(passwordHashed)
+				.setGenero(dto.getGenero())
 				.setPersonalidad(dto.getPersonalidad())
 				.setEnfasis(dto.getEnfasis())
 				.setAreasConocimiento(dto.getAreasConocimiento())
 				.setHabilidades(habilidades)
 				.setCarreras(carreras)
 				.setPreferencias(new PreferenciasUsuario()
-						.setPreferenciaIdea(dto.getPreferenciaIdea()))
+						.setPreferenciaIdea(PreferenciaIdeaEnum.ORDEN_CRONOLOGICO))
 				.setTipo(dto.getTipoUsuario());
 		
 		switch(dto.getTipoUsuario()){
@@ -245,7 +247,7 @@ public class MapEntities {
 		}
 		usuario.setCualidadesProfesor(cualidades)
 			.setDisponibilidad(new String(""))
-			.setGrupoInvestigacion(new String(""))
+			.setGrupoInvestigacion(dto.getGrupoInvestigacion())
 			.setTrabajosGradoDirigidos(new ArrayList<>());
 	}
 	
@@ -290,6 +292,8 @@ public class MapEntities {
 			.setId(usuario.getId())
 			.setEmail(usuario.getCorreo())
 			.setSemestre(usuario.getSemestre())
+			.setGrupoInvestigacion(usuario.getGrupoInvestigacion())
+			.setGenero(usuario.getGenero())
 			.setCantidadAmigos(usuario.getAmigos().size())
 			.setCantidadSeguidores(usuario.getSeguidores().size())
 			.setCarrera(mapCarreraToDTO(usuario.getCarreras().get(0)))

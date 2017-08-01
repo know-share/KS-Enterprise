@@ -132,7 +132,7 @@ public class UsuarioListBean implements UsuarioListFacade{
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public List<Map> buscarPorHabilidad(UsuarioDTO usuarioActual, String param){
+	public List<Map> buscarPorHabilidad(String param){
 		final List<ObjectId> idsHabilidades = habilidadBean.buscarPorNombre(param);
 		
 		final Aggregation agg = newAggregation(
@@ -143,6 +143,22 @@ public class UsuarioListBean implements UsuarioListFacade{
 					sort(Sort.Direction.DESC,"maximo")
 				);
 		
+		AggregationResults<Map> result = 
+				mongoTemplate.aggregate(agg, Usuario.class, Map.class);
+		
+		return result.getMappedResults();
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public List<Map> buscarPorAreaConocimiento( String param){
+		final Aggregation agg = newAggregation(
+				unwind("areasConocimiento"),
+				match(where("areasConocimiento.nombre").regex(param,"i")),
+				group("username","nombre","apellido","carreras")
+					.max("areasConocimiento.porcentaje").as("maximo"),
+				sort(Sort.Direction.DESC,"maximo")
+			);
+	
 		AggregationResults<Map> result = 
 				mongoTemplate.aggregate(agg, Usuario.class, Map.class);
 		
