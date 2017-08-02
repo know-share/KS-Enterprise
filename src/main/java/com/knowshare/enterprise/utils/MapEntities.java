@@ -138,6 +138,8 @@ public class MapEntities {
 		dto.setTags(idea.getTags());
 		dto.setTipo(idea.getTipo());
 		dto.setUsuario(idea.getUsuario().getUsername());
+		dto.setCompartida(idea.isCompartida());
+		dto.setUsuarioOriginal(idea.getUsuarioOriginal());
 		return dto;
 	}
 	
@@ -158,6 +160,9 @@ public class MapEntities {
 		idea.setTags(dto.getTags());
 		idea.setTipo(dto.getTipo());
 		idea.setUsuario(usuario);
+		idea.setCompartida(dto.isCompartida());
+		idea.setUsuarioOriginal(dto.getUsuarioOriginal());
+		
 		return idea;
 	}
 	

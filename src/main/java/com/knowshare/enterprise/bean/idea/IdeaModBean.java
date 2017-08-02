@@ -66,4 +66,29 @@ public class IdeaModBean implements IdeaModFacade{
 		return MapEntities.mapIdeaToDTO(ideaRep.save(idea));
 	}
 	
+	public IdeaDTO compartir(IdeaDTO dto, String username){
+		IdeaDTO compartida = new IdeaDTO();
+		compartida.setAlcance(dto.getAlcance());
+		compartida.setComentarios(new Long(0));
+		compartida.setCompartida(true);
+		compartida.setContenido(dto.getContenido());
+		compartida.setEstado(dto.getEstado());
+		compartida.setIsLight(false);
+		compartida.setLights(new Long(0));
+		compartida.setLugarEscritura(dto.getLugarEscritura());
+		compartida.setNumeroEstudiantes(dto.getNumeroEstudiantes());
+		compartida.setProblematica(dto.getProblematica());
+		compartida.setTags(dto.getTags());
+		compartida.setTipo(dto.getTipo());
+		compartida.setUsuario(username);
+		compartida.setUsuarioOriginal(dto.getUsuario());
+		Idea ret = new Idea();
+		try {
+			 ret = ideaRep.insert(MapEntities.mapDtoToIdea(compartida, usuRep.findByUsernameIgnoreCase(username)));
+		} catch (NoSuchAlgorithmException e) {
+			return null;
+		}
+		return MapEntities.mapIdeaToDTO(ret);
+	}
+	
 }

@@ -19,4 +19,5 @@ public interface IdeaFacade {
 	List<IdeaDTO> find10(String username);
 	List<IdeaDTO> findByUsuario(String username);
 	IdeaDTO findById(String id,String username);
+	IdeaDTO compartir(IdeaDTO dto,String username);
 }

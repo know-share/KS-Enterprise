@@ -15,4 +15,6 @@ public interface IdeaModFacade {
 	IdeaDTO crearIdea(IdeaDTO dto);
 	
 	IdeaDTO agregarOperacion(IdeaDTO dto, OperacionIdea operacion);
+	
+	IdeaDTO compartir(IdeaDTO dto,String username);
 }

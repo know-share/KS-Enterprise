@@ -45,5 +45,8 @@ public class IdeaBean implements IdeaFacade{
 		return ideaList.findById(id, username);
 	}
 	
+	public IdeaDTO compartir(IdeaDTO dto,String username){
+		return ideaMod.compartir(dto, username);
+	}
 	
 }
