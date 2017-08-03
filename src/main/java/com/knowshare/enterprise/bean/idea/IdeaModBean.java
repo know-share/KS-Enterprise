@@ -4,6 +4,7 @@
 package com.knowshare.enterprise.bean.idea;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class IdeaModBean implements IdeaModFacade{
 	
 	public IdeaDTO crearIdea(IdeaDTO dto){
 		try {
+			dto.setFechaCreacion(new Date());
 			Idea creada = MapEntities.mapDtoToIdea(dto,usuRep.findByUsernameIgnoreCase(dto.getUsuario()));
 			ideaRep.insert(creada);
 			return MapEntities.mapIdeaToDTO(creada);
@@ -80,8 +82,13 @@ public class IdeaModBean implements IdeaModFacade{
 		compartida.setProblematica(dto.getProblematica());
 		compartida.setTags(dto.getTags());
 		compartida.setTipo(dto.getTipo());
+		compartida.setFechaCreacion(new Date());
 		compartida.setUsuario(username);
-		compartida.setUsuarioOriginal(dto.getUsuario());
+		if(!dto.isCompartida()){
+			compartida.setUsuarioOriginal(dto.getUsuario());
+		}else{
+			compartida.setUsuarioOriginal(dto.getUsuarioOriginal());
+		}
 		Idea ret = new Idea();
 		try {
 			 ret = ideaRep.insert(MapEntities.mapDtoToIdea(compartida, usuRep.findByUsernameIgnoreCase(username)));
