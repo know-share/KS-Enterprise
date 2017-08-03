@@ -138,7 +138,7 @@ public class UsuarioListBean implements UsuarioListFacade{
 		final Aggregation agg = newAggregation(
 					unwind("habilidades"),
 					match(where("habilidades.habilidad.$id").in(idsHabilidades)),
-					group("username","nombre","apellido","carreras")
+					group("username","nombre","apellido","tipo","carreras")
 						.max("habilidades.cantidad").as("maximo"),
 					sort(Sort.Direction.DESC,"maximo")
 				);
@@ -154,7 +154,7 @@ public class UsuarioListBean implements UsuarioListFacade{
 		final Aggregation agg = newAggregation(
 				unwind("areasConocimiento"),
 				match(where("areasConocimiento.nombre").regex(param,"i")),
-				group("username","nombre","apellido","carreras")
+				group("username","nombre","apellido","tipo","carreras")
 					.max("areasConocimiento.porcentaje").as("maximo"),
 				sort(Sort.Direction.DESC,"maximo")
 			);
