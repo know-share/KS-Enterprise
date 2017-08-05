@@ -211,7 +211,6 @@ public class UsuarioModBeanTest extends AbstractTest {
 	@Test
 	public void test08AgregarTGDirigido(){
 		final TrabajoGrado tg = new TrabajoGrado()
-				.setDescripción(Arrays.asList("TAG1","TAG2","TAG5"))
 				.setNombre("TG for Profesor-Inserted")
 				.setNumEstudiantes(5)
 				.setPeriodoFin("2017-3")
