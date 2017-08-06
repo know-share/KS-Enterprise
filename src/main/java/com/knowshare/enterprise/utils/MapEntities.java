@@ -34,6 +34,7 @@ public class MapEntities {
 		final List<CarreraDTO> dtos = new ArrayList<>();
 		for (Carrera carrera : carreras) {
 			CarreraDTO dto = new CarreraDTO()
+					.setId(carrera.getId())
 					.setFacultad(carrera.getFacultad())
 					.setNombre(carrera.getNombre())
 					.setCarrerasAfines(carrerasAfinesNames(carrera.getCarrerasAfines()));
@@ -47,6 +48,7 @@ public class MapEntities {
 			return null;
 		return new CarreraDTO()
 				.setFacultad(carrera.getFacultad())
+				.setId(carrera.getId())
 				.setNombre(carrera.getNombre())
 				.setCarrerasAfines(carrerasAfinesNames(carrera.getCarrerasAfines()));
 	}
