@@ -29,7 +29,7 @@ public class HabilidadListBeanTest extends AbstractTest{
 	@Test
 	public void test01GetHabilidades(){
 		List<HabilidadDTO> habilidades = habilidadListBean
-				.getHabilidades("Ingeniería de sistemas");
+				.getHabilidades("idCarreraSistemas");
 		
 		List<HabilidadDTO> habilidadesPersonales = new ArrayList<>();
 		List<HabilidadDTO> habilidadesProfesionales = new ArrayList<>();
@@ -48,7 +48,7 @@ public class HabilidadListBeanTest extends AbstractTest{
 	@Test
 	public void test02GetHabilidadesProfesionales(){
 		List<HabilidadDTO> habilidades = habilidadListBean
-				.getHabilidadesProfesionales("Ingeniería civil");
+				.getHabilidadesProfesionales("idCarreraCivil");
 		
 		for (HabilidadDTO habilidadDTO : habilidades) {
 			habilidadMapTest(habilidadDTO);

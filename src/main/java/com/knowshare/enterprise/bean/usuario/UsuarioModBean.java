@@ -20,10 +20,12 @@ import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.enterprise.repository.academia.TrabajoGradoRepository;
 import com.knowshare.enterprise.repository.perfilusuario.UsuarioRepository;
 import com.knowshare.enterprise.utils.MapEntities;
+import com.knowshare.entities.academia.Carrera;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
 import com.knowshare.entities.perfilusuario.InfoUsuario;
 import com.knowshare.entities.perfilusuario.Usuario;
+import com.mongodb.DBRef;
 
 /**
  * {@link UsuarioModFacade}
@@ -187,7 +189,7 @@ public class UsuarioModBean implements UsuarioModFacade {
 			case EGRESADO:
 			case ESTUDIANTE:
 			case PROFESOR:
-				update.set("carreras", usuarioUpdate.getCarreras())
+				update.set("carreras",refsCarreras(usuarioUpdate.getCarreras()))
 					.set("enfasis", usuarioUpdate.getEnfasis())
 					.set("areasConocimiento", usuarioUpdate.getAreasConocimiento())
 					.set("habilidades",usuarioUpdate.getHabilidades());
@@ -196,6 +198,12 @@ public class UsuarioModBean implements UsuarioModFacade {
 				break;
 		}
 		return mongoTemplate.updateFirst(query, update, Usuario.class).getN() > 0;
+	}
+	
+	private List<DBRef> refsCarreras(List<Carrera> carreras){
+		final List<DBRef> dbrefs = new ArrayList<>();
+		carreras.forEach(c -> dbrefs.add(new DBRef("carrera", c.getId())));
+		return dbrefs;
 	}
 
 	@Override

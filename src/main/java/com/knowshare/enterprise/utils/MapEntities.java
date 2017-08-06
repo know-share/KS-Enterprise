@@ -55,7 +55,9 @@ public class MapEntities {
 	
 	public static Carrera mapDtoToCarrera(CarreraDTO dto){
 		if(null != dto)
-			return new Carrera().setNombre(dto.getNombre());
+			return new Carrera().setId(dto.getId())
+					.setFacultad(dto.getFacultad())
+					.setNombre(dto.getNombre());
 		return null;
 	}
 	

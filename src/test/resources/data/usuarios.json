@@ -67,7 +67,7 @@
 		],
 		"carreras": [
 			{
-				"nombre":"Ingeniería de sistemas"
+				"id": "idCarreraSistemas"
 			}
 		],
 		"insignias": [],
@@ -134,7 +134,7 @@
 		],
 		"carreras": [
 			{
-				"nombre":"Ingeniería de sistemas"
+				"id": "idCarreraSistemas"
 			}
 		],
 		"insignias": [],
@@ -209,7 +209,7 @@
 		],
 		"carreras": [
 			{
-				"nombre":"Ingeniería civil"
+				"id": "idCarreraCivil"
 			}
 		],
 		"insignias": [],
