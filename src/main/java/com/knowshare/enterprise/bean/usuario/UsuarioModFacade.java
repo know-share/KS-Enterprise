@@ -3,6 +3,8 @@
  */
 package com.knowshare.enterprise.bean.usuario;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
@@ -36,4 +38,6 @@ public interface UsuarioModFacade {
 	boolean actualizarHabilidadCualidad(UsuarioDTO usuario);
 	
 	boolean actualizarBasis(UsuarioDTO usuario);
+	
+	boolean uploadImage(String username, MultipartFile file);
 }

@@ -3,18 +3,24 @@
  */
 package com.knowshare.enterprise.bean.usuario;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.enterprise.repository.academia.TrabajoGradoRepository;
@@ -23,8 +29,10 @@ import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.academia.Carrera;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
+import com.knowshare.entities.perfilusuario.ImageProfile;
 import com.knowshare.entities.perfilusuario.InfoUsuario;
 import com.knowshare.entities.perfilusuario.Usuario;
+import com.knowshare.enums.TipoImagenEnum;
 import com.mongodb.DBRef;
 
 /**
@@ -48,6 +56,9 @@ public class UsuarioModBean implements UsuarioModFacade {
 	
 	@Autowired
 	private MongoTemplate mongoTemplate;
+	
+	@Autowired
+	private Environment env;
 
 	@Override
 	public boolean crearUsuario(UsuarioDTO usuario) {
@@ -59,8 +70,7 @@ public class UsuarioModBean implements UsuarioModFacade {
 			if (nuevoUsuario.getId() != null)
 				return true;
 		} catch (NoSuchAlgorithmException e) {
-			logger.debug("::::: Error with algorithm hash :::::");
-			e.printStackTrace();
+			logger.error("Error in UsuarioModBean.crearUsuario: "+e.getStackTrace());
 			return false;
 		}
 		return false;
@@ -74,10 +84,12 @@ public class UsuarioModBean implements UsuarioModFacade {
 			final InfoUsuario sol = new InfoUsuario()
 					.setUsername(solicitante.getUsername())
 					.setNombre(solicitante.getNombre() +" "+ solicitante.getApellido())
+					.setGenero(solicitante.getGenero())
 					.setCarrera(solicitante.getCarreras().get(0).getNombre());
 			final InfoUsuario obj = new InfoUsuario()
 					.setUsername(objetivo.getUsername())
 					.setNombre(objetivo.getNombre() +" "+ objetivo.getApellido())
+					.setGenero(objetivo.getGenero())
 					.setCarrera(objetivo.getCarreras().get(0).getNombre());
 			objetivo.getSeguidores().add(sol);
 			solicitante.getSiguiendo().add(obj);
@@ -127,32 +139,29 @@ public class UsuarioModBean implements UsuarioModFacade {
 			final InfoUsuario obj = new InfoUsuario()
 					.setUsername(objetivo.getUsername())
 					.setNombre(objetivo.getNombre() +" "+objetivo.getApellido())
+					.setGenero(objetivo.getGenero())
 					.setCarrera(objetivo.getCarreras().get(0).getNombre());
 			final InfoUsuario act = new InfoUsuario()
 					.setUsername(actual.getUsername())
 					.setNombre(actual.getNombre()+" "+actual.getApellido())
+					.setGenero(actual.getGenero())
 					.setCarrera(actual.getCarreras().get(0).getNombre());
 			actual.getAmigos().add(obj);
 			objetivo.getAmigos().add(act);
-			if(usuarioRepository.save(actual) != null && null != usuarioRepository.save(objetivo))
-				return true;
-			return false;
+			return (usuarioRepository.save(actual) != null && null != usuarioRepository.save(objetivo));
 		}
-		if(usuarioRepository.save(actual) != null)
-			return true;
-		return false;
+		return (usuarioRepository.save(actual) != null);
 	}
 	
 	public boolean agregarTGDirigido(TrabajoGrado tg, String username){
 		final Usuario usuario = usuarioRepository.findByUsernameIgnoreCase(username);
-		
-		tg = trabajoGradoRepository.insert(tg);
+		final TrabajoGrado newTg = trabajoGradoRepository.insert(tg);
 		if(null == usuario.getTrabajosGradoDirigidos()){
 			final List<TrabajoGrado> tgs = new ArrayList<>();
-			tgs.add(tg);
+			tgs.add(newTg);
 			usuario.setTrabajosGradoDirigidos(tgs);
 		}else
-			usuario.getTrabajosGradoDirigidos().add(tg);
+			usuario.getTrabajosGradoDirigidos().add(newTg);
 		
 		return (null != usuarioRepository.save(usuario));
 	}
@@ -250,5 +259,31 @@ public class UsuarioModBean implements UsuarioModFacade {
 				break;
 		}
 		return mongoTemplate.updateFirst(query, update, Usuario.class).getN() > 0;
+	}
+	
+	public boolean uploadImage(String username, MultipartFile file){
+		final Usuario usuario = usuarioRepository.findByUsernameIgnoreCase(username);
+		final String rootPath = env.getProperty("path.folder.images");
+		final String contenType = file.getContentType().substring(6);
+		final String imageName = username+"."+contenType;
+		if(contenType.equalsIgnoreCase(TipoImagenEnum.PNG.toString()) 
+				|| contenType.equalsIgnoreCase(TipoImagenEnum.JPEG.toString())
+				|| contenType.equalsIgnoreCase(TipoImagenEnum.JPG.toString())){
+			try(
+				BufferedOutputStream bf = new BufferedOutputStream(
+					new FileOutputStream(new File(rootPath+imageName)));
+			){
+				byte[] bytes = file.getBytes();
+				bf.write(bytes);
+				usuario.setImagen(new ImageProfile()
+						.setImageName(imageName)
+						.setType(TipoImagenEnum.valueOf(contenType.toUpperCase())));
+				return usuarioRepository.save(usuario) != null;
+			}catch(Exception e){
+				this.logger.error(Arrays.toString(e.getStackTrace()));
+				return false;
+			}
+		}
+		return false;
 	}
 }

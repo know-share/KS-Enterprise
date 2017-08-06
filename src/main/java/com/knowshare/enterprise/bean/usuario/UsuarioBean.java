@@ -8,7 +8,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.knowshare.dto.perfilusuario.ImagenDTO;
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
@@ -16,7 +18,7 @@ import com.knowshare.entities.perfilusuario.Usuario;
 
 /**
  * {@link UsuarioFacade}
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 @Component
@@ -122,5 +124,14 @@ public class UsuarioBean implements UsuarioFacade {
 	public List<Map> buscarPorAreaConocimiento(String param) {
 		return this.usuarioListBean.buscarPorAreaConocimiento(param);
 	}
-	
+
+	@Override
+	public boolean uploadImage(String username, MultipartFile file) {
+		return this.usuarioModBean.uploadImage(username, file);
+	}
+
+	@Override
+	public ImagenDTO getImage(String username) {
+		return this.usuarioListBean.getImage(username);
+	}
 }

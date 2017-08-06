@@ -6,6 +6,7 @@ package com.knowshare.enterprise.bean.usuario;
 import java.util.List;
 import java.util.Map;
 
+import com.knowshare.dto.perfilusuario.ImagenDTO;
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.entities.perfilusuario.Usuario;
 
@@ -36,4 +37,6 @@ public interface UsuarioListFacade {
 	
 	@SuppressWarnings("rawtypes")
 	List<Map> buscarPorAreaConocimiento(String param);
+	
+	ImagenDTO getImage(String username);
 }

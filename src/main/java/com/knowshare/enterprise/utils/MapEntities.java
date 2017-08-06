@@ -25,10 +25,14 @@ import com.knowshare.enums.TipoHabilidadEnum;
 import com.knowshare.enums.TipoIdeaEnum;
 
 /**
- * @author miguel
+ * Clase encargada de hacer los mapeos de entidades a dtos
+ * o viceversa.
+ * @author Miguel Montañez
  *
  */
 public class MapEntities {
+	
+	private MapEntities(){}
 	
 	public static List<CarreraDTO> mapCarrerasToDTOs(List<Carrera> carreras){
 		final List<CarreraDTO> dtos = new ArrayList<>();
@@ -257,7 +261,7 @@ public class MapEntities {
 			cualidades.add(mapDtoToCualidadAval(cualidad));
 		}
 		usuario.setCualidadesProfesor(cualidades)
-			.setDisponibilidad(new String(""))
+			.setDisponibilidad("")
 			.setGrupoInvestigacion(dto.getGrupoInvestigacion())
 			.setTrabajosGradoDirigidos(new ArrayList<>());
 	}
@@ -322,7 +326,8 @@ public class MapEntities {
 			.setSiguiendo(usuario.getSiguiendo())
 			.setSolicitudesAmistad(usuario.getSolicitudesAmistad())
 			.setTgDirigidos(usuario.getTrabajosGradoDirigidos())
-			.setFormacionAcademica(usuario.getFormacionesAcademicas());
+			.setFormacionAcademica(usuario.getFormacionesAcademicas())
+			.setImagen(usuario.getImagen() != null);
 		switch(usuario.getTipo()){
 			case PROFESOR:
 				dto.setCualidades(mapAvalesCualidad(usuario.getCualidadesProfesor()));
