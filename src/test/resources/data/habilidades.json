@@ -19,7 +19,7 @@
 		"nombre": "Habilidad Profesional sistemas 1",
 		"tipo": "PROFESIONALES",
 		"carrera": {
-			"nombre": "Ingeniería de sistemas"
+			"id": "idCarreraSistemas"
 		}
 	},
 	{
@@ -27,7 +27,7 @@
 		"nombre": "Habilidad Profesional sistemas  2",
 		"tipo": "PROFESIONALES",
 		"carrera": {
-			"nombre": "Ingeniería de sistemas"
+			"id": "idCarreraSistemas"
 		}
 	},
 	{
@@ -35,7 +35,7 @@
 		"nombre": "Habilidad Profesional civil 1",
 		"tipo": "PROFESIONALES",
 		"carrera": {
-			"nombre": "Ingeniería civil"
+			"id": "idCarreraCivil"
 		}
 	},
 	{
@@ -43,7 +43,7 @@
 		"nombre": "Habilidad Profesional civil 2",
 		"tipo": "PROFESIONALES",
 		"carrera": {
-			"nombre": "Ingeniería civil"
+			"id": "idCarreraCivil"
 		}
 	}
 ]

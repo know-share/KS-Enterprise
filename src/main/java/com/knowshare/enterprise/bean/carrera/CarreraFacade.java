@@ -16,4 +16,5 @@ public interface CarreraFacade {
 	
 	List<CarreraDTO> getAllCarreras();
 	EnfasisAreaConocimientoDTO getEnfasisAreaConocimiento(String carrera);
+	boolean update (CarreraDTO carrera);
 }

@@ -6,6 +6,9 @@ package com.knowshare.enterprise.bean.usuario;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import com.knowshare.dto.perfilusuario.ImagenDTO;
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
@@ -58,4 +61,8 @@ public interface UsuarioFacade {
 	
 	@SuppressWarnings("rawtypes")
 	List<Map> buscarPorAreaConocimiento(String param);
+	
+	boolean uploadImage(String username, MultipartFile file);
+	
+	ImagenDTO getImage(String username);
 }

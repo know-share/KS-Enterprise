@@ -20,6 +20,9 @@ public class CarreraBean implements CarreraFacade{
 	
 	@Autowired
 	private CarreraListFacade carreraListBean;
+	
+	@Autowired
+	private CarreraModFacade carreraModBean;
 
 	@Override
 	public List<CarreraDTO> getAllCarreras() {
@@ -29,6 +32,11 @@ public class CarreraBean implements CarreraFacade{
 	@Override
 	public EnfasisAreaConocimientoDTO getEnfasisAreaConocimiento(String carrera) {
 		return carreraListBean.getEnfasisAreaConocimiento(carrera);
+	}
+
+	@Override
+	public boolean update(CarreraDTO carrera) {
+		return carreraModBean.update(carrera);
 	}
 
 }

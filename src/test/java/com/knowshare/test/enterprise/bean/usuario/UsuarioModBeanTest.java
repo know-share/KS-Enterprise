@@ -69,7 +69,7 @@ public class UsuarioModBeanTest extends AbstractTest {
 				new Criteria().orOperator(Criteria.where("nombre").is("Cualidad 1"),Criteria.where("nombre").is("Cualidad 2"))), Cualidad.class);
 		List<Gusto> gustos = mongoTemplate.findAll(Gusto.class);
 		List<Habilidad> habilidades = mongoTemplate.find(new Query().addCriteria(Criteria.where("tipo").is("PROFESIONALES")
-				.andOperator(Criteria.where("carrera.nombre").is("Ingeniería de sistemas"))), Habilidad.class);
+				.andOperator(Criteria.where("carrera.id").is("idCarreraSistemas"))), Habilidad.class);
 		List<HabilidadDTO> habilidadesDto = MapEntities.mapHabilidadesToDTOs(habilidades);
 		
 		usuarioProfesor = crearUsuarioProfesor(MapEntities.mapCualidadesToDTOs(cualidades),habilidadesDto);
@@ -261,7 +261,7 @@ public class UsuarioModBeanTest extends AbstractTest {
 								.setPorcentaje(0d),
 						new AreaConocimiento().setCarrera("Ingeniería de sistemas").setNombre("AC sistemas 3")
 								.setPorcentaje(0d)))
-				.setCarrera(new CarreraDTO().setNombre("Ingeniería de sistemas"))
+				.setCarrera(new CarreraDTO().setId("idCarreraSistemas"))
 				.setEmail("Email estudiante inserted").setGustos(gustos)
 				.setEnfasis(Arrays.asList(
 						new Enfasis().setCarrera("Ingeniería de sistemas").setNombre("Enfasis sistemas 2"),
@@ -280,7 +280,7 @@ public class UsuarioModBeanTest extends AbstractTest {
 								.setPorcentaje(0d),
 						new AreaConocimiento().setCarrera("Ingeniería de sistemas").setNombre("AC sistemas 3")
 								.setPorcentaje(0d)))
-				.setCarrera(new CarreraDTO().setNombre("Ingeniería de sistemas"))
+				.setCarrera(new CarreraDTO().setId("idCarreraSistemas"))
 				.setEmail("Email egresado inserted")
 				.setEnfasis(Arrays.asList(
 						new Enfasis().setCarrera("Ingeniería de sistemas").setNombre("Enfasis sistemas 2"),
@@ -298,7 +298,7 @@ public class UsuarioModBeanTest extends AbstractTest {
 								.setPorcentaje(20d),
 						new AreaConocimiento().setCarrera("Ingeniería de sistemas").setNombre("AC sistemas 2")
 								.setPorcentaje(30d)))
-				.setCarrera(new CarreraDTO().setNombre("Ingeniería de sistemas")).setCualidades(cualidades)
+				.setCarrera(new CarreraDTO().setId("idCarreraSistemas")).setCualidades(cualidades)
 				.setEmail("Email profesor inserted")
 				.setEnfasis(Arrays.asList(
 						new Enfasis().setCarrera("Ingeniería de sistemas").setNombre("Enfasis sistemas 1"),

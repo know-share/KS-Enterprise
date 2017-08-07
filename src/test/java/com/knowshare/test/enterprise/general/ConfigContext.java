@@ -56,7 +56,7 @@ import com.mongodb.MongoClient;
  * Configuración de contexto para las pruebas. Se cargan los bean de negocio que
  * serán necesarios para la ejecución de las pruebas
  * 
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 @Lazy
