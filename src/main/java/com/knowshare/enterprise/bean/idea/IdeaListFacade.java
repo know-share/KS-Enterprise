@@ -12,4 +12,5 @@ public interface IdeaListFacade {
 	List<IdeaDTO> findByUsuario(String username);
 	OperacionIdea isLight(Idea idea, String username);
 	IdeaDTO findById(String id, String username);
+	List<IdeaDTO> findByUsuarioProyecto(String username);
 }
