@@ -17,7 +17,8 @@ import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.academia.Carrera;
 
 /**
- * @author miguel
+ * {@link CarreraListFacade}
+ * @author Miguel Montañez
  *
  */
 @Component
