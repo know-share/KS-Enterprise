@@ -149,6 +149,12 @@ public class MapEntities {
 		dto.setUsuario(idea.getUsuario().getUsername());
 		dto.setCompartida(idea.isCompartida());
 		dto.setUsuarioOriginal(idea.getUsuarioOriginal());
+		if(idea.getTipo().equals(TipoIdeaEnum.PR)){
+			for (Idea i : idea.getIdeasProyecto()) {
+				dto.getIdeasProyecto().add(mapIdeaToDTO(i));
+			}
+		}
+		dto.setTg(idea.getTg());
 		return dto;
 	}
 	
@@ -163,6 +169,9 @@ public class MapEntities {
 				idea.getIdeasProyecto().add(mapDtoToIdea(i,usuario));
 			}
 		}
+		if(dto.getTipo().equals(TipoIdeaEnum.PC)){
+			idea.setTg(dto.getTg());
+		}
 		idea.setLugarEscritura(dto.getLugarEscritura());
 		idea.setNumeroEstudiantes(dto.getNumeroEstudiantes());
 		idea.setProblematica(dto.getProblematica());
@@ -172,7 +181,6 @@ public class MapEntities {
 		idea.setUsuario(usuario);
 		idea.setCompartida(dto.isCompartida());
 		idea.setUsuarioOriginal(dto.getUsuarioOriginal());
-		
 		return idea;
 	}
 	

@@ -82,6 +82,19 @@ public class IdeaListBean implements IdeaListFacade{
 			dto.setIsLight(false);
 		return dto;
 	}
+
+	@Override
+	public List<IdeaDTO> findByUsuarioProyecto(String username) {
+		final Usuario usu = usuRep.findByUsernameIgnoreCase(username);
+		List<Idea> idea =  ideaRep.findIdeaByUsuarioProyecto(usu.getId());
+		List<IdeaDTO> dots = new ArrayList<>();
+		IdeaDTO dto = new IdeaDTO();
+		for (Idea ide : idea) {
+			dto = MapEntities.mapIdeaToDTO(ide);
+			dots.add(dto);
+		}
+		return dots;
+	}
 	
 	
 	

@@ -26,4 +26,7 @@ public interface IdeaRepository extends MongoRepository<Idea,String>{
 	
 	@Query("{'usuario.$id' : ?0}")
 	List<Idea> findIdeaByUsuario(ObjectId username);
+	
+	@Query("{'usuario.$id' : ?0, 'tipo' : {$ne:'PR'}}")
+	List<Idea> findIdeaByUsuarioProyecto(ObjectId username);
 }

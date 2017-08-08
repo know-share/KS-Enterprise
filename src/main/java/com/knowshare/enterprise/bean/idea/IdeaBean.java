@@ -48,5 +48,10 @@ public class IdeaBean implements IdeaFacade{
 	public IdeaDTO compartir(IdeaDTO dto,String username){
 		return ideaMod.compartir(dto, username);
 	}
+
+	@Override
+	public List<IdeaDTO> findByUsuarioProyecto(String username) {
+		return ideaList.findByUsuarioProyecto(username);
+	}
 	
 }

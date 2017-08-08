@@ -38,6 +38,7 @@ public class IdeaModBean implements IdeaModFacade{
 		try {
 			dto.setFechaCreacion(new Date());
 			Idea creada = MapEntities.mapDtoToIdea(dto,usuRep.findByUsernameIgnoreCase(dto.getUsuario()));
+			creada.setEstado("NOTG");
 			ideaRep.insert(creada);
 			return MapEntities.mapIdeaToDTO(creada);
 		} catch (NoSuchAlgorithmException e) {
