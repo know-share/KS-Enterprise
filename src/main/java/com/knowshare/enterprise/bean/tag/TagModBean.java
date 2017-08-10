@@ -46,7 +46,6 @@ public class TagModBean implements TagModFacade {
 	public boolean create(String nombre) {
 		if(nombre!=null) {	
 			Tag tag = new Tag();
-			tag.setId(nombre);
 			tag.setNombre(nombre);
 			if(tagRepository.insert(tag)!=null) 
 				return true;
