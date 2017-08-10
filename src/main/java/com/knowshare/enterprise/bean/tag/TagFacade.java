@@ -14,4 +14,7 @@ import com.knowshare.entities.idea.Tag;
 public interface TagFacade {
 	
 	List<Tag> findAll();
+	boolean create (String tag);
+	boolean update (Tag tag);
+	boolean delete(String tag);
 }

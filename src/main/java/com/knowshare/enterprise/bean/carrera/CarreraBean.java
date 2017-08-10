@@ -12,7 +12,8 @@ import com.knowshare.dto.academia.CarreraDTO;
 import com.knowshare.dto.academia.EnfasisAreaConocimientoDTO;
 
 /**
- * @author miguel
+ * {@link CarreraBean}
+ * @author Miguel Montañez
  *
  */
 @Component
@@ -38,5 +39,14 @@ public class CarreraBean implements CarreraFacade{
 	public boolean update(CarreraDTO carrera) {
 		return carreraModBean.update(carrera);
 	}
+	
+	@Override 
+	public boolean delete(String carrera) {
+		return carreraModBean.delete(carrera);
+	}
 
+	@Override
+	public boolean create (CarreraDTO carrera) {
+		return carreraModBean.create(carrera);
+	}
 }

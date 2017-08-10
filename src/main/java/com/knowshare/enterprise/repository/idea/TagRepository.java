@@ -13,4 +13,5 @@ import com.knowshare.entities.idea.Tag;
  */
 public interface TagRepository extends MongoRepository<Tag, String>{
 
+	Long removeById(String nombre);
 }
