@@ -138,6 +138,7 @@ public class MapEntities {
 		IdeaDTO dto = new IdeaDTO();
 		dto.setId(idea.getId());
 		dto.setAlcance(idea.getAlcance());
+		dto.setNumeroEstudiantes(idea.getNumeroEstudiantes());
 		dto.setComentarios(idea.getComentarios());
 		dto.setContenido(idea.getContenido());
 		dto.setEstado(idea.getEstado());
@@ -149,6 +150,8 @@ public class MapEntities {
 		dto.setUsuario(idea.getUsuario().getUsername());
 		dto.setCompartida(idea.isCompartida());
 		dto.setUsuarioOriginal(idea.getUsuarioOriginal());
+		//ya le dio memoria al arreglo del dto mkon?HP
+		dto.setIdeasProyecto(new ArrayList<>());	
 		if(idea.getTipo().equals(TipoIdeaEnum.PR)){
 			for (Idea i : idea.getIdeasProyecto()) {
 				dto.getIdeasProyecto().add(mapIdeaToDTO(i));
@@ -181,6 +184,7 @@ public class MapEntities {
 		idea.setUsuario(usuario);
 		idea.setCompartida(dto.isCompartida());
 		idea.setUsuarioOriginal(dto.getUsuarioOriginal());
+		idea.setTg(dto.getTg());
 		return idea;
 	}
 	
