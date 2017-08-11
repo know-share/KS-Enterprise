@@ -3,8 +3,6 @@
  */
 package com.knowshare.enterprise.bean.habilidad;
 
-import java.util.ArrayList;
-
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -15,10 +13,8 @@ import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.perfilusuario.HabilidadDTO;
 import com.knowshare.enterprise.repository.perfilusuario.HabilidadRepository;
-import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.academia.Carrera;
 import com.knowshare.entities.perfilusuario.Habilidad;
-import com.mongodb.DBRef;
 
 
 

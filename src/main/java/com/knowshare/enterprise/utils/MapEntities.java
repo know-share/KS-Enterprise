@@ -23,8 +23,6 @@ import com.knowshare.entities.perfilusuario.Usuario;
 import com.knowshare.enums.PreferenciaIdeaEnum;
 import com.knowshare.enums.TipoHabilidadEnum;
 import com.knowshare.enums.TipoIdeaEnum;
-import com.mongodb.DBRef;
-
 
 /**
  * Clase encargada de hacer los mapeos de entidades a dtos
