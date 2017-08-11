@@ -23,6 +23,8 @@ import com.knowshare.entities.perfilusuario.Usuario;
 import com.knowshare.enums.PreferenciaIdeaEnum;
 import com.knowshare.enums.TipoHabilidadEnum;
 import com.knowshare.enums.TipoIdeaEnum;
+import com.mongodb.DBRef;
+
 
 /**
  * Clase encargada de hacer los mapeos de entidades a dtos
@@ -87,7 +89,6 @@ public class MapEntities {
 				.setId(habilidad.getId())
 				.setNombre(habilidad.getNombre())
 				.setTipo(habilidad.getTipo());
-		
 		if(habilidad.getTipo().equals(TipoHabilidadEnum.PROFESIONALES))
 			dto.setCarrera(habilidad.getCarrera().getNombre());
 				
@@ -106,6 +107,14 @@ public class MapEntities {
 			habilidades.add(mapDtoToHabilidadAval(dto));
 		return habilidades;
 	}
+	
+	/*public static Habilidad mapDtoToHabilidad(HabilidadDTO habilidad){
+		return new Habilidad()
+				.setTipo(habilidad.getTipo())
+				.setNombre(habilidad.getNombre())
+				.setId(habilidad.getId())
+				.setCarrera( new DBRef("carrera", habilidad.getCarrera()));
+	}*/
 	
 	public static List<CualidadAval> mapDtosToCualidadAval(List<CualidadDTO> dtos){
 		final List<CualidadAval> cualidades = new ArrayList<>();

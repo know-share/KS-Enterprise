@@ -23,6 +23,8 @@ public interface HabilidadListFacade {
 	
 	List<ObjectId> buscarPorNombre(String nombre);
 	
+	List<HabilidadDTO> getAll();
+	
 	/**
 	 * Method not tested, this is for testing purpose
 	 * @return

@@ -26,4 +26,6 @@ public interface CarreraListFacade {
 	 * @return Un EnfasisAreaConocmientoDTO con los énfasis y areas de conocmiento de una Carrera, null si no encuentra la Carrera.
 	 */
 	EnfasisAreaConocimientoDTO getEnfasisAreaConocimiento(String carrera);
+	
+
 }

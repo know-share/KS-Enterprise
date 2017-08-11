@@ -82,4 +82,16 @@ public class HabilidadListBean implements HabilidadListFacade{
 		result.getMappedResults().forEach(r -> ids.add(r.getId()));
 		return ids;
 	}
+
+	@Override
+	public List<HabilidadDTO> getAll() {
+		final List<Habilidad> habilidades = habilidadRepository
+				.findAll();
+		final List<HabilidadDTO> habilidadesDto = new ArrayList<>();
+		
+		for (Habilidad habilidad : habilidades) {
+			habilidadesDto.add(MapEntities.mapHabilidadToDTO(habilidad));
+		}
+		return habilidadesDto;
+	}
 }
