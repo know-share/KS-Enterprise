@@ -24,6 +24,4 @@ public interface HabilidadRepository extends MongoRepository<Habilidad, String>{
 	
 	@Query("{'tipo':'PROFESIONALES','carrera.$id':?0}")
 	List<Habilidad> getHabilidadesProfesionales(String carrera);
-	
-	Habilidad findByNombre(String nombre);
 }

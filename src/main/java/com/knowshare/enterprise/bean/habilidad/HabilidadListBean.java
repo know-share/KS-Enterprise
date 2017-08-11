@@ -35,10 +35,6 @@ public class HabilidadListBean implements HabilidadListFacade{
 	
 	@Autowired
 	private MongoTemplate mongoTemplate;
-	
-	public Habilidad findOne(String nombre){
-		return habilidadRepository.findByNombre(nombre);
-	}
 
 	@Override
 	public List<HabilidadDTO> getHabilidades(String carrera) {

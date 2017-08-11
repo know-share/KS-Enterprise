@@ -10,6 +10,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Test;
@@ -133,6 +134,63 @@ public class UsuarioListBeanTest extends AbstractTest{
 		noConnections = usuarioListBean.getMyNoConnections("Felipe-Bautista");
 		assertNotNull(noConnections);
 		assertEquals(1, noConnections.size());
+	}
+	
+	@Test
+	public void test07IsCorreoTaken(){
+		assertTrue(usuarioListBean.isCorreoTaken("miguel@mail.com"));
+		assertFalse(usuarioListBean.isCorreoTaken("miguelm@mail.com"));
+	}
+	
+	@Test
+	public void test08BuscarPorNombre(){
+		final UsuarioDTO dto = new UsuarioDTO().setUsername("MinMiguelM");
+		List<UsuarioDTO> usuarios = usuarioListBean.buscarPorNombre(dto, "paBLo gaitan");
+		assertTrue(usuarios.size() == 1);
+		
+		usuarios = usuarioListBean.buscarPorNombre(dto, "paBLo gaitan miguel felipe");
+		assertTrue(usuarios.size() == 2);
+		
+		usuarios = usuarioListBean.buscarPorNombre(dto, "bautista miguel felipe");
+		assertTrue(usuarios.size() == 1);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Test
+	public void test09BuscarPorHabilidad(){
+		List<Map> result = usuarioListBean.buscarPorHabilidad("habilidad");
+		assertEquals(3,result.size());
+		
+		result = usuarioListBean.buscarPorHabilidad("civil");
+		assertEquals(1,result.size());
+		
+		result = usuarioListBean.buscarPorHabilidad("sistemas");
+		assertEquals(2,result.size());
+		
+		result = usuarioListBean.buscarPorHabilidad("sistemas electronica habilidad");
+		assertEquals(3,result.size());
+		
+		result = usuarioListBean.buscarPorHabilidad("electronica industrial");
+		assertEquals(0,result.size());
+		
+		result = usuarioListBean.buscarPorHabilidad("electronica personal");
+		assertEquals(3,result.size());
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Test
+	public void test10BuscarPorAreaConocimiento(){
+		List<Map> result = usuarioListBean.buscarPorAreaConocimiento("1");
+		assertEquals(3,result.size());
+		
+		result = usuarioListBean.buscarPorAreaConocimiento("sistemas civil");
+		assertEquals(3,result.size());
+		
+		result = usuarioListBean.buscarPorAreaConocimiento("sistemas 3");
+		assertEquals(3,result.size());
+		
+		result = usuarioListBean.buscarPorAreaConocimiento("sistemas 4");
+		assertEquals(2,result.size());
 	}
 	
 	@AfterClass
