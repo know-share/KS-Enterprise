@@ -35,7 +35,7 @@ public class IdeaListBean implements IdeaListFacade{
 	public List<IdeaDTO> find10(String username){
 		List<IdeaDTO> ret = new ArrayList<>();
 		List<Idea> lista = ideaRep.findAll();
-		IdeaDTO dto = new IdeaDTO();
+		IdeaDTO dto;
 		for (Idea idea : lista) {
 			dto = MapEntities.mapIdeaToDTO(idea);
 			if(isLight(idea, username)!=null)
@@ -51,7 +51,7 @@ public class IdeaListBean implements IdeaListFacade{
 		final Usuario usu = usuRep.findByUsernameIgnoreCase(username);
 		List<Idea> idea =  ideaRep.findIdeaByUsuario(usu.getId());
 		List<IdeaDTO> dots = new ArrayList<>();
-		IdeaDTO dto = new IdeaDTO();
+		IdeaDTO dto;
 		for (Idea ide : idea) {
 			dto = MapEntities.mapIdeaToDTO(ide);
 			if(isLight(ide, username)!=null)
@@ -65,9 +65,9 @@ public class IdeaListBean implements IdeaListFacade{
 	
 	public OperacionIdea isLight(Idea idea, String username){
 		for (OperacionIdea o : idea.getOperaciones()) {
-			if(o.getTipo().equals(TipoOperacionEnum.LIGHT))
-				if(o.getUsername().equalsIgnoreCase(username))
-					return o;
+			if(o.getTipo().equals(TipoOperacionEnum.LIGHT) &&
+					o.getUsername().equalsIgnoreCase(username))
+				return o;
 		}
 		return null;
 	}
@@ -88,15 +88,11 @@ public class IdeaListBean implements IdeaListFacade{
 		final Usuario usu = usuRep.findByUsernameIgnoreCase(username);
 		List<Idea> idea =  ideaRep.findIdeaByUsuarioProyecto(usu.getId());
 		List<IdeaDTO> dots = new ArrayList<>();
-		IdeaDTO dto = new IdeaDTO();
+		IdeaDTO dto;
 		for (Idea ide : idea) {
 			dto = MapEntities.mapIdeaToDTO(ide);
 			dots.add(dto);
 		}
 		return dots;
 	}
-	
-	
-	
-
 }

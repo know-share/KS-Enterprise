@@ -21,6 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.perfilusuario.ImagenDTO;
@@ -164,9 +165,15 @@ public class UsuarioListBean implements UsuarioListFacade{
 	
 	@SuppressWarnings("rawtypes")
 	public List<Map> buscarPorAreaConocimiento( String param){
+		final String[] words = param.split(" ");
+		final List<Criteria> matches = new ArrayList<>();
+		for(int i = 0;i<words.length;i++){
+			matches.add(Criteria.where("areasConocimiento.nombre").regex(words[i],"i"));
+		}
+		//where("areasConocimiento.nombre").regex(param,"i")
 		final Aggregation agg = newAggregation(
 				unwind("areasConocimiento"),
-				match(where("areasConocimiento.nombre").regex(param,"i")),
+				match(new Criteria().orOperator(matches.toArray(new Criteria[matches.size()]))),
 				group("username","nombre","apellido","tipo","carreras")
 					.max("areasConocimiento.porcentaje").as(MAXIMO),
 				sort(Sort.Direction.DESC,MAXIMO)

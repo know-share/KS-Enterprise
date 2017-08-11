@@ -15,8 +15,6 @@ import com.knowshare.entities.perfilusuario.Habilidad;
  */
 public interface HabilidadListFacade {
 	
-	Habilidad findOne(String nombre);
-	
 	List<HabilidadDTO> getHabilidades(String carrera);
 	
 	List<HabilidadDTO> getHabilidadesProfesionales(String carrera);

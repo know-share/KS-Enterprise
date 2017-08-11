@@ -12,7 +12,7 @@ import com.knowshare.enterprise.repository.perfilusuario.GustoRepository;
 import com.knowshare.entities.perfilusuario.Gusto;
 
 /**
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 @Component

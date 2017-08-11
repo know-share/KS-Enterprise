@@ -72,12 +72,12 @@ public class IdeaModBean implements IdeaModFacade{
 	public IdeaDTO compartir(IdeaDTO dto, String username){
 		IdeaDTO compartida = new IdeaDTO();
 		compartida.setAlcance(dto.getAlcance());
-		compartida.setComentarios(new Long(0));
+		compartida.setComentarios(Long.valueOf(0));
 		compartida.setCompartida(true);
 		compartida.setContenido(dto.getContenido());
 		compartida.setEstado(dto.getEstado());
 		compartida.setIsLight(false);
-		compartida.setLights(new Long(0));
+		compartida.setLights(Long.valueOf(0));
 		compartida.setLugarEscritura(dto.getLugarEscritura());
 		compartida.setNumeroEstudiantes(dto.getNumeroEstudiantes());
 		compartida.setProblematica(dto.getProblematica());

@@ -25,8 +25,11 @@ public interface HabilidadRepository extends MongoRepository<Habilidad, String>{
 	
 	@Query("{'tipo':'PROFESIONALES','carrera.$id':?0}")
 	List<Habilidad> getHabilidadesProfesionales(String carrera);
+<<<<<<< HEAD
 	
 	Habilidad findByNombre(String nombre);
 	
 	long removeById(ObjectId id);
+=======
+>>>>>>> a1bd82fe5624ca9901f2ac1bb71624eab2356107
 }
