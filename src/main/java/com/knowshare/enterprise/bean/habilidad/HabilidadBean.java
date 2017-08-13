@@ -49,4 +49,24 @@ public class HabilidadBean implements HabilidadFacade{
 	public List<ObjectId> buscarPorNombre(String nombre) {
 		return this.habilidadListBean.buscarPorNombre(nombre);
 	}
+
+	@Override
+	public List<HabilidadDTO> getAll() {
+		return habilidadListBean.getAll();
+	}
+
+	@Override
+	public boolean update(HabilidadDTO habilidad) {
+		return habilidadModBean.update(habilidad);
+	}
+
+	@Override
+	public boolean delete(String id) {
+		return habilidadModBean.delete(id);
+	}
+
+	@Override
+	public boolean create(HabilidadDTO habilidad) {
+		return habilidadModBean.create(habilidad);
+	}
 }

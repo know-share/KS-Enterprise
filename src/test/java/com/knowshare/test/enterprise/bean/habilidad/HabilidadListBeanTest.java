@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.junit.AfterClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,18 @@ public class HabilidadListBeanTest extends AbstractTest{
 		}
 		
 		assertEquals(2, habilidades.size());
+	}
+	
+	@Test
+	public void test03BuscarPorNombre(){
+		List<ObjectId> ids = habilidadListBean.buscarPorNombre("profesional");
+		assertEquals(4,ids.size());
+		
+		ids = habilidadListBean.buscarPorNombre("personal");
+		assertEquals(3,ids.size());
+		
+		ids = habilidadListBean.buscarPorNombre("sistemas");
+		assertEquals(2,ids.size());
 	}
 	
 	private void habilidadMapTest(HabilidadDTO dto){

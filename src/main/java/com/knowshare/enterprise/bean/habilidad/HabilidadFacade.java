@@ -26,4 +26,12 @@ public interface HabilidadFacade {
 	List<ObjectId> buscarPorNombre(String nombre);
 	
 	Page<Habilidad> getAll(Integer page);
+	
+	List<HabilidadDTO> getAll();
+	
+	boolean update (HabilidadDTO habilidad);
+	
+	boolean delete(String id);
+	
+	boolean create (HabilidadDTO habilidad);
 }

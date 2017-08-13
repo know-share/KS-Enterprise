@@ -35,10 +35,6 @@ public class HabilidadListBean implements HabilidadListFacade{
 	
 	@Autowired
 	private MongoTemplate mongoTemplate;
-	
-	public Habilidad findOne(String nombre){
-		return habilidadRepository.findByNombre(nombre);
-	}
 
 	@Override
 	public List<HabilidadDTO> getHabilidades(String carrera) {
@@ -81,5 +77,17 @@ public class HabilidadListBean implements HabilidadListFacade{
 		final List<ObjectId> ids = new ArrayList<>();
 		result.getMappedResults().forEach(r -> ids.add(r.getId()));
 		return ids;
+	}
+
+	@Override
+	public List<HabilidadDTO> getAll() {
+		final List<Habilidad> habilidades = habilidadRepository
+				.findAll();
+		final List<HabilidadDTO> habilidadesDto = new ArrayList<>();
+		
+		for (Habilidad habilidad : habilidades) {
+			habilidadesDto.add(MapEntities.mapHabilidadToDTO(habilidad));
+		}
+		return habilidadesDto;
 	}
 }

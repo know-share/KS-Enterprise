@@ -1,14 +1,14 @@
 /**
  * 
  */
-package com.knowshare.enterprise.bean.trabajoGrado;
+package com.knowshare.enterprise.bean.trabajogrado;
 
 import java.util.List;
 
 import com.knowshare.entities.academia.TrabajoGrado;
 
 /**
- * @author Pablo
+ * @author Miguel Montañez
  *
  */
 public interface TrabajoGradoFacade {

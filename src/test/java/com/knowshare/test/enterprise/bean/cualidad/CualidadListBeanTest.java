@@ -16,7 +16,7 @@ import com.knowshare.enterprise.bean.cualidad.CualidadListFacade;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
 /**
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 public class CualidadListBeanTest extends AbstractTest {

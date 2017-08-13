@@ -12,7 +12,7 @@ import com.knowshare.enterprise.repository.idea.TagRepository;
 import com.knowshare.entities.idea.Tag;
 
 /**
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 @Component

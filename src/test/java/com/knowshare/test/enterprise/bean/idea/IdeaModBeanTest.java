@@ -4,7 +4,9 @@
 package com.knowshare.test.enterprise.bean.idea;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 
@@ -27,7 +29,7 @@ import com.knowshare.enums.TipoOperacionEnum;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
 /**
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -78,8 +80,6 @@ public class IdeaModBeanTest extends AbstractTest {
 		
 		Idea consulted = mongoTemplate.findById(ideaNueva.getId(), Idea.class);
 		assertNotNull(consulted);
-		
-		dto.setId(ideaNueva.getId());
 	}
 	
 	@Test()
@@ -95,6 +95,19 @@ public class IdeaModBeanTest extends AbstractTest {
 		Idea ideaManaged = mongoTemplate.findById(idea.getId(), Idea.class);
 		assertNotNull(ideaManaged);
 		assertEquals(1, ideaManaged.getOperaciones().size());
+	}
+	
+	@Test
+	public void test03Compartir(){
+		final IdeaDTO dto = ideaModBean
+				.compartir(MapEntities.mapIdeaToDTO(idea), "Pablo.gaitan");
+		assertNotNull(dto);
+		
+		Idea ideaManaged = mongoTemplate.findById(dto.getId(), Idea.class);
+		assertNotNull(ideaManaged);
+		assertTrue(ideaManaged.isCompartida());
+		assertEquals("pablo.gaitan",ideaManaged.getUsuario().getUsername().toLowerCase());
+		assertNotEquals(idea.getId(), ideaManaged.getId());
 	}
 
 }

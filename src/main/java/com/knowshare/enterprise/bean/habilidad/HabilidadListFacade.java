@@ -15,13 +15,13 @@ import com.knowshare.entities.perfilusuario.Habilidad;
  */
 public interface HabilidadListFacade {
 	
-	Habilidad findOne(String nombre);
-	
 	List<HabilidadDTO> getHabilidades(String carrera);
 	
 	List<HabilidadDTO> getHabilidadesProfesionales(String carrera);
 	
 	List<ObjectId> buscarPorNombre(String nombre);
+	
+	List<HabilidadDTO> getAll();
 	
 	/**
 	 * Method not tested, this is for testing purpose

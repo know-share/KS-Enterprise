@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
@@ -44,6 +45,7 @@ import com.knowshare.entities.perfilusuario.Habilidad;
 import com.knowshare.entities.perfilusuario.Personalidad;
 import com.knowshare.entities.perfilusuario.Usuario;
 import com.knowshare.enums.PreferenciaIdeaEnum;
+import com.knowshare.enums.TipoHabilidadEnum;
 import com.knowshare.enums.TipoUsuariosEnum;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
@@ -252,6 +254,112 @@ public class UsuarioModBeanTest extends AbstractTest {
 				.find(new Query(Criteria.where("username").is("pablo.gaitan")), Usuario.class)).get(0);
 		assertNotNull(usuario);
 		assertEquals(0, usuario.getAmigos().size());
+	}
+	
+	@Test
+	public void test11ActualizarInfoAcademica(){
+		Usuario usuario = ((List<Usuario>)mongoTemplate
+				.find(new Query(Criteria.where("username").is("pablo.gaitan")), Usuario.class)).get(0);
+		final List<Habilidad> habilidades = mongoTemplate.find(new Query().addCriteria(Criteria.where("tipo").is("PROFESIONALES")
+				.andOperator(Criteria.where("carrera.id").is("idCarreraCivil"))), Habilidad.class);
+		final UsuarioDTO dto = MapEntities.mapUsuarioToDTO(usuario);
+		if(null != dto.getSegundaCarrera())
+			dto.getSegundaCarrera().setId("idCarreraCivil");
+		else
+			dto.setSegundaCarrera(new CarreraDTO()
+					.setId("idCarreraCivil"));
+		dto.getEnfasis().get(0).setNombre("Enfasis sistemas 2");
+		dto.getEnfasis().add(new Enfasis().setCarrera("Ingeniería civil").setNombre("Enfasis civil 2"));
+		dto.getEnfasis().add(null);
+		dto.getAreasConocimiento().add(new AreaConocimiento().setNombre("AC civil 1").setCarrera("Ingeniería civil")
+				.setPorcentaje(0d));
+		dto.getHabilidades().add(new HabilidadDTO().setAvales(0).setCarrera("Ingeniería civil").setNombre("Habilidad Profesional civil 1")
+				.setTipo(TipoHabilidadEnum.PROFESIONALES).setId(habilidades.get(0).getId()));
+		
+		assertTrue(usuarioModBean.actualizarInfoAcademica(dto));
+		
+		usuario = ((List<Usuario>)mongoTemplate
+				.find(new Query(Criteria.where("username").is("pablo.gaitan")), Usuario.class)).get(0);
+		assertEquals(2, usuario.getCarreras().size());
+		assertEquals("idCarreraCivil", usuario.getCarreras().get(1).getId());
+		
+		assertEquals(4, usuario.getEnfasis().size());
+		assertEquals("Enfasis sistemas 2", usuario.getEnfasis().get(0).getNombre());
+		assertEquals("Enfasis civil 2", usuario.getEnfasis().get(2).getNombre());
+		assertNull(usuario.getEnfasis().get(3));
+		
+		assertEquals(2, usuario.getAreasConocimiento().size());
+		assertEquals("AC civil 1", usuario.getAreasConocimiento().get(1).getNombre());
+		
+		assertEquals(3, usuario.getHabilidades().size());
+		assertEquals("Habilidad Profesional civil 1", usuario.getHabilidades().get(2).getHabilidad().getNombre());
+	}
+	
+	@Test
+	public void test12ActualizarHabilidad(){
+		Usuario usuario = ((List<Usuario>)mongoTemplate
+				.find(new Query(Criteria.where("username").is("pablo.gaitan")), Usuario.class)).get(0);
+		usuario.getHabilidades().clear();
+		assertTrue(usuarioModBean.actualizarHabilidadCualidad(MapEntities.mapUsuarioToDTO(usuario)));
+		
+		usuario = ((List<Usuario>)mongoTemplate
+				.find(new Query(Criteria.where("username").is("pablo.gaitan")), Usuario.class)).get(0);
+		assertEquals(0,usuario.getHabilidades().size());
+	}
+	
+	@Test
+	public void test13ActualizarCualidad(){
+		final List<Cualidad> cualidades = mongoTemplate.find(new Query(
+				new Criteria().orOperator(Criteria.where("nombre").is("Cualidad 3"),Criteria.where("nombre").is("Cualidad 4"))), Cualidad.class);
+		Usuario profesor = ((List<Usuario>)mongoTemplate
+				.find(new Query(Criteria.where("username").is(usuarioProfesor.getUsername())), Usuario.class)).get(0);
+		final UsuarioDTO dto = MapEntities.mapUsuarioToDTO(profesor);
+		dto.getCualidades().addAll(MapEntities.mapCualidadesToDTOs(cualidades));
+		assertTrue(usuarioModBean.actualizarHabilidadCualidad(dto));
+		
+		profesor = ((List<Usuario>)mongoTemplate
+				.find(new Query(Criteria.where("username").is(usuarioProfesor.getUsername())), Usuario.class)).get(0);
+		assertEquals(4, profesor.getCualidadesProfesor().size());
+		assertEquals("Cualidad 3", profesor.getCualidadesProfesor().get(2).getCualidad().getNombre());
+		assertEquals("Cualidad 4", profesor.getCualidadesProfesor().get(3).getCualidad().getNombre());
+	}
+	
+	@Test
+	public void test14ActualizarBasisEstudiante(){
+		Usuario estudiante = ((List<Usuario>)mongoTemplate
+				.find(new Query(Criteria.where("username").is(usuarioEstudiante.getUsername())), Usuario.class)).get(0);
+		estudiante.setApellido("This is a new last name")
+			.setNombre("This is a new name")
+			.setCorreo("correoforupdate@mail.com")
+			.setSemestre(8);
+		assertTrue(usuarioModBean.actualizarBasis(MapEntities.mapUsuarioToDTO(estudiante)));
+		
+		estudiante = ((List<Usuario>)mongoTemplate
+				.find(new Query(Criteria.where("username").is(usuarioEstudiante.getUsername())), Usuario.class)).get(0);
+		
+		assertEquals("This is a new last name", estudiante.getApellido());
+		assertEquals("This is a new name", estudiante.getNombre());
+		assertEquals("correoforupdate@mail.com", estudiante.getCorreo());
+		assertEquals(Integer.valueOf(8), estudiante.getSemestre());
+	}
+	
+	@Test
+	public void test15ActualizarBasisProfesor(){
+		Usuario profesor = ((List<Usuario>)mongoTemplate
+				.find(new Query(Criteria.where("username").is(usuarioProfesor.getUsername())), Usuario.class)).get(0);
+		profesor.setApellido("This is a new last name profesor")
+			.setNombre("This is a new name profesor")
+			.setCorreo("correoforupdateprofesor@mail.com")
+			.setGrupoInvestigacion("ISTAR");
+		assertTrue(usuarioModBean.actualizarBasis(MapEntities.mapUsuarioToDTO(profesor)));
+		
+		profesor = ((List<Usuario>)mongoTemplate
+				.find(new Query(Criteria.where("username").is(usuarioProfesor.getUsername())), Usuario.class)).get(0);
+		
+		assertEquals("This is a new last name profesor", profesor.getApellido());
+		assertEquals("This is a new name profesor", profesor.getNombre());
+		assertEquals("correoforupdateprofesor@mail.com", profesor.getCorreo());
+		assertEquals("ISTAR", profesor.getGrupoInvestigacion());
 	}
 	
 	private UsuarioDTO crearUsuarioEstudiante(List<HabilidadDTO> habilidadesDto, List<Gusto> gustos) {

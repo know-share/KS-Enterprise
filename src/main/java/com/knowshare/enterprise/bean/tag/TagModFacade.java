@@ -16,6 +16,6 @@ public interface TagModFacade {
 
 	boolean delete(String id);
 
-	boolean create (String id);
+	boolean create (String nombre);
 
 }
