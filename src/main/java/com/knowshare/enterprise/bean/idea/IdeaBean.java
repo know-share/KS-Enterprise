@@ -53,5 +53,12 @@ public class IdeaBean implements IdeaFacade{
 	public List<IdeaDTO> findByUsuarioProyecto(String username) {
 		return ideaList.findByUsuarioProyecto(username);
 	}
+
+	@Override
+	public List<OperacionIdea> findOpreaciones(String id, String tipo) {
+		return ideaList.findOpreaciones(id, tipo);
+	}
+	
+
 	
 }

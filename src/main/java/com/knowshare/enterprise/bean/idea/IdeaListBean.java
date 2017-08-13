@@ -96,6 +96,25 @@ public class IdeaListBean implements IdeaListFacade{
 		return dots;
 	}
 	
+	public List<OperacionIdea> findOpreaciones(String id,String tipo){
+		List<OperacionIdea> ret = new ArrayList<>();
+		Idea i = ideaRep.findOne(id);
+		if(tipo.equals("light")){
+			for (OperacionIdea op : i.getOperaciones()) {
+				if(op.getTipo().equals(TipoOperacionEnum.LIGHT)){
+					ret.add(op);
+				}
+			}
+		}else{
+			for (OperacionIdea op : i.getOperaciones()) {
+				if(op.getTipo().equals(TipoOperacionEnum.COMENTARIO)){
+					ret.add(op);
+				}
+			}
+		}
+		return ret;
+	}
+	
 	
 	
 
