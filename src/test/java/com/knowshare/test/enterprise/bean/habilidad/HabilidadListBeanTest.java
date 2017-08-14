@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.junit.AfterClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class HabilidadListBeanTest extends AbstractTest{
 	@Test
 	public void test01GetHabilidades(){
 		List<HabilidadDTO> habilidades = habilidadListBean
-				.getHabilidades("Ingeniería de sistemas");
+				.getHabilidades("idCarreraSistemas");
 		
 		List<HabilidadDTO> habilidadesPersonales = new ArrayList<>();
 		List<HabilidadDTO> habilidadesProfesionales = new ArrayList<>();
@@ -48,13 +49,25 @@ public class HabilidadListBeanTest extends AbstractTest{
 	@Test
 	public void test02GetHabilidadesProfesionales(){
 		List<HabilidadDTO> habilidades = habilidadListBean
-				.getHabilidadesProfesionales("Ingeniería civil");
+				.getHabilidadesProfesionales("idCarreraCivil");
 		
 		for (HabilidadDTO habilidadDTO : habilidades) {
 			habilidadMapTest(habilidadDTO);
 		}
 		
 		assertEquals(2, habilidades.size());
+	}
+	
+	@Test
+	public void test03BuscarPorNombre(){
+		List<ObjectId> ids = habilidadListBean.buscarPorNombre("profesional");
+		assertEquals(4,ids.size());
+		
+		ids = habilidadListBean.buscarPorNombre("personal");
+		assertEquals(3,ids.size());
+		
+		ids = habilidadListBean.buscarPorNombre("sistemas");
+		assertEquals(2,ids.size());
 	}
 	
 	private void habilidadMapTest(HabilidadDTO dto){

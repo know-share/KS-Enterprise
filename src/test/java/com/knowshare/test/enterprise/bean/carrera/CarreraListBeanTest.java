@@ -18,7 +18,7 @@ import com.knowshare.enterprise.bean.carrera.CarreraListFacade;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
 /**
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 public class CarreraListBeanTest extends AbstractTest{

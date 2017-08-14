@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.knowshare.entities.idea.Tag;
 
 /**
@@ -27,5 +28,20 @@ public class TagBean implements TagFacade{
 		return tagListBean.findAll();
 	}
 
+	@Override
+	public boolean create (String nombre) {
+		return tagModBean.create(nombre);
+	}
+
+	@Override
+	public boolean update(Tag tag) {
+		return tagModBean.update(tag);
+	}
+
+	@Override
+	public boolean delete(String tag) {
+		return tagModBean.delete(tag);
+	}
+	
 	
 }

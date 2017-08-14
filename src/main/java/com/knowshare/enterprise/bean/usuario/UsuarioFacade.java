@@ -4,12 +4,15 @@
 package com.knowshare.enterprise.bean.usuario;
 
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import com.knowshare.dto.perfilusuario.ImagenDTO;
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
 import com.knowshare.entities.perfilusuario.Usuario;
-import com.knowshare.enums.TipoUsuariosEnum;
 
 /**
  * Reune los métodos de negocio de una entidad. Operaciones de
@@ -43,11 +46,23 @@ public interface UsuarioFacade {
 	
 	boolean eliminarAmigo(String username, String usernameEliminar);
 	
-	List<UsuarioDTO> getMyNoConnections(String username,TipoUsuariosEnum tipo);
+	List<UsuarioDTO> getMyNoConnections(String username);
 	
 	boolean actualizarInfoAcademica(UsuarioDTO usuario);
 	
 	boolean actualizarHabilidadCualidad(UsuarioDTO usuario);
 	
 	boolean actualizarBasis(UsuarioDTO usuario);
+	
+	List<UsuarioDTO> buscarPorNombre(UsuarioDTO usuarioActual,String param);
+	
+	@SuppressWarnings("rawtypes")
+	List<Map> buscarPorHabilidad(String param);
+	
+	@SuppressWarnings("rawtypes")
+	List<Map> buscarPorAreaConocimiento(String param);
+	
+	boolean uploadImage(String username, MultipartFile file);
+	
+	ImagenDTO getImage(String username);
 }

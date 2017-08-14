@@ -8,7 +8,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * @author pablo
+ * @author Pablo Gaitan
  *
  */
 public class UtilsPassword {

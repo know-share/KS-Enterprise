@@ -15,8 +15,12 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import org.springframework.util.ResourceUtils;
 
+/**
+ * 
+ * @author Miguel Montañez
+ *
+ */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = ConfigContext.class, loader = AnnotationConfigContextLoader.class)
 @PropertySource("classpath:database.properties")
@@ -44,7 +48,7 @@ public abstract class AbstractTest {
 	public static void tearDown() throws IOException {
 		mongoTemplateStatic.getDb().dropDatabase();
 		String command = "mongorestore --host " +envStatic.getProperty("db.host") + " --port " + envStatic.getProperty("db.port")
-        	+ " -d " + envStatic.getProperty("db.name") +" "+ ResourceUtils.getURL("classpath:").getPath()+envStatic.getProperty("db.name");
+        	+ " -d " + envStatic.getProperty("db.name") +" ./target/"+envStatic.getProperty("db.name");
 		Process p = Runtime.getRuntime().exec(command);
 		while(p.isAlive());
 	}

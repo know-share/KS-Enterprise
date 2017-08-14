@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.index.TextIndexDefinition;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.util.ResourceUtils;
 
@@ -24,23 +25,37 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.knowshare.enterprise.bean.carrera.CarreraListBean;
 import com.knowshare.enterprise.bean.carrera.CarreraListFacade;
+import com.knowshare.enterprise.bean.carrera.CarreraModBean;
+import com.knowshare.enterprise.bean.carrera.CarreraModFacade;
 import com.knowshare.enterprise.bean.cualidad.CualidadListBean;
 import com.knowshare.enterprise.bean.cualidad.CualidadListFacade;
 import com.knowshare.enterprise.bean.gusto.GustoListBean;
 import com.knowshare.enterprise.bean.gusto.GustoListFacade;
+import com.knowshare.enterprise.bean.habilidad.HabilidadBean;
+import com.knowshare.enterprise.bean.habilidad.HabilidadFacade;
 import com.knowshare.enterprise.bean.habilidad.HabilidadListBean;
 import com.knowshare.enterprise.bean.habilidad.HabilidadListFacade;
+import com.knowshare.enterprise.bean.habilidad.HabilidadModBean;
+import com.knowshare.enterprise.bean.habilidad.HabilidadModFacade;
 import com.knowshare.enterprise.bean.idea.IdeaListBean;
 import com.knowshare.enterprise.bean.idea.IdeaListFacade;
 import com.knowshare.enterprise.bean.idea.IdeaModBean;
 import com.knowshare.enterprise.bean.idea.IdeaModFacade;
 import com.knowshare.enterprise.bean.personalidad.PersonalidadListBean;
 import com.knowshare.enterprise.bean.personalidad.PersonalidadListFacade;
+import com.knowshare.enterprise.bean.tag.TagListBean;
+import com.knowshare.enterprise.bean.tag.TagListFacade;
+import com.knowshare.enterprise.bean.tag.TagModBean;
+import com.knowshare.enterprise.bean.tag.TagModFacade;
+import com.knowshare.enterprise.bean.trabajogrado.TrabajoGradoListBean;
+import com.knowshare.enterprise.bean.trabajogrado.TrabajoGradoListFacade;
 import com.knowshare.enterprise.bean.usuario.UsuarioListBean;
 import com.knowshare.enterprise.bean.usuario.UsuarioListFacade;
 import com.knowshare.enterprise.bean.usuario.UsuarioModBean;
 import com.knowshare.enterprise.bean.usuario.UsuarioModFacade;
 import com.knowshare.entities.academia.Carrera;
+import com.knowshare.entities.academia.TrabajoGrado;
+import com.knowshare.entities.idea.Tag;
 import com.knowshare.entities.perfilusuario.Cualidad;
 import com.knowshare.entities.perfilusuario.Gusto;
 import com.knowshare.entities.perfilusuario.Habilidad;
@@ -52,7 +67,7 @@ import com.mongodb.MongoClient;
  * Configuración de contexto para las pruebas. Se cargan los bean de negocio que
  * serán necesarios para la ejecución de las pruebas
  * 
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 @Lazy
@@ -80,6 +95,10 @@ public class ConfigContext {
 				ResourceUtils.getURL("classpath:data/personalidades.json").openStream(),Personalidad[].class);
 		Usuario[] usuarios = mapper.readValue(
 				ResourceUtils.getURL("classpath:data/usuarios.json").openStream(),Usuario[].class);
+		Tag[] tags = mapper.readValue(
+				ResourceUtils.getURL("classpath:data/tags.json").openStream(),Tag[].class);
+		TrabajoGrado[] trabajoGrados = mapper.readValue(
+				ResourceUtils.getURL("classpath:data/trabajo_grados.json").openStream(),TrabajoGrado[].class);
 		
 		this.mongoTemplate().insertAll(Arrays.asList(carreras));
 		this.mongoTemplate().insertAll(Arrays.asList(habilidades));
@@ -87,9 +106,12 @@ public class ConfigContext {
 		this.mongoTemplate().insertAll(Arrays.asList(gustos));
 		this.mongoTemplate().insertAll(Arrays.asList(personalidades));
 		this.mongoTemplate().insertAll(Arrays.asList(usuarios));
+		this.mongoTemplate().insertAll(Arrays.asList(tags));
+		this.mongoTemplate().insertAll(Arrays.asList(trabajoGrados));
 		
+		this.createIndexes();
 		String command = "mongodump --host " +env.getProperty("db.host") + " --port " + env.getProperty("db.port")
-	            + " -d " + env.getProperty("db.name") +" -o \""+ ResourceUtils.getURL("classpath:").getPath() +"\"";
+	            + " -d " + env.getProperty("db.name") +" -o \"./target/\"";
 		Runtime.getRuntime().exec(command);
 	}
 	
@@ -105,6 +127,16 @@ public class ConfigContext {
 	public HabilidadListFacade getHabilidadListFacade() {
 		return new HabilidadListBean();
 	}
+	
+	@Bean
+	public HabilidadModFacade getHabilidadModFacade() {
+		return new HabilidadModBean();
+	}
+	
+	@Bean
+	public HabilidadFacade getHabilidadFacade(){
+		return new HabilidadBean();
+	}
 
 	@Bean
 	public IdeaModFacade getIdeaModFacade() {
@@ -119,6 +151,11 @@ public class ConfigContext {
 	@Bean
 	public CarreraListFacade getCarreraListFacade(){
 		return new CarreraListBean();
+	}
+	
+	@Bean
+	public CarreraModFacade getCarreraModFacade(){
+		return new CarreraModBean();
 	}
 	
 	@Bean
@@ -146,8 +183,44 @@ public class ConfigContext {
 		return new PersonalidadListBean();
 	}
 	
+	@Bean
+	public TagListFacade getTagListFacade(){
+		return new TagListBean();
+	}
+	
+	@Bean
+	public TagModFacade getTagModFacade(){
+		return new TagModBean();
+	}
+	
+	@Bean
+	public TrabajoGradoListFacade getTrabajoGradoListFacade(){
+		return new TrabajoGradoListBean();
+	}
+	
 	@PreDestroy
 	public void destroy() throws IOException{
 		this.mongoTemplate().getDb().dropDatabase();
+	}
+	
+	// ---------------------------
+	// PRIVATE METHODS
+	// ---------------------------
+	
+	private void createIndexes(){
+		//db.habilidad.createIndex({'nombre':'text'},{ default_language: 'spanish' });
+		TextIndexDefinition textIndex = TextIndexDefinition.builder()
+				.onField("nombre")
+				.withDefaultLanguage("spanish")
+				.build();
+		this.mongoTemplate().indexOps(Habilidad.class).ensureIndex(textIndex);
+		
+		//db.usuario.createIndex( { 'nombre': 'text','apellido':'text' },{ default_language: 'spanish' } );
+		textIndex = TextIndexDefinition.builder()
+				.onField("nombre")
+				.onField("apellido")
+				.withDefaultLanguage("spanish")
+				.build();
+		this.mongoTemplate().indexOps(Usuario.class).ensureIndex(textIndex);
 	}
 }

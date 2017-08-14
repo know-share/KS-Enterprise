@@ -4,19 +4,21 @@
 package com.knowshare.enterprise.bean.usuario;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.knowshare.dto.perfilusuario.ImagenDTO;
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
 import com.knowshare.entities.perfilusuario.Usuario;
-import com.knowshare.enums.TipoUsuariosEnum;
 
 /**
  * {@link UsuarioFacade}
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 @Component
@@ -82,8 +84,8 @@ public class UsuarioBean implements UsuarioFacade {
 	}
 
 	@Override
-	public List<UsuarioDTO> getMyNoConnections(String username,TipoUsuariosEnum tipo) {
-		return this.usuarioListBean.getMyNoConnections(username, tipo);
+	public List<UsuarioDTO> getMyNoConnections(String username) {
+		return this.usuarioListBean.getMyNoConnections(username);
 	}
 
 	@Override
@@ -105,5 +107,31 @@ public class UsuarioBean implements UsuarioFacade {
 	public boolean isCorreoTaken(String correo) {
 		return this.usuarioListBean.isCorreoTaken(correo);
 	}
-	
+
+	@Override
+	public List<UsuarioDTO> buscarPorNombre(UsuarioDTO usuarioActual, String param) {
+		return this.usuarioListBean.buscarPorNombre(usuarioActual,param);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public List<Map> buscarPorHabilidad(String param) {
+		return this.usuarioListBean.buscarPorHabilidad(param);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public List<Map> buscarPorAreaConocimiento(String param) {
+		return this.usuarioListBean.buscarPorAreaConocimiento(param);
+	}
+
+	@Override
+	public boolean uploadImage(String username, MultipartFile file) {
+		return this.usuarioModBean.uploadImage(username, file);
+	}
+
+	@Override
+	public ImagenDTO getImage(String username) {
+		return this.usuarioListBean.getImage(username);
+	}
 }

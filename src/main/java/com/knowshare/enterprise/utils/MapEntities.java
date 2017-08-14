@@ -20,24 +20,24 @@ import com.knowshare.entities.ludificacion.HabilidadAval;
 import com.knowshare.entities.perfilusuario.Cualidad;
 import com.knowshare.entities.perfilusuario.Habilidad;
 import com.knowshare.entities.perfilusuario.Usuario;
+import com.knowshare.enums.PreferenciaIdeaEnum;
 import com.knowshare.enums.TipoHabilidadEnum;
 import com.knowshare.enums.TipoIdeaEnum;
 
 /**
- * @author miguel
+ * Clase encargada de hacer los mapeos de entidades a dtos
+ * o viceversa.
+ * @author Miguel Montañez
  *
  */
 public class MapEntities {
 	
+	private MapEntities(){}
+	
 	public static List<CarreraDTO> mapCarrerasToDTOs(List<Carrera> carreras){
 		final List<CarreraDTO> dtos = new ArrayList<>();
-		for (Carrera carrera : carreras) {
-			CarreraDTO dto = new CarreraDTO()
-					.setFacultad(carrera.getFacultad())
-					.setNombre(carrera.getNombre())
-					.setCarrerasAfines(carrerasAfinesNames(carrera.getCarrerasAfines()));
-			dtos.add(dto);
-		}
+		for (Carrera carrera : carreras)
+			dtos.add(mapCarreraToDTO(carrera));
 		return dtos;
 	}
 	
@@ -46,13 +46,18 @@ public class MapEntities {
 			return null;
 		return new CarreraDTO()
 				.setFacultad(carrera.getFacultad())
+				.setId(carrera.getId())
 				.setNombre(carrera.getNombre())
-				.setCarrerasAfines(carrerasAfinesNames(carrera.getCarrerasAfines()));
+				.setCarrerasAfines(carrerasAfinesNames(carrera.getCarrerasAfines()))
+				.setEnfasis(carrera.getEnfasis());
 	}
 	
 	public static Carrera mapDtoToCarrera(CarreraDTO dto){
 		if(null != dto)
-			return new Carrera().setNombre(dto.getNombre());
+			return new Carrera().setId(dto.getId())
+					.setFacultad(dto.getFacultad())
+					.setNombre(dto.getNombre())
+					.setEnfasis(dto.getEnfasis());
 		return null;
 	}
 	
@@ -78,7 +83,6 @@ public class MapEntities {
 				.setId(habilidad.getId())
 				.setNombre(habilidad.getNombre())
 				.setTipo(habilidad.getTipo());
-		
 		if(habilidad.getTipo().equals(TipoHabilidadEnum.PROFESIONALES))
 			dto.setCarrera(habilidad.getCarrera().getNombre());
 				
@@ -97,6 +101,14 @@ public class MapEntities {
 			habilidades.add(mapDtoToHabilidadAval(dto));
 		return habilidades;
 	}
+	
+	/*public static Habilidad mapDtoToHabilidad(HabilidadDTO habilidad){
+		return new Habilidad()
+				.setTipo(habilidad.getTipo())
+				.setNombre(habilidad.getNombre())
+				.setId(habilidad.getId())
+				.setCarrera( new DBRef("carrera", habilidad.getCarrera()));
+	}*/
 	
 	public static List<CualidadAval> mapDtosToCualidadAval(List<CualidadDTO> dtos){
 		final List<CualidadAval> cualidades = new ArrayList<>();
@@ -129,6 +141,7 @@ public class MapEntities {
 		IdeaDTO dto = new IdeaDTO();
 		dto.setId(idea.getId());
 		dto.setAlcance(idea.getAlcance());
+		dto.setNumeroEstudiantes(idea.getNumeroEstudiantes());
 		dto.setComentarios(idea.getComentarios());
 		dto.setContenido(idea.getContenido());
 		dto.setEstado(idea.getEstado());
@@ -136,7 +149,18 @@ public class MapEntities {
 		dto.setProblematica(idea.getProblematica());
 		dto.setTags(idea.getTags());
 		dto.setTipo(idea.getTipo());
+		dto.setFechaCreacion(idea.getFechaCreacion());
 		dto.setUsuario(idea.getUsuario().getUsername());
+		dto.setCompartida(idea.isCompartida());
+		dto.setUsuarioOriginal(idea.getUsuarioOriginal());
+		//ya le dio memoria al arreglo del dto mkon?HP
+		dto.setIdeasProyecto(new ArrayList<>());	
+		if(idea.getTipo().equals(TipoIdeaEnum.PR)){
+			for (Idea i : idea.getIdeasProyecto()) {
+				dto.getIdeasProyecto().add(mapIdeaToDTO(i));
+			}
+		}
+		dto.setTg(idea.getTg());
 		return dto;
 	}
 	
@@ -151,12 +175,19 @@ public class MapEntities {
 				idea.getIdeasProyecto().add(mapDtoToIdea(i,usuario));
 			}
 		}
+		if(dto.getTipo().equals(TipoIdeaEnum.PC)){
+			idea.setTg(dto.getTg());
+		}
 		idea.setLugarEscritura(dto.getLugarEscritura());
 		idea.setNumeroEstudiantes(dto.getNumeroEstudiantes());
 		idea.setProblematica(dto.getProblematica());
 		idea.setTags(dto.getTags());
 		idea.setTipo(dto.getTipo());
+		idea.setFechaCreacion(dto.getFechaCreacion());
 		idea.setUsuario(usuario);
+		idea.setCompartida(dto.isCompartida());
+		idea.setUsuarioOriginal(dto.getUsuarioOriginal());
+		idea.setTg(dto.getTg());
 		return idea;
 	}
 	
@@ -176,13 +207,14 @@ public class MapEntities {
 				.setCorreo(dto.getEmail())
 				.setUsername(dto.getUsername())
 				.setPassword(passwordHashed)
+				.setGenero(dto.getGenero())
 				.setPersonalidad(dto.getPersonalidad())
 				.setEnfasis(dto.getEnfasis())
 				.setAreasConocimiento(dto.getAreasConocimiento())
 				.setHabilidades(habilidades)
 				.setCarreras(carreras)
 				.setPreferencias(new PreferenciasUsuario()
-						.setPreferenciaIdea(dto.getPreferenciaIdea()))
+						.setPreferenciaIdea(PreferenciaIdeaEnum.ORDEN_CRONOLOGICO))
 				.setTipo(dto.getTipoUsuario());
 		
 		switch(dto.getTipoUsuario()){
@@ -244,8 +276,8 @@ public class MapEntities {
 			cualidades.add(mapDtoToCualidadAval(cualidad));
 		}
 		usuario.setCualidadesProfesor(cualidades)
-			.setDisponibilidad(new String(""))
-			.setGrupoInvestigacion(new String(""))
+			.setDisponibilidad("")
+			.setGrupoInvestigacion(dto.getGrupoInvestigacion())
 			.setTrabajosGradoDirigidos(new ArrayList<>());
 	}
 	
@@ -290,6 +322,8 @@ public class MapEntities {
 			.setId(usuario.getId())
 			.setEmail(usuario.getCorreo())
 			.setSemestre(usuario.getSemestre())
+			.setGrupoInvestigacion(usuario.getGrupoInvestigacion())
+			.setGenero(usuario.getGenero())
 			.setCantidadAmigos(usuario.getAmigos().size())
 			.setCantidadSeguidores(usuario.getSeguidores().size())
 			.setCarrera(mapCarreraToDTO(usuario.getCarreras().get(0)))
@@ -307,7 +341,8 @@ public class MapEntities {
 			.setSiguiendo(usuario.getSiguiendo())
 			.setSolicitudesAmistad(usuario.getSolicitudesAmistad())
 			.setTgDirigidos(usuario.getTrabajosGradoDirigidos())
-			.setFormacionAcademica(usuario.getFormacionesAcademicas());
+			.setFormacionAcademica(usuario.getFormacionesAcademicas())
+			.setImagen(usuario.getImagen() != null);
 		switch(usuario.getTipo()){
 			case PROFESOR:
 				dto.setCualidades(mapAvalesCualidad(usuario.getCualidadesProfesor()));

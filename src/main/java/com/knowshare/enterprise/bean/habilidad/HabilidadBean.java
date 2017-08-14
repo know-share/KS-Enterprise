@@ -5,6 +5,7 @@ package com.knowshare.enterprise.bean.habilidad;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -42,5 +43,30 @@ public class HabilidadBean implements HabilidadFacade{
 	@Override
 	public List<HabilidadDTO> getHabilidadesProfesionales(String carrera) {
 		return habilidadListBean.getHabilidadesProfesionales(carrera);
+	}
+
+	@Override
+	public List<ObjectId> buscarPorNombre(String nombre) {
+		return this.habilidadListBean.buscarPorNombre(nombre);
+	}
+
+	@Override
+	public List<HabilidadDTO> getAll() {
+		return habilidadListBean.getAll();
+	}
+
+	@Override
+	public boolean update(HabilidadDTO habilidad) {
+		return habilidadModBean.update(habilidad);
+	}
+
+	@Override
+	public boolean delete(ObjectId id) {
+		return habilidadModBean.delete(id);
+	}
+
+	@Override
+	public boolean create(HabilidadDTO habilidad) {
+		return habilidadModBean.create(habilidad);
 	}
 }

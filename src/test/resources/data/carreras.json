@@ -1,5 +1,6 @@
 [
 	{
+		"id": "idCarreraSistemas",
 		"nombre": "Ingeniería de sistemas",
 		"facultad": "Ingeniería",
 		"carrerasAfines": [],
@@ -16,6 +17,7 @@
 		]
 	},
 	{
+		"id": "idCarreraCivil",
 		"nombre": "Ingeniería civil",
 		"facultad": "Ingeniería",
 		"carrerasAfines": [],

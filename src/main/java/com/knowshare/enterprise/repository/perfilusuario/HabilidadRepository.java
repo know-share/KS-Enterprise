@@ -18,7 +18,7 @@ import com.knowshare.entities.perfilusuario.Habilidad;
  *
  */
 @Repository
-public interface HabilidadRepository extends MongoRepository<Habilidad, ObjectId>{
+public interface HabilidadRepository extends MongoRepository<Habilidad, String>{
 	
 	@Query(value="{$or:[{'tipo':'PERSONALES'},{'carrera.$id':?0, 'tipo':'PROFESIONALES'}]}")
 	List<Habilidad> getHabilidades(String carrera);
@@ -26,6 +26,5 @@ public interface HabilidadRepository extends MongoRepository<Habilidad, ObjectId
 	@Query("{'tipo':'PROFESIONALES','carrera.$id':?0}")
 	List<Habilidad> getHabilidadesProfesionales(String carrera);
 	
-	Habilidad findByNombre(String nombre);
-
+	long removeById(ObjectId id);
 }

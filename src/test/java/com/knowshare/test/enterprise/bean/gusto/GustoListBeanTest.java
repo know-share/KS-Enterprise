@@ -16,7 +16,7 @@ import com.knowshare.entities.perfilusuario.Gusto;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
 /**
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 public class GustoListBeanTest extends AbstractTest {
