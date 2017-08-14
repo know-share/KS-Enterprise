@@ -1,5 +1,7 @@
 package com.knowshare.enterprise.bean.habilidad;
 
+import org.bson.types.ObjectId;
+
 import com.knowshare.dto.perfilusuario.HabilidadDTO;
 
 /**
@@ -15,6 +17,6 @@ public interface HabilidadModFacade {
 	 */
 	void createHabilidad(String nombre);
 	boolean update (HabilidadDTO habilidad);
-	boolean delete(String id);
+	boolean delete(ObjectId id);
 	boolean create (HabilidadDTO habilidad);
 }

@@ -12,7 +12,7 @@ import org.junit.AfterClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.knowshare.enterprise.bean.trabajogrado.TrabajoGradoListFacade;
+import com.knowshare.enterprise.bean.trabajoGrado.TrabajoGradoListFacade;
 import com.knowshare.entities.academia.TrabajoGrado;
 import com.knowshare.test.enterprise.general.AbstractTest;
 

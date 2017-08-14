@@ -61,7 +61,7 @@ public class HabilidadBean implements HabilidadFacade{
 	}
 
 	@Override
-	public boolean delete(String id) {
+	public boolean delete(ObjectId id) {
 		return habilidadModBean.delete(id);
 	}
 

@@ -31,7 +31,7 @@ public interface HabilidadFacade {
 	
 	boolean update (HabilidadDTO habilidad);
 	
-	boolean delete(String id);
+	boolean delete(ObjectId id);
 	
 	boolean create (HabilidadDTO habilidad);
 }

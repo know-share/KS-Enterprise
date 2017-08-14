@@ -36,14 +36,8 @@ public class MapEntities {
 	
 	public static List<CarreraDTO> mapCarrerasToDTOs(List<Carrera> carreras){
 		final List<CarreraDTO> dtos = new ArrayList<>();
-		for (Carrera carrera : carreras) {
-			CarreraDTO dto = new CarreraDTO()
-					.setId(carrera.getId())
-					.setFacultad(carrera.getFacultad())
-					.setNombre(carrera.getNombre())
-					.setCarrerasAfines(carrerasAfinesNames(carrera.getCarrerasAfines()));
-			dtos.add(dto);
-		}
+		for (Carrera carrera : carreras)
+			dtos.add(mapCarreraToDTO(carrera));
 		return dtos;
 	}
 	
@@ -54,14 +48,16 @@ public class MapEntities {
 				.setFacultad(carrera.getFacultad())
 				.setId(carrera.getId())
 				.setNombre(carrera.getNombre())
-				.setCarrerasAfines(carrerasAfinesNames(carrera.getCarrerasAfines()));
+				.setCarrerasAfines(carrerasAfinesNames(carrera.getCarrerasAfines()))
+				.setEnfasis(carrera.getEnfasis());
 	}
 	
 	public static Carrera mapDtoToCarrera(CarreraDTO dto){
 		if(null != dto)
 			return new Carrera().setId(dto.getId())
 					.setFacultad(dto.getFacultad())
-					.setNombre(dto.getNombre());
+					.setNombre(dto.getNombre())
+					.setEnfasis(dto.getEnfasis());
 		return null;
 	}
 	

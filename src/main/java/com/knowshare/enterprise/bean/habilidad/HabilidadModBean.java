@@ -48,9 +48,8 @@ public class HabilidadModBean implements HabilidadModFacade{
 	}
 
 	@Override
-	public boolean delete(String id) {
-		ObjectId ob = new ObjectId(id); // acá ayuda
-		return habilidadRepository.removeById(ob)==1;
+	public boolean delete(ObjectId id) {
+		return habilidadRepository.removeById(id)==1;
 	}
 
 	
