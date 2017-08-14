@@ -8,11 +8,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
+import com.knowshare.enums.PreferenciaIdeaEnum;
 
 /**
  * Se encarga de operaciones que hagan modificaciones sobre
  * la entidad Usuario.
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 public interface UsuarioModFacade {
@@ -40,4 +41,6 @@ public interface UsuarioModFacade {
 	boolean actualizarBasis(UsuarioDTO usuario);
 	
 	boolean uploadImage(String username, MultipartFile file);
+	
+	boolean updatePreferenciaIdea(String username, PreferenciaIdeaEnum preferencia);
 }

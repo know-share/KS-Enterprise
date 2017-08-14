@@ -153,7 +153,6 @@ public class MapEntities {
 		dto.setUsuario(idea.getUsuario().getUsername());
 		dto.setCompartida(idea.isCompartida());
 		dto.setUsuarioOriginal(idea.getUsuarioOriginal());
-		//ya le dio memoria al arreglo del dto mkon?HP
 		dto.setIdeasProyecto(new ArrayList<>());	
 		if(idea.getTipo().equals(TipoIdeaEnum.PR)){
 			for (Idea i : idea.getIdeasProyecto()) {
@@ -342,6 +341,7 @@ public class MapEntities {
 			.setSolicitudesAmistad(usuario.getSolicitudesAmistad())
 			.setTgDirigidos(usuario.getTrabajosGradoDirigidos())
 			.setFormacionAcademica(usuario.getFormacionesAcademicas())
+			.setPreferenciaIdea(usuario.getPreferencias().getPreferenciaIdea())
 			.setImagen(usuario.getImagen() != null);
 		switch(usuario.getTipo()){
 			case PROFESOR:

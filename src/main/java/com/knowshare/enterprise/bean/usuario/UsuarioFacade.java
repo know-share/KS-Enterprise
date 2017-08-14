@@ -13,11 +13,12 @@ import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
 import com.knowshare.entities.perfilusuario.Usuario;
+import com.knowshare.enums.PreferenciaIdeaEnum;
 
 /**
  * Reune los métodos de negocio de una entidad. Operaciones de
  * listado y de modificaciones.
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 public interface UsuarioFacade {
@@ -65,4 +66,6 @@ public interface UsuarioFacade {
 	boolean uploadImage(String username, MultipartFile file);
 	
 	ImagenDTO getImage(String username);
+	
+	boolean updatePreferenciaIdea(String username, PreferenciaIdeaEnum preferencia);
 }

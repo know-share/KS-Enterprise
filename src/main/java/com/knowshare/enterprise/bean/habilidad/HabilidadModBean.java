@@ -16,10 +16,8 @@ import com.knowshare.enterprise.repository.perfilusuario.HabilidadRepository;
 import com.knowshare.entities.academia.Carrera;
 import com.knowshare.entities.perfilusuario.Habilidad;
 
-
-
 /**
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 @Component
@@ -56,7 +54,7 @@ public class HabilidadModBean implements HabilidadModFacade{
 	@Override
 	public boolean create(HabilidadDTO habilidad) {
 		Habilidad habilidadOriginal = new Habilidad();
-		if(habilidadOriginal!=null) {
+		if(habilidad!=null) {
 			habilidadOriginal.setNombre(habilidad.getNombre());
 			habilidadOriginal.setTipo(habilidad.getTipo());
 			habilidadOriginal.setCarrera( new Carrera().setId(habilidad.getIdCarrera()));

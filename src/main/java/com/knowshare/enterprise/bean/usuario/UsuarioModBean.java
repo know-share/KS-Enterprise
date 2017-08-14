@@ -32,12 +32,13 @@ import com.knowshare.entities.academia.TrabajoGrado;
 import com.knowshare.entities.perfilusuario.ImageProfile;
 import com.knowshare.entities.perfilusuario.InfoUsuario;
 import com.knowshare.entities.perfilusuario.Usuario;
+import com.knowshare.enums.PreferenciaIdeaEnum;
 import com.knowshare.enums.TipoImagenEnum;
 import com.mongodb.DBRef;
 
 /**
  * {@link UsuarioModFacade}
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 @Component
@@ -285,5 +286,12 @@ public class UsuarioModBean implements UsuarioModFacade {
 			}
 		}
 		return false;
+	}
+	
+	public boolean updatePreferenciaIdea(String username, PreferenciaIdeaEnum preferencia){
+		final Update update = new Update();
+		update.set("preferencias.preferenciaIdea", preferencia);
+		return mongoTemplate.updateFirst(new Query(Criteria.where("username").is(username)), 
+				update, Usuario.class).getN() > 0;
 	}
 }
