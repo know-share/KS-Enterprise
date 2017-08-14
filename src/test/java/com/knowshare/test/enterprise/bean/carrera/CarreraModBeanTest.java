@@ -59,6 +59,7 @@ public class CarreraModBeanTest extends AbstractTest{
 		final CarreraDTO dto = new CarreraDTO()
 				.setId(carreras.get(0).getId())
 				.setNombre("Carrera mod Bean updated")
+				.setEnfasis(carreras.get(0).getEnfasis())
 				.setFacultad("Facultad carrera mod bean updated");
 		
 		final boolean result = carreraModBean.update(dto);

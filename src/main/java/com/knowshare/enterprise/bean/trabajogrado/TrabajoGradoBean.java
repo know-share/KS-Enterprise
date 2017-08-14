@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.knowshare.enterprise.bean.trabajoGrado;
+package com.knowshare.enterprise.bean.trabajogrado;
 
 import java.util.List;
 
