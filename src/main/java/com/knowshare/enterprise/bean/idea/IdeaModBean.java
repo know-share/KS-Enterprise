@@ -19,7 +19,7 @@ import com.knowshare.entities.idea.OperacionIdea;
 import com.knowshare.enums.TipoOperacionEnum;
 
 /**
- * @author HP
+ * @author Pablo Gaitán
  *
  */
 @Component

@@ -55,6 +55,7 @@ import com.knowshare.enterprise.bean.usuario.UsuarioModBean;
 import com.knowshare.enterprise.bean.usuario.UsuarioModFacade;
 import com.knowshare.entities.academia.Carrera;
 import com.knowshare.entities.academia.TrabajoGrado;
+import com.knowshare.entities.idea.Idea;
 import com.knowshare.entities.idea.Tag;
 import com.knowshare.entities.perfilusuario.Cualidad;
 import com.knowshare.entities.perfilusuario.Gusto;
@@ -99,6 +100,8 @@ public class ConfigContext {
 				ResourceUtils.getURL("classpath:data/tags.json").openStream(),Tag[].class);
 		TrabajoGrado[] trabajoGrados = mapper.readValue(
 				ResourceUtils.getURL("classpath:data/trabajo_grados.json").openStream(),TrabajoGrado[].class);
+		Idea[] ideas = mapper.readValue(
+				ResourceUtils.getURL("classpath:data/ideas.json").openStream(),Idea[].class);
 		
 		this.mongoTemplate().insertAll(Arrays.asList(carreras));
 		this.mongoTemplate().insertAll(Arrays.asList(habilidades));
@@ -108,6 +111,7 @@ public class ConfigContext {
 		this.mongoTemplate().insertAll(Arrays.asList(usuarios));
 		this.mongoTemplate().insertAll(Arrays.asList(tags));
 		this.mongoTemplate().insertAll(Arrays.asList(trabajoGrados));
+		this.mongoTemplate().insertAll(Arrays.asList(ideas));
 		
 		this.createIndexes();
 		String command = "mongodump --host " +env.getProperty("db.host") + " --port " + env.getProperty("db.port")

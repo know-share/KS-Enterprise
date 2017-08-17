@@ -55,10 +55,7 @@ public class IdeaBean implements IdeaFacade{
 	}
 
 	@Override
-	public List<OperacionIdea> findOpreaciones(String id, String tipo) {
-		return ideaList.findOpreaciones(id, tipo);
+	public List<OperacionIdea> findOperaciones(String id, String tipo) {
+		return ideaList.findOperaciones(id, tipo);
 	}
-	
-
-	
 }

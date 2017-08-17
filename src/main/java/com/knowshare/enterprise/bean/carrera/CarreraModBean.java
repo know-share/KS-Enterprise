@@ -16,6 +16,7 @@ import com.knowshare.dto.academia.CarreraDTO;
 import com.knowshare.enterprise.repository.academia.CarreraRepository;
 import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.academia.Carrera;
+import com.knowshare.entities.perfilusuario.Habilidad;
 
 /**
  * {@link CarreraModFacade}
@@ -44,6 +45,8 @@ public class CarreraModBean implements CarreraModFacade {
 
 	@Override
 	public boolean delete(String carrera){
+		mongoTemplate.remove(new Query(Criteria.where("carrera.$id").is(carrera)), 
+				Habilidad.class);
 		return carreraRepository.removeById(carrera)==1;
 	}
 

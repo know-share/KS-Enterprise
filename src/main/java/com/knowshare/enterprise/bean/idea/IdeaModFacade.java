@@ -7,7 +7,7 @@ import com.knowshare.dto.idea.IdeaDTO;
 import com.knowshare.entities.idea.OperacionIdea;
 
 /**
- * @author pablo
+ * @author Pablo Gaitán
  *
  */
 public interface IdeaModFacade {

@@ -1,5 +1,6 @@
 [
 	{
+		"id":{"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":1},
 		"username": "MinMiguelM",
 		"password": "8e21d61d91c6c6e1f3137b783a1b524d",
 		"nombre": "Miguel",
@@ -75,6 +76,7 @@
 			"nombre":"ISFJ"
 		}
 	},{
+		"id":{"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":2},
 		"username": "pablo.gaitan",
 		"password": "8e21d61d91c6c6e1f3137b783a1b524d",
 		"nombre": "Pablo",
@@ -142,6 +144,7 @@
 			"nombre":"ENTP"
 		}
 	},{
+		"id":{"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3},
 		"username": "Felipe-Bautista",
 		"password": "8e21d61d91c6c6e1f3137b783a1b524d",
 		"nombre": "Felipe",

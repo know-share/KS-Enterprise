@@ -75,12 +75,15 @@ public class IdeaListBean implements IdeaListFacade{
 	@Override
 	public IdeaDTO findById(String id, String username) {
 		Idea idea = ideaRep.findOne(id);
-		IdeaDTO dto = MapEntities.mapIdeaToDTO(idea);
-		if(isLight(idea, username)!=null)
-			dto.setIsLight(true);
-		else
-			dto.setIsLight(false);
-		return dto;
+		if(null != idea){
+			IdeaDTO dto = MapEntities.mapIdeaToDTO(idea);
+			if(isLight(idea, username)!=null)
+				dto.setIsLight(true);
+			else
+				dto.setIsLight(false);
+			return dto;
+		}
+		return null;
 	}
 
 	@Override
@@ -96,7 +99,7 @@ public class IdeaListBean implements IdeaListFacade{
 		return dots;
 	}
 	
-	public List<OperacionIdea> findOpreaciones(String id,String tipo){
+	public List<OperacionIdea> findOperaciones(String id,String tipo){
 		List<OperacionIdea> ret = new ArrayList<>();
 		Idea i = ideaRep.findOne(id);
 		if(tipo.equals("light")){
