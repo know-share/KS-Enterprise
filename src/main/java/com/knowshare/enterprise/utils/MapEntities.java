@@ -5,10 +5,13 @@ package com.knowshare.enterprise.utils;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.knowshare.dto.academia.CarreraDTO;
 import com.knowshare.dto.idea.IdeaDTO;
+import com.knowshare.dto.ludificacion.InsigniaDTO;
 import com.knowshare.dto.perfilusuario.CualidadDTO;
 import com.knowshare.dto.perfilusuario.HabilidadDTO;
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
@@ -17,6 +20,7 @@ import com.knowshare.entities.app.PreferenciasUsuario;
 import com.knowshare.entities.idea.Idea;
 import com.knowshare.entities.ludificacion.CualidadAval;
 import com.knowshare.entities.ludificacion.HabilidadAval;
+import com.knowshare.entities.ludificacion.InsigniaPreview;
 import com.knowshare.entities.perfilusuario.Cualidad;
 import com.knowshare.entities.perfilusuario.Habilidad;
 import com.knowshare.entities.perfilusuario.Usuario;
@@ -206,6 +210,7 @@ public class MapEntities {
 				.setCorreo(dto.getEmail())
 				.setUsername(dto.getUsername())
 				.setPassword(passwordHashed)
+				.setFechaRegistro(new Date())
 				.setGenero(dto.getGenero())
 				.setPersonalidad(dto.getPersonalidad())
 				.setEnfasis(dto.getEnfasis())
@@ -342,6 +347,7 @@ public class MapEntities {
 			.setTgDirigidos(usuario.getTrabajosGradoDirigidos())
 			.setFormacionAcademica(usuario.getFormacionesAcademicas())
 			.setPreferenciaIdea(usuario.getPreferencias().getPreferenciaIdea())
+			.setInsignias(mapInsigniasToDTOs(usuario.getInsignias()))
 			.setImagen(usuario.getImagen() != null);
 		switch(usuario.getTipo()){
 			case PROFESOR:
@@ -360,5 +366,18 @@ public class MapEntities {
 			
 		return dto;
 	}
+	
+	public static List<InsigniaDTO> mapInsigniasToDTOs(List<InsigniaPreview> insignias){
+		return insignias.stream()
+				.map(ins -> mapInsigniaToDTO(ins))
+				.collect(Collectors.toList());
+	}
 
+	public static InsigniaDTO mapInsigniaToDTO(InsigniaPreview insignia){
+		return new InsigniaDTO().setDescripcion(insignia.getInsignia().getDescripcion())
+				.setIconoRef(insignia.getInsignia().getIconoRef())
+				.setId(insignia.getInsignia().getId())
+				.setNombre(insignia.getInsignia().getNombre())
+				.setVisto(insignia.isVisto());
+	}
 }

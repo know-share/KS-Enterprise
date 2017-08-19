@@ -140,4 +140,9 @@ public class UsuarioBean implements UsuarioFacade {
 	public boolean updatePreferenciaIdea(String username, PreferenciaIdeaEnum preferencia) {
 		return this.usuarioModBean.updatePreferenciaIdea(username, preferencia);
 	}
+
+	@Override
+	public boolean updateInsignias(String username) {
+		return this.usuarioModBean.updateInsignias(username);
+	}
 }

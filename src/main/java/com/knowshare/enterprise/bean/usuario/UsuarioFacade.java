@@ -68,4 +68,6 @@ public interface UsuarioFacade {
 	ImagenDTO getImage(String username);
 	
 	boolean updatePreferenciaIdea(String username, PreferenciaIdeaEnum preferencia);
+	
+	boolean updateInsignias(String username);
 }

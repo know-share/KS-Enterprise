@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.knowshare.entities.perfilusuario.Cualidad;
 
 /**
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 @Repository

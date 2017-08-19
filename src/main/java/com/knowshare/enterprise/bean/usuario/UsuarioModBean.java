@@ -294,4 +294,12 @@ public class UsuarioModBean implements UsuarioModFacade {
 		return mongoTemplate.updateFirst(new Query(Criteria.where("username").is(username)), 
 				update, Usuario.class).getN() > 0;
 	}
+	
+	public boolean updateInsignias(String username){
+		final Usuario usuario = usuarioRepository.findByUsernameIgnoreCase(username);
+		usuario.getInsignias()
+			.stream()
+			.forEach(ins -> ins.setVisto(true));
+		return (null != usuarioRepository.save(usuario));
+	}
 }

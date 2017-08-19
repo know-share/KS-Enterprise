@@ -43,4 +43,6 @@ public interface UsuarioModFacade {
 	boolean uploadImage(String username, MultipartFile file);
 	
 	boolean updatePreferenciaIdea(String username, PreferenciaIdeaEnum preferencia);
+	
+	boolean updateInsignias(String username);
 }
