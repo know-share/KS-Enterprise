@@ -280,7 +280,7 @@ public class MapEntities {
 			cualidades.add(mapDtoToCualidadAval(cualidad));
 		}
 		usuario.setCualidadesProfesor(cualidades)
-			.setDisponibilidad("")
+			.setDisponible(dto.isDisponible())
 			.setGrupoInvestigacion(dto.getGrupoInvestigacion())
 			.setTrabajosGradoDirigidos(new ArrayList<>());
 	}
@@ -352,6 +352,7 @@ public class MapEntities {
 		switch(usuario.getTipo()){
 			case PROFESOR:
 				dto.setCualidades(mapAvalesCualidad(usuario.getCualidadesProfesor()));
+				dto.setDisponible(usuario.isDisponible());
 				break;
 			case ESTUDIANTE:
 				dto.setGustos(usuario.getGustos());

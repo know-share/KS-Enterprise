@@ -250,7 +250,8 @@ public class UsuarioModBean implements UsuarioModFacade {
 					.set("semestre", usuario.getSemestre());
 				break;
 			case PROFESOR:
-				update.set("grupoInvestigacion", usuario.getGrupoInvestigacion());
+				update.set("grupoInvestigacion", usuario.getGrupoInvestigacion())
+					.set("disponible", usuario.isDisponible());
 			case EGRESADO:
 				update.set("nombre",usuario.getNombre())
 					.set("apellido", usuario.getApellido())
