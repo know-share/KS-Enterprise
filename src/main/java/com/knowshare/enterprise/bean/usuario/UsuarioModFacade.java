@@ -3,11 +3,14 @@
  */
 package com.knowshare.enterprise.bean.usuario;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
+import com.knowshare.entities.perfilusuario.Gusto;
 import com.knowshare.enums.PreferenciaIdeaEnum;
 
 /**
@@ -45,4 +48,8 @@ public interface UsuarioModFacade {
 	boolean updatePreferenciaIdea(String username, PreferenciaIdeaEnum preferencia);
 	
 	boolean updateInsignias(String username);
+	
+	boolean promoteEstudiante(String username);
+	
+	boolean actualizarGustos(List<Gusto> gustos, String username);
 }

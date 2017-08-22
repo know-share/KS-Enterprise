@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import com.knowshare.entities.perfilusuario.Gusto;
 
 /**
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 @Component

@@ -29,11 +29,13 @@ import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.academia.Carrera;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
+import com.knowshare.entities.perfilusuario.Gusto;
 import com.knowshare.entities.perfilusuario.ImageProfile;
 import com.knowshare.entities.perfilusuario.InfoUsuario;
 import com.knowshare.entities.perfilusuario.Usuario;
 import com.knowshare.enums.PreferenciaIdeaEnum;
 import com.knowshare.enums.TipoImagenEnum;
+import com.knowshare.enums.TipoUsuariosEnum;
 import com.mongodb.DBRef;
 
 /**
@@ -302,5 +304,21 @@ public class UsuarioModBean implements UsuarioModFacade {
 			.stream()
 			.forEach(ins -> ins.setVisto(true));
 		return (null != usuarioRepository.save(usuario));
+	}
+	
+	public boolean promoteEstudiante(String username){
+		final Usuario usuario = usuarioRepository.findByUsernameIgnoreCase(username);
+		if(usuario != null && usuario.getTipo().equals(TipoUsuariosEnum.ESTUDIANTE)){
+			usuario.setTipo(TipoUsuariosEnum.EGRESADO);
+			return null != usuarioRepository.save(usuario);
+		}
+		return false;
+	}
+	
+	public boolean actualizarGustos(List<Gusto> gustos, String username){
+		final Update update = new Update().set("gustos", gustos);
+		return mongoTemplate.updateFirst(new Query(Criteria.where("username").is(username)), 
+				update, 
+				Usuario.class).getN() > 0;
 	}
 }
