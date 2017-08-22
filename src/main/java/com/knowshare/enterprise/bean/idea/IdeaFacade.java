@@ -22,4 +22,5 @@ public interface IdeaFacade {
 	IdeaDTO compartir(IdeaDTO dto,String username);
 	List<IdeaDTO> findByUsuarioProyecto(String username);
 	List<OperacionIdea> findOperaciones(String id,String tipo);
+	IdeaDTO cambiarEstado(IdeaDTO dto);
 }

@@ -58,4 +58,9 @@ public class IdeaBean implements IdeaFacade{
 	public List<OperacionIdea> findOperaciones(String id, String tipo) {
 		return ideaList.findOperaciones(id, tipo);
 	}
+
+	@Override
+	public IdeaDTO cambiarEstado(IdeaDTO dto) {
+		return ideaMod.cambiarEstado(dto);
+	}
 }

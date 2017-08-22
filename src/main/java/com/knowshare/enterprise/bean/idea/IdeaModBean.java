@@ -98,5 +98,13 @@ public class IdeaModBean implements IdeaModFacade{
 		}
 		return MapEntities.mapIdeaToDTO(ret);
 	}
+
+	@Override
+	public IdeaDTO cambiarEstado(IdeaDTO dto) {
+		Idea idea = ideaRep.findOne(dto.getId());
+		idea.setEstado(dto.getEstado());
+		return MapEntities.mapIdeaToDTO(ideaRep.save(idea));
+	}
+	
 	
 }

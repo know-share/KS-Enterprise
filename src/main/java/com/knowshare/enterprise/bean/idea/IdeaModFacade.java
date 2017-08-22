@@ -17,4 +17,6 @@ public interface IdeaModFacade {
 	IdeaDTO agregarOperacion(IdeaDTO dto, OperacionIdea operacion);
 	
 	IdeaDTO compartir(IdeaDTO dto,String username);
+	
+	IdeaDTO cambiarEstado(IdeaDTO dto);
 }
