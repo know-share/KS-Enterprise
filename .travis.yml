@@ -15,3 +15,5 @@ before_install:
   - git clone --branch=$TRAVIS_BRANCH https://github.com/know-share/KS-Data.git
   - cd KS-Data && mvn install
 script: cd $TRAVIS_BUILD_DIR/ && mvn test -B
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
