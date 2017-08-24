@@ -14,8 +14,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
 /**
- * Repositorio con los metodos CRUD de idea
- * @author pablo
+ * Repositorio con los metodos CRUD de {@link Idea idea}
+ * @author Pablo Gaitan
  *
  */
 @Repository

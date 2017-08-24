@@ -9,7 +9,9 @@ import org.springframework.stereotype.Repository;
 import com.knowshare.entities.perfilusuario.Personalidad;
 
 /**
- * @author miguel
+ * Repositorio de personalidad. Permite consultas y operaciones
+ * con la entidad {@link Personalidad} ante la base de datos.
+ * @author Miguel Montañez
  *
  */
 @Repository

@@ -8,6 +8,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import com.knowshare.entities.idea.Tag;
 
 /**
+ * Repositorio de tag. Permite consultas y operaciones
+ * con la entidad {@link Tag} ante la base de datos.
  * @author Pablo Gaitan
  *
  */

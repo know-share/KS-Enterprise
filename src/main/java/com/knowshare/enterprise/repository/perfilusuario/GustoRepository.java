@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
 import com.knowshare.entities.perfilusuario.Gusto;
 
 /**
- * @author miguel
+ * Repositorio de gusto. Permite consultas y operaciones
+ * con la entidad {@link Gusto} ante la base de datos.
+ * @author Miguel Montañez
  *
  */
 @Repository

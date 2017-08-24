@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
 import com.knowshare.entities.academia.TrabajoGrado;
 
 /**
- * @author miguel
+ * Repositorio de trabajo grado. Permite consultas y operaciones
+ * con la entidad {@link TrabajoGrado} ante la base de datos.
+ * @author Miguel Montañez
  *
  */
 @Repository

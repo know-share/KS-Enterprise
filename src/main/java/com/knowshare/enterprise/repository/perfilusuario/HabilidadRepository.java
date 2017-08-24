@@ -13,8 +13,8 @@ import org.springframework.stereotype.Repository;
 import com.knowshare.entities.perfilusuario.Habilidad;
 
 /**
- * Repositorio con metodos CRUD para la clase Habilidad.
- * @author miguel
+ * Repositorio con metodos CRUD para la clase {@link Habilidad}
+ * @author Miguel Montañez
  *
  */
 @Repository

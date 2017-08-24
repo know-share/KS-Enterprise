@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.knowshare.entities.perfilusuario.Cualidad;
 
 /**
+ * Repositorio de cualidad. Permite consultas y operaciones
+ * con la entidad {@link Cualidad} ante la base de datos.
  * @author Miguel Montañez
  *
  */
