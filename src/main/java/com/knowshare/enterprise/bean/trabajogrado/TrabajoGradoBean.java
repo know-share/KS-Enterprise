@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.knowshare.entities.academia.TrabajoGrado;
 
 /**
+ * {@link TrabajoGradoFacade}
  * @author Miguel Montañez
  *
  */

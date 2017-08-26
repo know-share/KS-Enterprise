@@ -15,7 +15,7 @@ import com.knowshare.enums.PreferenciaIdeaEnum;
 
 /**
  * Se encarga de operaciones que hagan modificaciones sobre
- * la entidad Usuario.
+ * la entidad {@link Usuario}.
  * @author Miguel Montañez
  *
  */

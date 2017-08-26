@@ -11,7 +11,10 @@ import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.entities.perfilusuario.Usuario;
 
 /**
- * @author miguel
+ * Se encarga de operaciones de consulta, es decir,
+ * no hacen modificaciones en la base de datos, sobre
+ * la entidad {@link Usuario}
+ * @author Miguel Montañez
  *
  */
 public interface UsuarioListFacade {

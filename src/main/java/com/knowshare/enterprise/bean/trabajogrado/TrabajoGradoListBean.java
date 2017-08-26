@@ -12,6 +12,7 @@ import com.knowshare.enterprise.repository.academia.TrabajoGradoRepository;
 import com.knowshare.entities.academia.TrabajoGrado;
 
 /**
+ * {@link TrabajoGradoListFacade}
  * @author Pablo Gaitan
  *
  */
