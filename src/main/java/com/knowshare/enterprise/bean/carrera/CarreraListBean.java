@@ -48,6 +48,4 @@ public class CarreraListBean implements CarreraListFacade{
 			dto.setAreaConocimiento(c.getAreaConocimiento());
 		return dto;
 	}
-
-
 }

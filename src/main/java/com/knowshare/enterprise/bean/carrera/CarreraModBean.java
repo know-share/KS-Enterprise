@@ -61,6 +61,4 @@ public class CarreraModBean implements CarreraModFacade {
 		}
 		return false;
 	}
-	
-	
 }

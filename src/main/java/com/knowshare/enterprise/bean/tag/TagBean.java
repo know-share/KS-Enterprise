@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.knowshare.entities.idea.Tag;
 
 /**
+ * {@link TagFacade}
  * @author Pablo Gaitan
  *
  */
@@ -42,6 +43,4 @@ public class TagBean implements TagFacade{
 	public boolean delete(String tag) {
 		return tagModBean.delete(tag);
 	}
-	
-	
 }

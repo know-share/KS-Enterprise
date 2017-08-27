@@ -212,6 +212,11 @@ public class UsuarioModBean implements UsuarioModFacade {
 		return mongoTemplate.updateFirst(query, update, Usuario.class).getN() > 0;
 	}
 	
+	/**
+	 * Crea referencias según una lista de carreras que llega como parámetro
+	 * @param carreras
+	 * @return Lista de referencias a {@link Carrera carrera}
+	 */
 	private List<DBRef> refsCarreras(List<Carrera> carreras){
 		final List<DBRef> dbrefs = new ArrayList<>();
 		carreras.forEach(c -> dbrefs.add(new DBRef("carrera", c.getId())));

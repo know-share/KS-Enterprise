@@ -14,6 +14,7 @@ import com.knowshare.enterprise.repository.idea.TagRepository;
 import com.knowshare.entities.idea.Tag;
 
 /**
+ * {@link TagModFacade}
  * @author Pablo Gaitan
  *
  */
@@ -49,7 +50,5 @@ public class TagModBean implements TagModFacade {
 				return true;
 		}
 		return false;
-	}
-
-	
+	}	
 }

@@ -13,7 +13,8 @@ import com.knowshare.enterprise.repository.perfilusuario.CualidadRepository;
 import com.knowshare.enterprise.utils.MapEntities;
 
 /**
- * @author miguel
+ * {@link CualidadListFacade}
+ * @author Miguel Montañez
  *
  */
 @Component
@@ -26,5 +27,4 @@ public class CualidadListBean implements CualidadListFacade {
 	public List<CualidadDTO> getAll() {
 		return MapEntities.mapCualidadesToDTOs(this.cualidadRepository.findAll());
 	}
-
 }

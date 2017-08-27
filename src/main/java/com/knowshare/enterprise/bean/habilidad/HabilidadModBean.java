@@ -17,6 +17,7 @@ import com.knowshare.entities.academia.Carrera;
 import com.knowshare.entities.perfilusuario.Habilidad;
 
 /**
+ * {@link HabilidadModFacade}
  * @author Miguel Montañez
  *
  */
@@ -28,13 +29,6 @@ public class HabilidadModBean implements HabilidadModFacade{
 	
 	@Autowired
 	private MongoTemplate mongoTemplate;
-	
-	@Override
-	public void createHabilidad(String nombre) {
-		final Habilidad habilidad = new Habilidad();
-		habilidad.setNombre(nombre);
-		habilidadRepository.insert(habilidad);
-	}
 
 	@Override
 	public boolean update(HabilidadDTO habilidad) {

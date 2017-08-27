@@ -11,7 +11,8 @@ import org.springframework.stereotype.Component;
 import com.knowshare.entities.perfilusuario.Personalidad;
 
 /**
- * @author miguel
+ * {@link PersonalidadFacade}
+ * @author Miguel Montañez
  *
  */
 @Component

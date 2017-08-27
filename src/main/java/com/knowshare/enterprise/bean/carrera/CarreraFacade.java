@@ -9,8 +9,9 @@ import com.knowshare.dto.academia.CarreraDTO;
 import com.knowshare.dto.academia.EnfasisAreaConocimientoDTO;
 
 /**
- * Esta clase tiene todos los métodos que se conectan a la base de datos y modifican o leen Carrera.
- * @author miguel
+ * Esta clase tiene todos los métodos que se conectan a la base de 
+ * datos y modifican o leen Carrera.
+ * @author Miguel Montañez
  *
  */
 public interface CarreraFacade {
@@ -24,7 +25,8 @@ public interface CarreraFacade {
 	/**
 	 * Descripción: busca los énfasis y areas de conocimiento de una carrera
 	 * @param carrera
-	 * @return Un EnfasisAreaConocmientoDTO con los énfasis y areas de conocmiento de una Carrera, null si no encuentra la Carrera.
+	 * @return Un EnfasisAreaConocmientoDTO con los énfasis y 
+	 * areas de conocmiento de una Carrera, null si no encuentra la Carrera.
 	 */
 	EnfasisAreaConocimientoDTO getEnfasisAreaConocimiento(String carrera);
 	

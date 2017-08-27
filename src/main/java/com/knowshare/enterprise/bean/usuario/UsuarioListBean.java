@@ -41,6 +41,7 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.unwi
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 /**
+ * {@link UsuarioListFacade}
  * @author Miguel Montañez
  *
  */

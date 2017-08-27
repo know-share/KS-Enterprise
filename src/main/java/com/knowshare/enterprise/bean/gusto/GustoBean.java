@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.knowshare.entities.perfilusuario.Gusto;
 
 /**
+ * {@link GustoFacade}
  * @author Miguel Montañez
  *
  */

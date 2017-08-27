@@ -12,7 +12,8 @@ import com.knowshare.enterprise.repository.perfilusuario.PersonalidadRepository;
 import com.knowshare.entities.perfilusuario.Personalidad;
 
 /**
- * @author miguel
+ * {@link PersonalidadListFacade}
+ * @author Miguel Montañez
  *
  */
 @Component
