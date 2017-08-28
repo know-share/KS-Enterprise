@@ -12,7 +12,7 @@ import org.junit.AfterClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.knowshare.enterprise.bean.tag.TagListFacade;
+import com.knowshare.enterprise.bean.tag.TagFacade;
 import com.knowshare.entities.idea.Tag;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
@@ -23,7 +23,7 @@ import com.knowshare.test.enterprise.general.AbstractTest;
 public class TagListBeanTest extends AbstractTest{
 	
 	@Autowired
-	private TagListFacade tagListBean;
+	private TagFacade tagListBean;
 	
 	@Test
 	public void test01FindAll(){

@@ -11,18 +11,18 @@ import org.junit.AfterClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.knowshare.enterprise.bean.personalidad.PersonalidadListFacade;
+import com.knowshare.enterprise.bean.personalidad.PersonalidadFacade;
 import com.knowshare.entities.perfilusuario.Personalidad;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
 /**
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 public class PersonalidadListBeanTest extends AbstractTest{
 	
 	@Autowired
-	private PersonalidadListFacade personalidadListBean;
+	private PersonalidadFacade personalidadListBean;
 	
 	@Test
 	public void test01GetAllPersonalidades(){

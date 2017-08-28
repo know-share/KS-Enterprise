@@ -23,12 +23,18 @@ import org.springframework.util.ResourceUtils;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.knowshare.enterprise.bean.carrera.CarreraBean;
+import com.knowshare.enterprise.bean.carrera.CarreraFacade;
 import com.knowshare.enterprise.bean.carrera.CarreraListBean;
 import com.knowshare.enterprise.bean.carrera.CarreraListFacade;
 import com.knowshare.enterprise.bean.carrera.CarreraModBean;
 import com.knowshare.enterprise.bean.carrera.CarreraModFacade;
+import com.knowshare.enterprise.bean.cualidad.CualidadBean;
+import com.knowshare.enterprise.bean.cualidad.CualidadFacade;
 import com.knowshare.enterprise.bean.cualidad.CualidadListBean;
 import com.knowshare.enterprise.bean.cualidad.CualidadListFacade;
+import com.knowshare.enterprise.bean.gusto.GustoBean;
+import com.knowshare.enterprise.bean.gusto.GustoFacade;
 import com.knowshare.enterprise.bean.gusto.GustoListBean;
 import com.knowshare.enterprise.bean.gusto.GustoListFacade;
 import com.knowshare.enterprise.bean.habilidad.HabilidadBean;
@@ -37,18 +43,28 @@ import com.knowshare.enterprise.bean.habilidad.HabilidadListBean;
 import com.knowshare.enterprise.bean.habilidad.HabilidadListFacade;
 import com.knowshare.enterprise.bean.habilidad.HabilidadModBean;
 import com.knowshare.enterprise.bean.habilidad.HabilidadModFacade;
+import com.knowshare.enterprise.bean.idea.IdeaBean;
+import com.knowshare.enterprise.bean.idea.IdeaFacade;
 import com.knowshare.enterprise.bean.idea.IdeaListBean;
 import com.knowshare.enterprise.bean.idea.IdeaListFacade;
 import com.knowshare.enterprise.bean.idea.IdeaModBean;
 import com.knowshare.enterprise.bean.idea.IdeaModFacade;
+import com.knowshare.enterprise.bean.personalidad.PersonalidadBean;
+import com.knowshare.enterprise.bean.personalidad.PersonalidadFacade;
 import com.knowshare.enterprise.bean.personalidad.PersonalidadListBean;
 import com.knowshare.enterprise.bean.personalidad.PersonalidadListFacade;
+import com.knowshare.enterprise.bean.tag.TagBean;
+import com.knowshare.enterprise.bean.tag.TagFacade;
 import com.knowshare.enterprise.bean.tag.TagListBean;
 import com.knowshare.enterprise.bean.tag.TagListFacade;
 import com.knowshare.enterprise.bean.tag.TagModBean;
 import com.knowshare.enterprise.bean.tag.TagModFacade;
+import com.knowshare.enterprise.bean.trabajogrado.TrabajoGradoBean;
+import com.knowshare.enterprise.bean.trabajogrado.TrabajoGradoFacade;
 import com.knowshare.enterprise.bean.trabajogrado.TrabajoGradoListBean;
 import com.knowshare.enterprise.bean.trabajogrado.TrabajoGradoListFacade;
+import com.knowshare.enterprise.bean.usuario.UsuarioBean;
+import com.knowshare.enterprise.bean.usuario.UsuarioFacade;
 import com.knowshare.enterprise.bean.usuario.UsuarioListBean;
 import com.knowshare.enterprise.bean.usuario.UsuarioListFacade;
 import com.knowshare.enterprise.bean.usuario.UsuarioModBean;
@@ -153,6 +169,11 @@ public class ConfigContext {
 	}
 	
 	@Bean
+	public IdeaFacade getIdeaFacade(){
+		return new IdeaBean();
+	}
+	
+	@Bean
 	public CarreraListFacade getCarreraListFacade(){
 		return new CarreraListBean();
 	}
@@ -163,13 +184,28 @@ public class ConfigContext {
 	}
 	
 	@Bean
+	public CarreraFacade getCarreraFacade(){
+		return new CarreraBean();
+	}
+	
+	@Bean
 	public CualidadListFacade getCualidadListFacade(){
 		return new CualidadListBean();
 	}
 	
 	@Bean
+	public CualidadFacade getCualidadFacade(){
+		return new CualidadBean();
+	}
+	
+	@Bean
 	public GustoListFacade getGustoListFacade(){
 		return new GustoListBean();
+	}
+	
+	@Bean
+	public GustoFacade getGustoFacade(){
+		return new GustoBean();
 	}
 	
 	@Bean
@@ -183,8 +219,18 @@ public class ConfigContext {
 	}
 	
 	@Bean
+	public UsuarioFacade getUsuarioFacade(){
+		return new UsuarioBean();
+	}
+	
+	@Bean
 	public PersonalidadListFacade getPersonalidadListFacade(){
 		return new PersonalidadListBean();
+	}
+	
+	@Bean
+	public PersonalidadFacade getPersonalidadFacade(){
+		return new PersonalidadBean();
 	}
 	
 	@Bean
@@ -198,8 +244,18 @@ public class ConfigContext {
 	}
 	
 	@Bean
+	public TagFacade getTagFacade(){
+		return new TagBean();
+	}
+	
+	@Bean
 	public TrabajoGradoListFacade getTrabajoGradoListFacade(){
 		return new TrabajoGradoListBean();
+	}
+	
+	@Bean
+	public TrabajoGradoFacade getTrabajoGradoFacade(){
+		return new TrabajoGradoBean();
 	}
 	
 	@PreDestroy

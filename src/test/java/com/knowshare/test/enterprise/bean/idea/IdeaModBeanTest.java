@@ -19,7 +19,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import com.knowshare.dto.idea.IdeaDTO;
-import com.knowshare.enterprise.bean.idea.IdeaModFacade;
+import com.knowshare.enterprise.bean.idea.IdeaFacade;
 import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.idea.Idea;
 import com.knowshare.entities.idea.OperacionIdea;
@@ -36,7 +36,7 @@ import com.knowshare.test.enterprise.general.AbstractTest;
 public class IdeaModBeanTest extends AbstractTest {
 
 	@Autowired
-	private IdeaModFacade ideaModBean;
+	private IdeaFacade ideaModBean;
 	
 	private IdeaDTO dto;
 	
