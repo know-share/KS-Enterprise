@@ -7,6 +7,7 @@ package com.knowshare.enterprise.bean.idea;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,8 @@ import com.knowshare.enterprise.repository.perfilusuario.UsuarioRepository;
 import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.idea.Idea;
 import com.knowshare.entities.idea.OperacionIdea;
+import com.knowshare.entities.idea.Tag;
+import com.knowshare.entities.perfilusuario.InfoUsuario;
 import com.knowshare.entities.perfilusuario.Usuario;
 import com.knowshare.enums.TipoOperacionEnum;
 
@@ -117,5 +120,35 @@ public class IdeaListBean implements IdeaListFacade{
 		}
 		return ret;
 	}
+
+	@Override
+	public List<IdeaDTO> findRed(String username) {
+		final Usuario usu = usuRep.findByUsernameIgnoreCase(username);
+		List<InfoUsuario> red = usu.getAmigos();
+		red.addAll(usu.getSiguiendo());
+		List<String> usernamesRed = new ArrayList<>();
+		for (InfoUsuario inf : red) {
+			usernamesRed.add(inf.getUsername());
+		}
+		List<ObjectId> usuariosId = usuRep.findUsuariosByUsername(usernamesRed);
+		List<Idea> ideas = ideaRep.findIdeaRed(usuariosId);
+		List<IdeaDTO> dtos = new ArrayList<>();
+		for (Idea i : ideas) {
+			dtos.add(MapEntities.mapIdeaToDTO(i));
+		}
+		return dtos;
+	}
+
+	@Override
+	public List<IdeaDTO> findByTags(List<Tag> tags) {
+		List<Idea> ideas = ideaRep.findIdeaByTags(tags);
+		List<IdeaDTO> dtos = new ArrayList<>();
+		for (Idea i : ideas) {
+			dtos.add(MapEntities.mapIdeaToDTO(i));
+		}
+		return dtos;
+	}
+
+	
 	
 }

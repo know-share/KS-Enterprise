@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.idea.IdeaDTO;
 import com.knowshare.entities.idea.OperacionIdea;
+import com.knowshare.entities.idea.Tag;
 
 /**
  * @author Pablo Gaitan
@@ -62,5 +63,15 @@ public class IdeaBean implements IdeaFacade{
 	@Override
 	public IdeaDTO cambiarEstado(IdeaDTO dto) {
 		return ideaMod.cambiarEstado(dto);
+	}
+
+	@Override
+	public List<IdeaDTO> findRed(String username) {
+		return ideaList.findRed(username);
+	}
+
+	@Override
+	public List<IdeaDTO> findByTags(List<Tag> tags) {
+		return ideaList.findByTags(tags);
 	}
 }
