@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
-import com.knowshare.enterprise.bean.tag.TagModFacade;
+import com.knowshare.enterprise.bean.tag.TagFacade;
 import com.knowshare.entities.idea.Tag;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
@@ -29,7 +29,7 @@ import com.knowshare.test.enterprise.general.AbstractTest;
 public class TagModBeanTest extends AbstractTest{
 
 	@Autowired
-	private TagModFacade tagModBean;
+	private TagFacade tagModBean;
 	
 	@Test
 	public void test01Create(){

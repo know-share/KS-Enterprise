@@ -30,7 +30,7 @@ import com.knowshare.dto.academia.CarreraDTO;
 import com.knowshare.dto.perfilusuario.CualidadDTO;
 import com.knowshare.dto.perfilusuario.HabilidadDTO;
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
-import com.knowshare.enterprise.bean.usuario.UsuarioModFacade;
+import com.knowshare.enterprise.bean.usuario.UsuarioFacade;
 import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.enterprise.utils.UtilsPassword;
 import com.knowshare.entities.academia.AreaConocimiento;
@@ -52,14 +52,14 @@ import com.knowshare.test.enterprise.general.AbstractTest;
 /**
  * Pruebas de la creación de usuarios de tipo Profesor,
  * Egresado y Estudiante
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UsuarioModBeanTest extends AbstractTest {
 
 	@Autowired
-	private UsuarioModFacade usuarioModBean;
+	private UsuarioFacade usuarioModBean;
 
 	private UsuarioDTO usuarioProfesor;
 	private UsuarioDTO usuarioEstudiante;

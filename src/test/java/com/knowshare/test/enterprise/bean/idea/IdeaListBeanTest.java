@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.knowshare.dto.idea.IdeaDTO;
+import com.knowshare.enterprise.bean.idea.IdeaFacade;
 import com.knowshare.enterprise.bean.idea.IdeaListFacade;
 import com.knowshare.entities.idea.Idea;
 import com.knowshare.entities.idea.OperacionIdea;
@@ -31,20 +32,23 @@ import com.knowshare.test.enterprise.general.AbstractTest;
 public class IdeaListBeanTest extends AbstractTest{
 
 	@Autowired
+	private IdeaFacade ideaBean;
+	
+	@Autowired
 	private IdeaListFacade ideaListBean;
 	
 	@Test
 	public void test01FindByUsuario(){
-		List<IdeaDTO> ideas = ideaListBean.findByUsuario("Felipe-Bautista");
+		List<IdeaDTO> ideas = ideaBean.findByUsuario("Felipe-Bautista");
 		assertNotNull(ideas);
 		assertEquals(0, ideas.size());
 		
-		ideas = ideaListBean.findByUsuario("pablo.gaitan");
+		ideas = ideaBean.findByUsuario("pablo.gaitan");
 		assertNotNull(ideas);
 		assertEquals(3, ideas.size());
 		assertEquals(Long.valueOf(2),ideas.get(0).getLights());
 		
-		ideas = ideaListBean.findByUsuario("MinMiguelM");
+		ideas = ideaBean.findByUsuario("MinMiguelM");
 		assertNotNull(ideas);
 		assertEquals(2, ideas.size());
 		for(IdeaDTO idea:ideas){
@@ -74,25 +78,25 @@ public class IdeaListBeanTest extends AbstractTest{
 	
 	@Test
 	public void test03FindById(){
-		IdeaDTO idea = ideaListBean.findById("NU01", "pablo.gaitan");
+		IdeaDTO idea = ideaBean.findById("NU01", "pablo.gaitan");
 		assertNotNull(idea);
 		assertFalse(idea.isIsLight());
 		
-		idea = ideaListBean.findById("NU03", "pablo.gaitan");
+		idea = ideaBean.findById("NU03", "pablo.gaitan");
 		assertNotNull(idea);
 		assertFalse(idea.isIsLight());
 		
-		idea = ideaListBean.findById("NU03", "MinMiguelM");
+		idea = ideaBean.findById("NU03", "MinMiguelM");
 		assertNotNull(idea);
 		assertTrue(idea.isIsLight());
 		
-		idea = ideaListBean.findById("NOEXIST", "MinMiguelM");
+		idea = ideaBean.findById("NOEXIST", "MinMiguelM");
 		assertNull(idea);
 	}
 	
 	@Test
 	public void test04FindByUsuarioProyecto(){
-		List<IdeaDTO> ideas = ideaListBean.findByUsuarioProyecto("pablo.gaitan");
+		List<IdeaDTO> ideas = ideaBean.findByUsuarioProyecto("pablo.gaitan");
 		assertNotNull(ideas);
 		assertEquals(1, ideas.size());
 		
@@ -100,7 +104,7 @@ public class IdeaListBeanTest extends AbstractTest{
 			assertNotEquals(TipoIdeaEnum.PR, idea.getTipo());
 		}
 		
-		ideas = ideaListBean.findByUsuarioProyecto("MinMiguelM");
+		ideas = ideaBean.findByUsuarioProyecto("MinMiguelM");
 		assertNotNull(ideas);
 		assertEquals(2, ideas.size());
 		
@@ -111,13 +115,13 @@ public class IdeaListBeanTest extends AbstractTest{
 	
 	@Test
 	public void test05FindOperaciones(){
-		List<OperacionIdea> operaciones =  ideaListBean.findOperaciones("NU03","light");
+		List<OperacionIdea> operaciones =  ideaBean.findOperaciones("NU03","light");
 		assertNotNull(operaciones);
 		assertEquals(2, operaciones.size());
 		for(OperacionIdea operacion: operaciones)
 			assertEquals(TipoOperacionEnum.LIGHT, operacion.getTipo());
 		
-		operaciones =  ideaListBean.findOperaciones("NU03","comentario");
+		operaciones =  ideaBean.findOperaciones("NU03","comentario");
 		assertNotNull(operaciones);
 		assertEquals(1, operaciones.size());
 		for(OperacionIdea operacion: operaciones)

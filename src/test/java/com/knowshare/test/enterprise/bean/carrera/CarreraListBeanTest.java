@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.knowshare.dto.academia.CarreraDTO;
 import com.knowshare.dto.academia.EnfasisAreaConocimientoDTO;
-import com.knowshare.enterprise.bean.carrera.CarreraListFacade;
+import com.knowshare.enterprise.bean.carrera.CarreraFacade;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
 /**
@@ -24,7 +24,7 @@ import com.knowshare.test.enterprise.general.AbstractTest;
 public class CarreraListBeanTest extends AbstractTest{
 	
 	@Autowired
-	private CarreraListFacade carreraListBean;
+	private CarreraFacade carreraListBean;
 	
 	@Test
 	public void test01GetAllCarreras(){

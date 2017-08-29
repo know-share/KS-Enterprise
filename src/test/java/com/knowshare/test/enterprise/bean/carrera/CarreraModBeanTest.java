@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import com.knowshare.dto.academia.CarreraDTO;
-import com.knowshare.enterprise.bean.carrera.CarreraModFacade;
+import com.knowshare.enterprise.bean.carrera.CarreraFacade;
 import com.knowshare.entities.academia.Carrera;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
@@ -30,7 +30,7 @@ import java.util.List;
 public class CarreraModBeanTest extends AbstractTest{
 	
 	@Autowired
-	private CarreraModFacade carreraModBean;
+	private CarreraFacade carreraModBean;
 	
 	@Test
 	public void test01Create(){

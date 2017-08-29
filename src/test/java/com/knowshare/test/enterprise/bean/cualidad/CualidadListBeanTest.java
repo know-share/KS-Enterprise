@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.knowshare.dto.perfilusuario.CualidadDTO;
-import com.knowshare.enterprise.bean.cualidad.CualidadListFacade;
+import com.knowshare.enterprise.bean.cualidad.CualidadFacade;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
 /**
@@ -22,7 +22,7 @@ import com.knowshare.test.enterprise.general.AbstractTest;
 public class CualidadListBeanTest extends AbstractTest {
 
 	@Autowired
-	private CualidadListFacade cualidadListBean;
+	private CualidadFacade cualidadListBean;
 	
 	@Test
 	public void test01GetAll(){

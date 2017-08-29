@@ -13,19 +13,19 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.knowshare.dto.perfilusuario.HabilidadDTO;
-import com.knowshare.enterprise.bean.habilidad.HabilidadListFacade;
+import com.knowshare.enterprise.bean.habilidad.HabilidadFacade;
 import com.knowshare.enums.TipoHabilidadEnum;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
 /**
  * Pruebas unitarias para todos los métodos de listar del bean de habilidad.
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 public class HabilidadListBeanTest extends AbstractTest{
 	
 	@Autowired
-	private HabilidadListFacade habilidadListBean;
+	private HabilidadFacade habilidadListBean;
 
 	@Test
 	public void test01GetHabilidades(){
