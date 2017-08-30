@@ -38,6 +38,6 @@ public interface UsuarioRepository extends MongoRepository<Usuario, ObjectId>{
 	@Query("{$text:{$search:?0,$diacriticSensitive:false}}")
 	List<Usuario> searchByNombreOrApellido(String param);
 	
-	@Query(value="{'username': {$in:?0}}", fields="{'_id':1}")
-	List<ObjectId> findUsuariosByUsername(List<String> username);
+	@Query(value="{'username': {$in:?0}}")
+	List<Usuario> findUsuariosByUsername(List<String> username);
 }

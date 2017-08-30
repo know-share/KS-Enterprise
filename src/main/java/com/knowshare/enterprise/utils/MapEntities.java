@@ -254,7 +254,8 @@ public class MapEntities {
 		idea.setUsuario(usuario);
 		idea.setCompartida(dto.isCompartida());
 		idea.setUsuarioOriginal(dto.getUsuarioOriginal());
-		idea.setTg(dto.getTg());
+		if(idea.getTipo().equals(TipoIdeaEnum.PC))
+			idea.setTg(dto.getTg());
 		return idea;
 	}
 	

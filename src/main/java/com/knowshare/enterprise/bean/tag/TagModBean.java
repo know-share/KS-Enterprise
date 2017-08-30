@@ -3,6 +3,7 @@
  */
 package com.knowshare.enterprise.bean.tag;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -44,8 +45,9 @@ public class TagModBean implements TagModFacade {
 	@Override
 	public boolean create(String nombre) {
 		if(nombre!=null) {	
-			Tag tag = new Tag();
-			tag.setNombre(nombre);
+			Tag tag = new Tag()
+				.setNombre(nombre)
+				.setId(new ObjectId().toString());
 			if(tagRepository.insert(tag)!=null) 
 				return true;
 		}

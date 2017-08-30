@@ -6,6 +6,7 @@ package com.knowshare.enterprise.bean.idea;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import com.knowshare.entities.perfilusuario.Usuario;
 import com.knowshare.enums.TipoOperacionEnum;
 
 /**
+ * {@link IdeaListFacade}
  * @author Pablo Gaitan
  *
  */
@@ -127,10 +129,12 @@ public class IdeaListBean implements IdeaListFacade{
 		List<InfoUsuario> red = usu.getAmigos();
 		red.addAll(usu.getSiguiendo());
 		List<String> usernamesRed = new ArrayList<>();
-		for (InfoUsuario inf : red) {
+		for (InfoUsuario inf : red)
 			usernamesRed.add(inf.getUsername());
-		}
-		List<ObjectId> usuariosId = usuRep.findUsuariosByUsername(usernamesRed);
+		List<ObjectId> usuariosId = usuRep.findUsuariosByUsername(usernamesRed)
+				.stream()
+				.map(Usuario::getId)
+				.collect(Collectors.toList());
 		List<Idea> ideas = ideaRep.findIdeaRed(usuariosId);
 		List<IdeaDTO> dtos = new ArrayList<>();
 		for (Idea i : ideas) {
@@ -148,7 +152,5 @@ public class IdeaListBean implements IdeaListFacade{
 		}
 		return dtos;
 	}
-
-	
 	
 }

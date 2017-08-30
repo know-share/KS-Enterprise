@@ -35,9 +35,8 @@ public interface IdeaRepository extends MongoRepository<Idea,String>{
 	Long countByUsuario(ObjectId id);
 	
 	@Query("{'usuario.$id' : {$in:?0}}")
-	List<Idea> findIdeaRed(List<ObjectId> usernames);
+	List<Idea> findIdeaRed(List<ObjectId> ids);
 	
 	List<Idea> findIdeaByTags(List<Tag> tags);
-	
 	
 }
