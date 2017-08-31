@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.idea.IdeaDTO;
@@ -36,6 +39,9 @@ public class IdeaListBean implements IdeaListFacade{
 	
 	@Autowired
 	private UsuarioRepository usuRep;
+	
+	@Autowired
+	private MongoTemplate mongoTemplate;
 	
 	public List<IdeaDTO> find10(String username){
 		List<IdeaDTO> ret = new ArrayList<>();
@@ -145,7 +151,11 @@ public class IdeaListBean implements IdeaListFacade{
 
 	@Override
 	public List<IdeaDTO> findByTags(List<Tag> tags) {
-		List<Idea> ideas = ideaRep.findIdeaByTags(tags);
+//		List<Idea> ideas = ideaRep.findIdeaByTags(tags.stream().map(Tag::getId).collect(Collectors.toList()));
+		List<String> ids = tags.stream().map(Tag::getId).collect(Collectors.toList());
+		final Query query = new Query(Criteria.where("tags")
+				.all(tags));
+		List<Idea> ideas = mongoTemplate.find(query, Idea.class);
 		List<IdeaDTO> dtos = new ArrayList<>();
 		for (Idea i : ideas) {
 			dtos.add(MapEntities.mapIdeaToDTO(i));

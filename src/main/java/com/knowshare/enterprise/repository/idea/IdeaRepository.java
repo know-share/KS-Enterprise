@@ -37,6 +37,7 @@ public interface IdeaRepository extends MongoRepository<Idea,String>{
 	@Query("{'usuario.$id' : {$in:?0}}")
 	List<Idea> findIdeaRed(List<ObjectId> ids);
 	
-	List<Idea> findIdeaByTags(List<Tag> tags);
+	@Query("{'tags.$id':{$all:?0}}")
+	List<Idea> findIdeaByTags(List<String> tags);
 	
 }
