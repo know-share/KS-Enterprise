@@ -6,7 +6,6 @@ package com.knowshare.enterprise.repository.idea;
 import org.springframework.stereotype.Repository;
 
 import com.knowshare.entities.idea.Idea;
-import com.knowshare.entities.idea.Tag;
 
 import java.util.List;
 
@@ -35,9 +34,5 @@ public interface IdeaRepository extends MongoRepository<Idea,String>{
 	Long countByUsuario(ObjectId id);
 	
 	@Query("{'usuario.$id' : {$in:?0}}")
-	List<Idea> findIdeaRed(List<ObjectId> ids);
-	
-	@Query("{'tags.$id':{$all:?0}}")
-	List<Idea> findIdeaByTags(List<String> tags);
-	
+	List<Idea> findIdeaRed(List<ObjectId> ids);	
 }

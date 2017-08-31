@@ -131,7 +131,8 @@ public class MapEntities {
 	public static HabilidadAval mapDtoToHabilidadAval(HabilidadDTO habilidad){
 		return new HabilidadAval()
 				.setCantidad(habilidad.getAvales() == null ? 0 : habilidad.getAvales())
-				.setHabilidad(new Habilidad().setId(habilidad.getId()));
+				.setHabilidad(new Habilidad().setId(habilidad.getId()))
+				.setNombre(habilidad.getNombre());
 	}
 	
 	/**
@@ -166,7 +167,8 @@ public class MapEntities {
 	public static CualidadAval mapDtoToCualidadAval(CualidadDTO cualidad){
 		return new CualidadAval()
 				.setCantidad(cualidad.getAvales() == null ? 0 : cualidad.getAvales())
-				.setCualidad(new Cualidad().setId(cualidad.getId()));
+				.setCualidad(new Cualidad().setId(cualidad.getId()))
+				.setNombre(cualidad.getNombre());
 	}
 	
 	/**

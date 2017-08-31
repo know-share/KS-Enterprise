@@ -151,8 +151,6 @@ public class IdeaListBean implements IdeaListFacade{
 
 	@Override
 	public List<IdeaDTO> findByTags(List<Tag> tags) {
-//		List<Idea> ideas = ideaRep.findIdeaByTags(tags.stream().map(Tag::getId).collect(Collectors.toList()));
-		List<String> ids = tags.stream().map(Tag::getId).collect(Collectors.toList());
 		final Query query = new Query(Criteria.where("tags")
 				.all(tags));
 		List<Idea> ideas = mongoTemplate.find(query, Idea.class);
