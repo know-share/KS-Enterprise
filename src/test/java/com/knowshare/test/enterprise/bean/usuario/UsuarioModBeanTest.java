@@ -399,10 +399,10 @@ public class UsuarioModBeanTest extends AbstractTest {
 		assertsImage(TipoImagenEnum.JPEG,"pablo.gaitan.jpeg");
 		
 		// png -> some errors
-//		file = getFile("upload_image.png","image/png");
-//		result = usuarioModBean.uploadImage("pablo.gaitan", file);
-//		assertTrue(result);
-//		assertsImage(TipoImagenEnum.PNG,"pablo.gaitan.png");
+		file = getFile("upload_image.png","image/png");
+		result = usuarioModBean.uploadImage("pablo.gaitan", file);
+		assertTrue(result);
+		assertsImage(TipoImagenEnum.PNG,"pablo.gaitan.png");
 	}
 	
 	@Test
@@ -473,6 +473,7 @@ public class UsuarioModBeanTest extends AbstractTest {
 					.getPath());
 			content = Files.readAllBytes(path);
 		}catch(IOException e){
+			e.printStackTrace();
 			content = null;
 		}
 		assertNotNull(content);
