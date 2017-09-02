@@ -219,7 +219,11 @@ public class UsuarioModBean implements UsuarioModFacade {
 	 */
 	private List<DBRef> refsCarreras(List<Carrera> carreras){
 		final List<DBRef> dbrefs = new ArrayList<>();
-		carreras.forEach(c -> dbrefs.add(new DBRef("carrera", c.getId())));
+		if(carreras != null)
+			carreras.forEach(c -> {
+				if( null != c)
+					dbrefs.add(new DBRef("carrera", c.getId()));
+			});
 		return dbrefs;
 	}
 

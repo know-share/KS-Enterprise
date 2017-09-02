@@ -4,3 +4,7 @@ target/
 .settings/
 .springBeans
 *.log
+*.jpg
+*.png
+!MinMiguelM.png
+*.jpeg

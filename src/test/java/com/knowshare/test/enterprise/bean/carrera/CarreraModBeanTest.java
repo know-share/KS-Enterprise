@@ -37,7 +37,7 @@ public class CarreraModBeanTest extends AbstractTest{
 		final CarreraDTO dto = new CarreraDTO()
 				.setNombre("Carrera mod Bean")
 				.setFacultad("Facultad carrera mod bean");
-		final boolean result = carreraModBean.create(dto);
+		boolean result = carreraModBean.create(dto);
 		assertTrue(result);
 		
 		final List<Carrera> carrera = mongoTemplate
@@ -49,6 +49,9 @@ public class CarreraModBeanTest extends AbstractTest{
 		assertEquals("Facultad carrera mod bean", carrera.get(0).getFacultad());
 		assertNotNull(carrera.get(0).getEnfasis());
 		assertNotNull(carrera.get(0).getCarrerasAfines());
+		
+		result = carreraModBean.create(null);
+		assertFalse(result);
 	}
 	
 	@Test
@@ -62,7 +65,7 @@ public class CarreraModBeanTest extends AbstractTest{
 				.setEnfasis(carreras.get(0).getEnfasis())
 				.setFacultad("Facultad carrera mod bean updated");
 		
-		final boolean result = carreraModBean.update(dto);
+		boolean result = carreraModBean.update(dto);
 		assertTrue(result);
 		
 		final List<Carrera> carrera = mongoTemplate
@@ -74,19 +77,25 @@ public class CarreraModBeanTest extends AbstractTest{
 		assertEquals("Facultad carrera mod bean updated", carrera.get(0).getFacultad());
 		assertNotNull(carrera.get(0).getEnfasis());
 		assertNotNull(carrera.get(0).getCarrerasAfines());
+		
+		result = carreraModBean.update(new CarreraDTO());
+		assertFalse(result);
 	}
 	
 	@Test
 	public void test03Delete(){
 		final List<Carrera> carreras = mongoTemplate
 				.find(new Query(Criteria.where("nombre").is("Carrera mod Bean updated")), Carrera.class);
-		final boolean result = carreraModBean.delete(carreras.get(0).getId());
+		boolean result = carreraModBean.delete(carreras.get(0).getId());
 		assertTrue(result);
 		
 		final List<Carrera> carrera = mongoTemplate
 				.find(new Query(Criteria.where("_id").is(carreras.get(0).getId())), Carrera.class);
 		
 		assertEquals(0,carrera.size());
+		
+		result = carreraModBean.delete("");
+		assertFalse(result);
 	}
 	
 	@AfterClass

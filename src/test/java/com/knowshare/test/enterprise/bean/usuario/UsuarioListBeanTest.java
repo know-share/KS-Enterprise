@@ -18,10 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
+import com.knowshare.dto.perfilusuario.ImagenDTO;
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.enterprise.bean.usuario.UsuarioFacade;
 import com.knowshare.enterprise.bean.usuario.UsuarioListFacade;
 import com.knowshare.entities.perfilusuario.Usuario;
+import com.knowshare.enums.TipoImagenEnum;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
 /**
@@ -76,6 +78,12 @@ public class UsuarioListBeanTest extends AbstractTest{
 		// Usuario no existente
 		res = usuarioListBean.esSeguidor(usuarioMiguel,null);
 		assertFalse(res);
+		
+		res = usuarioListBean.esSeguidor(null,usuarioMiguel);
+		assertFalse(res);
+		
+		res = usuarioListBean.esSeguidor(null,null);
+		assertFalse(res);
 	}
 	
 	@Test
@@ -93,11 +101,17 @@ public class UsuarioListBeanTest extends AbstractTest{
 		
 		res = usuarioListBean.estaSolicitud(usuarioFelipe,usuarioPablo);
 		assertTrue(res);
+		
+		res = usuarioListBean.estaSolicitud(null,usuarioPablo);
+		assertFalse(res);
+		
+		res = usuarioListBean.estaSolicitud(null,null);
+		assertFalse(res);
 	}
 	
 	@Test
 	public void test05GetUsuario(){
-		final UsuarioDTO usuario = usuarioBean.getUsuario("pablo.Gaitan");
+		UsuarioDTO usuario = usuarioBean.getUsuario("pablo.Gaitan");
 		assertNotNull(usuario);
 		
 		assertNotNull(usuario.getAmigos());
@@ -123,6 +137,9 @@ public class UsuarioListBeanTest extends AbstractTest{
 		
 		assertNotNull(usuario.getGustos());
 		assertEquals(2, usuario.getGustos().size());
+		
+		usuario = usuarioBean.getUsuario("");
+		assertNull(usuario);
 	}
 	
 	@Test
@@ -195,6 +212,27 @@ public class UsuarioListBeanTest extends AbstractTest{
 		
 		result = usuarioBean.buscarPorAreaConocimiento("sistemas 4");
 		assertEquals(2,result.size());
+	}
+	
+	@Test
+	public void test11GetImage(){
+		ImagenDTO image = usuarioBean.getImage("");
+		assertNotNull(image);
+		assertFalse(image.isResult());
+		
+		image = usuarioBean.getImage("pablo.gaitan");
+		assertNotNull(image);
+		assertFalse(image.isResult());
+		
+		image = usuarioBean.getImage("minmiguelm");
+		assertNotNull(image);
+		assertTrue(image.isResult());
+		assertNotNull(image.getBytes());
+		assertEquals(TipoImagenEnum.PNG, image.getType());
+		
+		image = usuarioBean.getImage("Felipe-bautista");
+		assertNotNull(image);
+		assertFalse(image.isResult());
 	}
 	
 	@AfterClass

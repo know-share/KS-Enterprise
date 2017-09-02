@@ -5,6 +5,7 @@ package com.knowshare.test.enterprise.bean.carrera;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
@@ -33,13 +34,24 @@ public class CarreraListBeanTest extends AbstractTest{
 			carreraMapTest(carreraDTO);
 		}
 		
-		assertEquals(2, carreras.size());
+		assertEquals(3, carreras.size());
 	}
 	
 	@Test
 	public void test02GetEnfasisAreaConocimiento(){
 		EnfasisAreaConocimientoDTO dto = carreraListBean
+				.getEnfasisAreaConocimiento("");
+		assertNull(dto);
+		
+		dto = carreraListBean
+				.getEnfasisAreaConocimiento("Ingeniería X");
+		assertNotNull(dto);
+		assertEquals(2, dto.getEnfasis().size());
+		assertEquals(2, dto.getAreaConocimiento().size());
+		
+		dto = carreraListBean
 				.getEnfasisAreaConocimiento("Ingeniería de sistemas");
+		assertNotNull(dto);
 		assertEquals(4, dto.getEnfasis().size());
 		assertEquals(3, dto.getAreaConocimiento().size());
 	}

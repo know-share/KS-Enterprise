@@ -331,9 +331,10 @@ public class MapEntities {
 	 */
 	public static Usuario mapDtoToUsuarioPartial(UsuarioDTO dto){
 		final List<HabilidadAval> habilidades = new ArrayList<>();
-		for (HabilidadDTO habilidad : dto.getHabilidades()) {
-			habilidades.add(mapDtoToHabilidadAval(habilidad));
-		}
+		if(dto.getHabilidades() != null)
+			for (HabilidadDTO habilidad : dto.getHabilidades()) {
+				habilidades.add(mapDtoToHabilidadAval(habilidad));
+			}
 		final List<Carrera> carreras = new ArrayList<>();
 		carreras.add(mapDtoToCarrera(dto.getCarrera()));
 		final Usuario usuario = new Usuario()

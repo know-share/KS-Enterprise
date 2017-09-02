@@ -70,6 +70,12 @@ public class HabilidadListBeanTest extends AbstractTest{
 		assertEquals(2,ids.size());
 	}
 	
+	@Test
+	public void test04GetAll(){
+		List<HabilidadDTO> habilidades = habilidadListBean.getAll();
+		assertEquals(7, habilidades.size());
+	}
+	
 	private void habilidadMapTest(HabilidadDTO dto){
 		assertNotNull(dto.getId());
 		assertNotNull(dto.getNombre());

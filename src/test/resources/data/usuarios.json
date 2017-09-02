@@ -8,6 +8,10 @@
 		"correo": "miguel@mail.com",
 		"tipo": "ESTUDIANTE",
 		"semestre": 10,
+		"imagen":{
+			"imageName":"MinMiguelM.png",
+			"type":"PNG"
+		},
 		"habilidades": [
 			{
 				"cantidad": 0,
@@ -152,6 +156,10 @@
 		"correo": "felipe@mail.com",
 		"tipo": "ESTUDIANTE",
 		"semestre": 9,
+		"imagen":{
+			"imageName":"Felipe-Bautista.png",
+			"type":"PNG"
+		},
 		"habilidades": [
 			{
 				"cantidad": 0,
@@ -215,7 +223,14 @@
 				"id": "idCarreraCivil"
 			}
 		],
-		"insignias": [],
+		"insignias": [
+			{
+				"visto":false,
+				"insignia":{
+					"id":"SEGUIDORES1"
+				}
+			}
+		],
 		"personalidad": {
 			"nombre":"ESFJ"
 		}

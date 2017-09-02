@@ -23,7 +23,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = ConfigContext.class, loader = AnnotationConfigContextLoader.class)
-@PropertySource("classpath:database.properties")
+@PropertySource("classpath:test.properties")
 public abstract class AbstractTest {
 	
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());

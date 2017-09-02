@@ -73,6 +73,7 @@ import com.knowshare.entities.academia.Carrera;
 import com.knowshare.entities.academia.TrabajoGrado;
 import com.knowshare.entities.idea.Idea;
 import com.knowshare.entities.idea.Tag;
+import com.knowshare.entities.ludificacion.Insignia;
 import com.knowshare.entities.perfilusuario.Cualidad;
 import com.knowshare.entities.perfilusuario.Gusto;
 import com.knowshare.entities.perfilusuario.Habilidad;
@@ -90,7 +91,7 @@ import com.mongodb.MongoClient;
 @Lazy
 @Configuration
 @EnableMongoRepositories(basePackages = { "com.knowshare.enterprise.repository" })
-@PropertySource("classpath:database.properties")
+@PropertySource("classpath:test.properties")
 public class ConfigContext {
 	
 	@Autowired
@@ -118,6 +119,8 @@ public class ConfigContext {
 				ResourceUtils.getURL("classpath:data/trabajo_grados.json").openStream(),TrabajoGrado[].class);
 		Idea[] ideas = mapper.readValue(
 				ResourceUtils.getURL("classpath:data/ideas.json").openStream(),Idea[].class);
+		Insignia[] insignias = mapper.readValue(
+				ResourceUtils.getURL("classpath:data/insignias.json").openStream(),Insignia[].class);
 		
 		this.mongoTemplate().insertAll(Arrays.asList(carreras));
 		this.mongoTemplate().insertAll(Arrays.asList(habilidades));
@@ -128,6 +131,7 @@ public class ConfigContext {
 		this.mongoTemplate().insertAll(Arrays.asList(tags));
 		this.mongoTemplate().insertAll(Arrays.asList(trabajoGrados));
 		this.mongoTemplate().insertAll(Arrays.asList(ideas));
+		this.mongoTemplate().insertAll(Arrays.asList(insignias));
 		
 		this.createIndexes();
 		String command = "mongodump --host " +env.getProperty("db.host") + " --port " + env.getProperty("db.port")
