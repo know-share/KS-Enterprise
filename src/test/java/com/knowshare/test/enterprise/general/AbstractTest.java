@@ -34,7 +34,7 @@ public abstract class AbstractTest {
 	private static MongoTemplate mongoTemplateStatic;
 	
 	@Autowired
-	private Environment env;
+	protected Environment env;
 	
 	private static Environment envStatic;
 	

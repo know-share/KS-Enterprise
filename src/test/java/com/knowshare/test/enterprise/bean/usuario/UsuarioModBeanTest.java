@@ -10,6 +10,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -28,7 +29,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -467,11 +467,10 @@ public class UsuarioModBeanTest extends AbstractTest {
 	
 	private void assertsImage(TipoImagenEnum type, String image){
 		byte[] content = null;
+		final String rootPath = env.getProperty("path.folder.images");
+		final File imagePath = new File(rootPath+image);
 		try{
-			Path path = Paths.get(ResourceUtils
-					.getURL("classpath:knowshare_uploads_test/"+image)
-					.getPath());
-			content = Files.readAllBytes(path);
+			content = Files.readAllBytes(imagePath.toPath());
 		}catch(IOException e){
 			e.printStackTrace();
 			content = null;
