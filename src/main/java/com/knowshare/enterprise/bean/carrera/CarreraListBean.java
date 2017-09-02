@@ -35,7 +35,7 @@ public class CarreraListBean implements CarreraListFacade{
 
 	@Override
 	public EnfasisAreaConocimientoDTO getEnfasisAreaConocimiento(String carrera) {
-		Carrera c = carreraRepository.findByNombreIgnoreCase(carrera);
+		Carrera c = carreraRepository.findByIdIgnoreCase(carrera);
 		if(c == null)
 			return null;
 		

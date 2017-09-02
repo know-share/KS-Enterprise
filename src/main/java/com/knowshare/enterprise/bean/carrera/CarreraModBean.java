@@ -38,8 +38,16 @@ public class CarreraModBean implements CarreraModFacade {
 		final Query query = Query
 				.query( Criteria.where("_id").is(carrera.getId()));
 		update.set("nombre", carrera.getNombre())
-			.set("facultad",carrera.getFacultad())
-			.set("enfasis",carrera.getEnfasis());
+			.set("facultad",carrera.getFacultad());
+		return mongoTemplate.updateFirst(query, update, Carrera.class).getN() > 0;
+	}
+	
+	@Override
+	public boolean updateEnfasis(CarreraDTO carrera) {
+		final Update update = new Update();
+		final Query query = Query
+				.query( Criteria.where("_id").is(carrera.getId()));
+		update.set("enfasis", carrera.getEnfasis());
 		return mongoTemplate.updateFirst(query, update, Carrera.class).getN() > 0;
 	}
 

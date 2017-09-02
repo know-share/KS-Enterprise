@@ -21,7 +21,7 @@ public interface CarreraRepository extends MongoRepository<Carrera, String>{
 	 * @param nombre
 	 * @return La carrera si la encontró, null si no encuentra nada.
 	 */
-	Carrera findByNombreIgnoreCase(String nombre);
+	Carrera findByIdIgnoreCase(String nombre);
 	
 	/**
 	 * Descripción: elimina una Carrera dado su Id.

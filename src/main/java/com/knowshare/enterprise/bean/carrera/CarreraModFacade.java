@@ -18,16 +18,25 @@ public interface CarreraModFacade {
 	 * @return Verdadero si actualizó correctamente, falso si no.
 	 */
 	boolean update (CarreraDTO carrera);
+	
 	/**
 	 * Descripción: elimina una Carrera recibiendo su ID en la base de datos.
 	 * @param id
 	 * @return Verdadero si elimino correctamente, falso si no.
 	 */
 	boolean delete(String id);
+	
 	/**
 	 * Descripción: crea una Carrera en la base de datos.
 	 * @param carrera
 	 * @return Verdadero si la crea, falso si no.
 	 */
 	boolean create (CarreraDTO carrera);
+	
+	/**
+	 * Descripción: Actualiza los énfasis de una carrera
+	 * @param carrera
+	 * @return Verdadero si actualizó correctatamente, falso si no
+	 */
+	boolean updateEnfasis(CarreraDTO carrera);
 }

@@ -51,4 +51,11 @@ public interface CarreraFacade {
 	 */
 	boolean create (CarreraDTO carrera);
 	
+	/**
+	 * Descripción: Actualiza los énfasis de una carrera
+	 * @param carrera
+	 * @return Verdadero si actualizó correctatamente, falso si no
+	 */
+	boolean updateEnfasis(CarreraDTO carrera);
+	
 }

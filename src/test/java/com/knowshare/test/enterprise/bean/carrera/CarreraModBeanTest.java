@@ -20,6 +20,7 @@ import com.knowshare.test.enterprise.general.AbstractTest;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,6 +37,7 @@ public class CarreraModBeanTest extends AbstractTest{
 	public void test01Create(){
 		final CarreraDTO dto = new CarreraDTO()
 				.setNombre("Carrera mod Bean")
+				.setEnfasis(new ArrayList<>())
 				.setFacultad("Facultad carrera mod bean");
 		boolean result = carreraModBean.create(dto);
 		assertTrue(result);
@@ -62,7 +64,6 @@ public class CarreraModBeanTest extends AbstractTest{
 		final CarreraDTO dto = new CarreraDTO()
 				.setId(carreras.get(0).getId())
 				.setNombre("Carrera mod Bean updated")
-				.setEnfasis(carreras.get(0).getEnfasis())
 				.setFacultad("Facultad carrera mod bean updated");
 		
 		boolean result = carreraModBean.update(dto);
@@ -83,7 +84,34 @@ public class CarreraModBeanTest extends AbstractTest{
 	}
 	
 	@Test
-	public void test03Delete(){
+	public void test03UpdateEnfasis(){
+		final List<Carrera> carreras = mongoTemplate
+				.find(new Query(Criteria.where("nombre").is("Carrera mod Bean updated")), Carrera.class);
+		final List<String> enfasis = new ArrayList<>();
+		enfasis.add("enfasis nuevo 1");
+		enfasis.add("enfasis nuevo 2");
+		enfasis.add("enfasis nuevo 3");
+		final CarreraDTO dto = new CarreraDTO()
+				.setId(carreras.get(0).getId())
+				.setEnfasis(enfasis);
+		
+		boolean result = carreraModBean.updateEnfasis(dto);
+		assertTrue(result);
+		
+		final List<Carrera> carrera = mongoTemplate
+				.find(new Query(Criteria.where("_id").is(dto.getId())), Carrera.class);
+		
+		assertEquals(1,carrera.size());
+		
+		assertNotNull(carrera.get(0).getEnfasis());
+		assertEquals(3, carrera.get(0).getEnfasis().size());
+		
+		result = carreraModBean.update(new CarreraDTO());
+		assertFalse(result);
+	}
+	
+	@Test
+	public void test04Delete(){
 		final List<Carrera> carreras = mongoTemplate
 				.find(new Query(Criteria.where("nombre").is("Carrera mod Bean updated")), Carrera.class);
 		boolean result = carreraModBean.delete(carreras.get(0).getId());

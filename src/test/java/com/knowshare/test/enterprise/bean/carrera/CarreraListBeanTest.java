@@ -44,13 +44,13 @@ public class CarreraListBeanTest extends AbstractTest{
 		assertNull(dto);
 		
 		dto = carreraListBean
-				.getEnfasisAreaConocimiento("Ingeniería X");
+				.getEnfasisAreaConocimiento("idCarreraX");
 		assertNotNull(dto);
 		assertEquals(2, dto.getEnfasis().size());
 		assertEquals(2, dto.getAreaConocimiento().size());
 		
 		dto = carreraListBean
-				.getEnfasisAreaConocimiento("Ingeniería de sistemas");
+				.getEnfasisAreaConocimiento("idCarreraSistemas");
 		assertNotNull(dto);
 		assertEquals(4, dto.getEnfasis().size());
 		assertEquals(3, dto.getAreaConocimiento().size());

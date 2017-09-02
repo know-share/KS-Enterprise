@@ -49,4 +49,9 @@ public class CarreraBean implements CarreraFacade{
 	public boolean create (CarreraDTO carrera) {
 		return carreraModBean.create(carrera);
 	}
+
+	@Override
+	public boolean updateEnfasis(CarreraDTO carrera) {
+		return carreraModBean.updateEnfasis(carrera);
+	}
 }
