@@ -1,5 +1,6 @@
 [
 	{
+		"id":{"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":1},
 		"username": "MinMiguelM",
 		"password": "8e21d61d91c6c6e1f3137b783a1b524d",
 		"nombre": "Miguel",
@@ -7,6 +8,10 @@
 		"correo": "miguel@mail.com",
 		"tipo": "ESTUDIANTE",
 		"semestre": 10,
+		"imagen":{
+			"imageName":"MinMiguelM.png",
+			"type":"PNG"
+		},
 		"habilidades": [
 			{
 				"cantidad": 0,
@@ -75,6 +80,7 @@
 			"nombre":"ISFJ"
 		}
 	},{
+		"id":{"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":2},
 		"username": "pablo.gaitan",
 		"password": "8e21d61d91c6c6e1f3137b783a1b524d",
 		"nombre": "Pablo",
@@ -142,6 +148,7 @@
 			"nombre":"ENTP"
 		}
 	},{
+		"id":{"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3},
 		"username": "Felipe-Bautista",
 		"password": "8e21d61d91c6c6e1f3137b783a1b524d",
 		"nombre": "Felipe",
@@ -149,6 +156,10 @@
 		"correo": "felipe@mail.com",
 		"tipo": "ESTUDIANTE",
 		"semestre": 9,
+		"imagen":{
+			"imageName":"Felipe-Bautista.png",
+			"type":"PNG"
+		},
 		"habilidades": [
 			{
 				"cantidad": 0,
@@ -212,7 +223,14 @@
 				"id": "idCarreraCivil"
 			}
 		],
-		"insignias": [],
+		"insignias": [
+			{
+				"visto":false,
+				"insignia":{
+					"id":"SEGUIDORES1"
+				}
+			}
+		],
 		"personalidad": {
 			"nombre":"ESFJ"
 		}

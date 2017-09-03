@@ -11,7 +11,7 @@ import org.junit.AfterClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.knowshare.enterprise.bean.gusto.GustoListFacade;
+import com.knowshare.enterprise.bean.gusto.GustoFacade;
 import com.knowshare.entities.perfilusuario.Gusto;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
@@ -22,7 +22,7 @@ import com.knowshare.test.enterprise.general.AbstractTest;
 public class GustoListBeanTest extends AbstractTest {
 
 	@Autowired
-	private GustoListFacade gustoListBean;
+	private GustoFacade gustoListBean;
 	
 	@Test
 	public void test01GetAllGustos(){

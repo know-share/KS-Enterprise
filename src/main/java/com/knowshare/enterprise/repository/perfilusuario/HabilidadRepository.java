@@ -13,12 +13,12 @@ import org.springframework.stereotype.Repository;
 import com.knowshare.entities.perfilusuario.Habilidad;
 
 /**
- * Repositorio con metodos CRUD para la clase Habilidad.
- * @author miguel
+ * Repositorio con metodos CRUD para la clase {@link Habilidad}
+ * @author Miguel Montañez
  *
  */
 @Repository
-public interface HabilidadRepository extends MongoRepository<Habilidad, String>{
+public interface HabilidadRepository extends MongoRepository<Habilidad, ObjectId>{
 	
 	@Query(value="{$or:[{'tipo':'PERSONALES'},{'carrera.$id':?0, 'tipo':'PROFESIONALES'}]}")
 	List<Habilidad> getHabilidades(String carrera);

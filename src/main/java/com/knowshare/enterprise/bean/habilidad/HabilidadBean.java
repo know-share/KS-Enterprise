@@ -14,7 +14,8 @@ import com.knowshare.dto.perfilusuario.HabilidadDTO;
 import com.knowshare.entities.perfilusuario.Habilidad;
 
 /**
- * @author miguel
+ * {@link HabilidadFacade}
+ * @author Miguel Montañez
  *
  */
 @Component
@@ -25,11 +26,6 @@ public class HabilidadBean implements HabilidadFacade{
 	
 	@Autowired
 	private HabilidadListFacade habilidadListBean;
-
-	@Override
-	public void createHabilidad(String nombre) {
-		habilidadModBean.createHabilidad(nombre);
-	}
 
 	@Override
 	public List<HabilidadDTO> getHabilidades(String carrera) {

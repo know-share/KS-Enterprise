@@ -18,9 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
+import com.knowshare.dto.perfilusuario.ImagenDTO;
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
+import com.knowshare.enterprise.bean.usuario.UsuarioFacade;
 import com.knowshare.enterprise.bean.usuario.UsuarioListFacade;
 import com.knowshare.entities.perfilusuario.Usuario;
+import com.knowshare.enums.TipoImagenEnum;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
 /**
@@ -30,26 +33,29 @@ import com.knowshare.test.enterprise.general.AbstractTest;
 public class UsuarioListBeanTest extends AbstractTest{
 
 	@Autowired
+	private UsuarioFacade usuarioBean;
+	
+	@Autowired
 	private UsuarioListFacade usuarioListBean;
 	
 	@Test
 	public void test01IsUsernameTaken(){
-		boolean res = usuarioListBean.isUsernameTaken("username not exist");
+		boolean res = usuarioBean.isUsernameTaken("username not exist");
 		assertEquals(false, res);
 		
-		res = usuarioListBean.isUsernameTaken("minMiguelm");
+		res = usuarioBean.isUsernameTaken("minMiguelm");
 		assertEquals(true, res);
 		
-		res = usuarioListBean.isUsernameTaken("MINMIGUELM");
+		res = usuarioBean.isUsernameTaken("MINMIGUELM");
 		assertEquals(true, res);
 	}
 	
 	@Test
 	public void test02Login(){
-		Usuario usu = usuarioListBean.login("MINMIGUELM","INCROO");
+		Usuario usu = usuarioBean.login("MINMIGUELM","INCROO");
 		assertNull(usu);
 		
-		usu = usuarioListBean.login("MINMIGUELM","Asdf1234$");
+		usu = usuarioBean.login("MINMIGUELM","Asdf1234$");
 		assertNotNull(usu);
 		assertEquals("MinMiguelM", usu.getUsername());
 	}
@@ -72,6 +78,12 @@ public class UsuarioListBeanTest extends AbstractTest{
 		// Usuario no existente
 		res = usuarioListBean.esSeguidor(usuarioMiguel,null);
 		assertFalse(res);
+		
+		res = usuarioListBean.esSeguidor(null,usuarioMiguel);
+		assertFalse(res);
+		
+		res = usuarioListBean.esSeguidor(null,null);
+		assertFalse(res);
 	}
 	
 	@Test
@@ -89,11 +101,17 @@ public class UsuarioListBeanTest extends AbstractTest{
 		
 		res = usuarioListBean.estaSolicitud(usuarioFelipe,usuarioPablo);
 		assertTrue(res);
+		
+		res = usuarioListBean.estaSolicitud(null,usuarioPablo);
+		assertFalse(res);
+		
+		res = usuarioListBean.estaSolicitud(null,null);
+		assertFalse(res);
 	}
 	
 	@Test
 	public void test05GetUsuario(){
-		final UsuarioDTO usuario = usuarioListBean.getUsuario("pablo.Gaitan");
+		UsuarioDTO usuario = usuarioBean.getUsuario("pablo.Gaitan");
 		assertNotNull(usuario);
 		
 		assertNotNull(usuario.getAmigos());
@@ -119,78 +137,102 @@ public class UsuarioListBeanTest extends AbstractTest{
 		
 		assertNotNull(usuario.getGustos());
 		assertEquals(2, usuario.getGustos().size());
+		
+		usuario = usuarioBean.getUsuario("");
+		assertNull(usuario);
 	}
 	
 	@Test
 	public void test06GetMyNoConnections(){
-		List<UsuarioDTO> noConnections = usuarioListBean.getMyNoConnections("MinMiguelM");
+		List<UsuarioDTO> noConnections = usuarioBean.getMyNoConnections("MinMiguelM");
 		assertNotNull(noConnections);
 		assertEquals(1, noConnections.size());
 		
-		noConnections = usuarioListBean.getMyNoConnections("pablo.gaitan");
+		noConnections = usuarioBean.getMyNoConnections("pablo.gaitan");
 		assertNotNull(noConnections);
 		assertEquals(2, noConnections.size());
 		
-		noConnections = usuarioListBean.getMyNoConnections("Felipe-Bautista");
+		noConnections = usuarioBean.getMyNoConnections("Felipe-Bautista");
 		assertNotNull(noConnections);
 		assertEquals(1, noConnections.size());
 	}
 	
 	@Test
 	public void test07IsCorreoTaken(){
-		assertTrue(usuarioListBean.isCorreoTaken("miguel@mail.com"));
-		assertFalse(usuarioListBean.isCorreoTaken("miguelm@mail.com"));
+		assertTrue(usuarioBean.isCorreoTaken("miguel@mail.com"));
+		assertFalse(usuarioBean.isCorreoTaken("miguelm@mail.com"));
 	}
 	
 	@Test
 	public void test08BuscarPorNombre(){
 		final UsuarioDTO dto = new UsuarioDTO().setUsername("MinMiguelM");
-		List<UsuarioDTO> usuarios = usuarioListBean.buscarPorNombre(dto, "paBLo gaitan");
+		List<UsuarioDTO> usuarios = usuarioBean.buscarPorNombre(dto, "paBLo gaitan");
 		assertTrue(usuarios.size() == 1);
 		
-		usuarios = usuarioListBean.buscarPorNombre(dto, "paBLo gaitan miguel felipe");
+		usuarios = usuarioBean.buscarPorNombre(dto, "paBLo gaitan miguel felipe");
 		assertTrue(usuarios.size() == 2);
 		
-		usuarios = usuarioListBean.buscarPorNombre(dto, "bautista miguel felipe");
+		usuarios = usuarioBean.buscarPorNombre(dto, "bautista miguel felipe");
 		assertTrue(usuarios.size() == 1);
 	}
 	
 	@SuppressWarnings("rawtypes")
 	@Test
 	public void test09BuscarPorHabilidad(){
-		List<Map> result = usuarioListBean.buscarPorHabilidad("habilidad");
+		List<Map> result = usuarioBean.buscarPorHabilidad("habilidad");
 		assertEquals(3,result.size());
 		
-		result = usuarioListBean.buscarPorHabilidad("civil");
+		result = usuarioBean.buscarPorHabilidad("civil");
 		assertEquals(1,result.size());
 		
-		result = usuarioListBean.buscarPorHabilidad("sistemas");
+		result = usuarioBean.buscarPorHabilidad("sistemas");
 		assertEquals(2,result.size());
 		
-		result = usuarioListBean.buscarPorHabilidad("sistemas electronica habilidad");
+		result = usuarioBean.buscarPorHabilidad("sistemas electronica habilidad");
 		assertEquals(3,result.size());
 		
-		result = usuarioListBean.buscarPorHabilidad("electronica industrial");
+		result = usuarioBean.buscarPorHabilidad("electronica industrial");
 		assertEquals(0,result.size());
 		
-		result = usuarioListBean.buscarPorHabilidad("electronica personal");
+		result = usuarioBean.buscarPorHabilidad("electronica personal");
 		assertEquals(3,result.size());
 	}
 	
 	@SuppressWarnings("rawtypes")
 	@Test
 	public void test10BuscarPorAreaConocimiento(){
-		List<Map> result = usuarioListBean.buscarPorAreaConocimiento("1");
+		List<Map> result = usuarioBean.buscarPorAreaConocimiento("1");
 		assertEquals(3,result.size());
 		
-		result = usuarioListBean.buscarPorAreaConocimiento("sistemas civil");
+		result = usuarioBean.buscarPorAreaConocimiento("sistemas civil");
 		assertEquals(3,result.size());
 		
-		result = usuarioListBean.buscarPorAreaConocimiento("sistemas 3");
+		result = usuarioBean.buscarPorAreaConocimiento("sistemas 3");
 		assertEquals(3,result.size());
 		
-		result = usuarioListBean.buscarPorAreaConocimiento("sistemas 4");
+		result = usuarioBean.buscarPorAreaConocimiento("sistemas 4");
 		assertEquals(2,result.size());
+	}
+	
+	@Test
+	public void test11GetImage(){
+		ImagenDTO image = usuarioBean.getImage("");
+		assertNotNull(image);
+		assertFalse(image.isResult());
+		
+		image = usuarioBean.getImage("pablo.gaitan");
+		assertNotNull(image);
+		assertFalse(image.isResult());
+		
+		image = usuarioBean.getImage("minmiguelm");
+		assertNotNull(image);
+		assertTrue(image.isResult());
+		assertNotNull(image.getBytes());
+		assertEquals(TipoImagenEnum.PNG, image.getType());
+		
+		image = usuarioBean.getImage("Felipe-bautista");
+		assertNotNull(image);
+		assertFalse(image.isResult());
 	}
 	
 	@AfterClass

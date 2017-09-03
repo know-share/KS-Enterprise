@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.knowshare.entities.app.UserSession;
 
 /**
+ * Repositorio de usersession. Permite consultas y operaciones
+ * con la entidad {@link UserSession} ante la base de datos.
  * @author Pablo Gaitan
  *
  */

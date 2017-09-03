@@ -12,6 +12,7 @@ import com.knowshare.enterprise.repository.perfilusuario.GustoRepository;
 import com.knowshare.entities.perfilusuario.Gusto;
 
 /**
+ * {@link GustoListFacade}
  * @author Miguel Montañez
  *
  */

@@ -10,9 +10,14 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,6 +28,8 @@ import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -30,7 +37,7 @@ import com.knowshare.dto.academia.CarreraDTO;
 import com.knowshare.dto.perfilusuario.CualidadDTO;
 import com.knowshare.dto.perfilusuario.HabilidadDTO;
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
-import com.knowshare.enterprise.bean.usuario.UsuarioModFacade;
+import com.knowshare.enterprise.bean.usuario.UsuarioFacade;
 import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.enterprise.utils.UtilsPassword;
 import com.knowshare.entities.academia.AreaConocimiento;
@@ -38,6 +45,7 @@ import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
 import com.knowshare.entities.ludificacion.CualidadAval;
 import com.knowshare.entities.ludificacion.HabilidadAval;
+import com.knowshare.entities.ludificacion.InsigniaPreview;
 import com.knowshare.entities.perfilusuario.Cualidad;
 import com.knowshare.entities.perfilusuario.Enfasis;
 import com.knowshare.entities.perfilusuario.Gusto;
@@ -46,20 +54,21 @@ import com.knowshare.entities.perfilusuario.Personalidad;
 import com.knowshare.entities.perfilusuario.Usuario;
 import com.knowshare.enums.PreferenciaIdeaEnum;
 import com.knowshare.enums.TipoHabilidadEnum;
+import com.knowshare.enums.TipoImagenEnum;
 import com.knowshare.enums.TipoUsuariosEnum;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
 /**
  * Pruebas de la creación de usuarios de tipo Profesor,
  * Egresado y Estudiante
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UsuarioModBeanTest extends AbstractTest {
 
 	@Autowired
-	private UsuarioModFacade usuarioModBean;
+	private UsuarioFacade usuarioModBean;
 
 	private UsuarioDTO usuarioProfesor;
 	private UsuarioDTO usuarioEstudiante;
@@ -293,6 +302,9 @@ public class UsuarioModBeanTest extends AbstractTest {
 		
 		assertEquals(3, usuario.getHabilidades().size());
 		assertEquals("Habilidad Profesional civil 1", usuario.getHabilidades().get(2).getHabilidad().getNombre());
+		
+		assertFalse(usuarioModBean.actualizarInfoAcademica(
+				new UsuarioDTO().setTipoUsuario(TipoUsuariosEnum.ADMIN)));
 	}
 	
 	@Test
@@ -305,6 +317,9 @@ public class UsuarioModBeanTest extends AbstractTest {
 		usuario = ((List<Usuario>)mongoTemplate
 				.find(new Query(Criteria.where("username").is("pablo.gaitan")), Usuario.class)).get(0);
 		assertEquals(0,usuario.getHabilidades().size());
+		
+		assertFalse(usuarioModBean.actualizarHabilidadCualidad(
+				new UsuarioDTO().setTipoUsuario(TipoUsuariosEnum.ADMIN)));
 	}
 	
 	@Test
@@ -341,6 +356,9 @@ public class UsuarioModBeanTest extends AbstractTest {
 		assertEquals("This is a new name", estudiante.getNombre());
 		assertEquals("correoforupdate@mail.com", estudiante.getCorreo());
 		assertEquals(Integer.valueOf(8), estudiante.getSemestre());
+		
+		assertFalse(usuarioModBean.actualizarBasis(
+				new UsuarioDTO().setTipoUsuario(TipoUsuariosEnum.ADMIN)));
 	}
 	
 	@Test
@@ -360,6 +378,118 @@ public class UsuarioModBeanTest extends AbstractTest {
 		assertEquals("This is a new name profesor", profesor.getNombre());
 		assertEquals("correoforupdateprofesor@mail.com", profesor.getCorreo());
 		assertEquals("ISTAR", profesor.getGrupoInvestigacion());
+	}
+	
+	@Test
+	public void test16UploadImage(){
+		MultipartFile file = getFile("test.txt","image/text");
+		boolean result = usuarioModBean.uploadImage("pablo.gaitan", file);
+		assertFalse(result);
+		
+		// jpg
+		file = getFile("upload_image.jpg","image/jpg");
+		result = usuarioModBean.uploadImage("pablo.gaitan", file);
+		assertTrue(result);
+		assertsImage(TipoImagenEnum.JPG,"pablo.gaitan.jpg");
+		
+		// jpeg
+		file = getFile("upload_image.jpeg","image/jpeg");
+		result = usuarioModBean.uploadImage("pablo.gaitan", file);
+		assertTrue(result);
+		assertsImage(TipoImagenEnum.JPEG,"pablo.gaitan.jpeg");
+		
+		// png -> some errors
+		file = getFile("upload_image.png","image/png");
+		result = usuarioModBean.uploadImage("pablo.gaitan", file);
+		assertTrue(result);
+		assertsImage(TipoImagenEnum.PNG,"pablo.gaitan.png");
+	}
+	
+	@Test
+	public void test17UpdatePreferenciaIdea(){
+		boolean result = usuarioModBean
+				.updatePreferenciaIdea("MinMiguelM", PreferenciaIdeaEnum.ORDEN_CRONOLOGICO);
+		assertTrue(result);
+		assertEquals(PreferenciaIdeaEnum.ORDEN_CRONOLOGICO,mongoTemplate.findOne(new Query(Criteria.where("username").is("MinMiguelM")), Usuario.class)
+			.getPreferencias().getPreferenciaIdea());
+		
+		result = usuarioModBean
+				.updatePreferenciaIdea("MinMiguelM", PreferenciaIdeaEnum.POR_RELEVANCIA);
+		assertTrue(result);
+		assertEquals(PreferenciaIdeaEnum.POR_RELEVANCIA,mongoTemplate.findOne(new Query(Criteria.where("username").is("MinMiguelM")), Usuario.class)
+			.getPreferencias().getPreferenciaIdea());
+		
+		result = usuarioModBean
+				.updatePreferenciaIdea("", PreferenciaIdeaEnum.POR_RELEVANCIA);
+		assertFalse(result);
+	}
+	
+	@Test
+	public void test18UpdateInsignias(){
+		boolean result = usuarioModBean.updateInsignias("Felipe-Bautista");
+		assertTrue(result);
+		final Usuario usuario = mongoTemplate.findOne(
+				new Query(Criteria.where("username").is("Felipe-Bautista")), Usuario.class);
+		for(InsigniaPreview i:usuario.getInsignias()){
+			assertTrue(i.isVisto());
+		}
+	}
+	
+	@Test
+	public void test19PromoteEstudiante(){
+		boolean result = usuarioModBean.promoteEstudiante("");
+		assertFalse(result);
+		
+		result = usuarioModBean.promoteEstudiante(usuarioEgresado.getNombre());
+		assertFalse(result);
+		
+		result = usuarioModBean.promoteEstudiante("Felipe-Bautista");
+		assertTrue(result);
+		
+		assertEquals(TipoUsuariosEnum.EGRESADO, mongoTemplate.findOne(
+				new Query(Criteria.where("username").is("Felipe-Bautista")), 
+				Usuario.class)
+					.getTipo());
+	}
+	
+	@Test
+	public void test20ActualizarGustos(){
+		boolean result = usuarioModBean.actualizarGustos(new ArrayList<>(), "");
+		assertFalse(result);
+		
+		result = usuarioModBean.actualizarGustos(new ArrayList<>(), "Felipe-Bautista");
+		assertTrue(result);
+		assertEquals(0, mongoTemplate.findOne(
+				new Query(Criteria.where("username").is("Felipe-Bautista")), 
+				Usuario.class)
+					.getGustos().size());
+	}
+	
+	private void assertsImage(TipoImagenEnum type, String image){
+		byte[] content = null;
+		final String rootPath = env.getProperty("path.folder.images");
+		final File imagePath = new File(rootPath+image);
+		try{
+			content = Files.readAllBytes(imagePath.toPath());
+		}catch(IOException e){
+			e.printStackTrace();
+			content = null;
+		}
+		assertNotNull(content);
+		assertEquals(type,mongoTemplate.findOne(new Query(Criteria.where("username")
+					.is("pablo.gaitan")), Usuario.class)
+				.getImagen().getType());
+	}
+	
+	private MultipartFile getFile(String image, String contentType){
+		Path path = Paths.get("classpath:"+image);
+		byte[] content = null;
+		try{
+			content = Files.readAllBytes(path);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return new MockMultipartFile(image,image,contentType,content);
 	}
 	
 	private UsuarioDTO crearUsuarioEstudiante(List<HabilidadDTO> habilidadesDto, List<Gusto> gustos) {

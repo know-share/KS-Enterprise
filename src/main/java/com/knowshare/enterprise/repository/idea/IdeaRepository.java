@@ -14,8 +14,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
 /**
- * Repositorio con los metodos CRUD de idea
- * @author pablo
+ * Repositorio con los metodos CRUD de {@link Idea idea}
+ * @author Pablo Gaitan
  *
  */
 @Repository
@@ -29,4 +29,10 @@ public interface IdeaRepository extends MongoRepository<Idea,String>{
 	
 	@Query("{'usuario.$id' : ?0, 'tipo' : {$ne:'PR'}}")
 	List<Idea> findIdeaByUsuarioProyecto(ObjectId username);
+	
+	@Query(value="{'usuario.$id':?0}",count=true)
+	Long countByUsuario(ObjectId id);
+	
+	@Query("{'usuario.$id' : {$in:?0}}")
+	List<Idea> findIdeaRed(List<ObjectId> ids);	
 }

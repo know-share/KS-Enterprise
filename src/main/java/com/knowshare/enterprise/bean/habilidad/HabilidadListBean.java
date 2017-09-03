@@ -23,7 +23,7 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.newA
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.project;
 
 /**
- * 
+ * {@link HabilidadListFacade}
  * @author Miguel Montañez
  *
  */

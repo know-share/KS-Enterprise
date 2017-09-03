@@ -8,11 +8,19 @@ import java.util.List;
 import com.knowshare.entities.perfilusuario.Personalidad;
 
 /**
- * @author miguel
+ * Se encarga de operaciones de consulta, es decir,
+ * no hacen modificaciones en la base de datos, sobre
+ * la entidad {@link Personalidad}
+ * @author Miguel Montañez
  *
  */
 public interface PersonalidadListFacade {
 	
+	/**
+	 * Obtiene todas las personalidades registradas
+	 * en la aplicación
+	 * @return Lista de {@link Personalidad personalidades}
+	 */
 	List<Personalidad> getAllPersonalidades();
 
 }

@@ -19,7 +19,7 @@ import com.knowshare.entities.idea.OperacionIdea;
 import com.knowshare.enums.TipoOperacionEnum;
 
 /**
- * @author HP
+ * @author Pablo Gaitán
  *
  */
 @Component
@@ -98,5 +98,11 @@ public class IdeaModBean implements IdeaModFacade{
 		}
 		return MapEntities.mapIdeaToDTO(ret);
 	}
-	
+
+	@Override
+	public IdeaDTO cambiarEstado(IdeaDTO dto) {
+		Idea idea = ideaRep.findOne(dto.getId());
+		idea.setEstado(dto.getEstado());
+		return MapEntities.mapIdeaToDTO(ideaRep.save(idea));
+	}
 }

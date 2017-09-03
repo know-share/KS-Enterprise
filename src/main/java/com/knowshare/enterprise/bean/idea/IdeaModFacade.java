@@ -7,7 +7,7 @@ import com.knowshare.dto.idea.IdeaDTO;
 import com.knowshare.entities.idea.OperacionIdea;
 
 /**
- * @author pablo
+ * @author Pablo Gaitán
  *
  */
 public interface IdeaModFacade {
@@ -17,4 +17,6 @@ public interface IdeaModFacade {
 	IdeaDTO agregarOperacion(IdeaDTO dto, OperacionIdea operacion);
 	
 	IdeaDTO compartir(IdeaDTO dto,String username);
+	
+	IdeaDTO cambiarEstado(IdeaDTO dto);
 }

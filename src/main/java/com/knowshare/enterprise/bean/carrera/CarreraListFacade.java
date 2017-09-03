@@ -23,9 +23,9 @@ public interface CarreraListFacade {
 	/**
 	 * Descripción: busca los énfasis y areas de conocimiento de una carrera
 	 * @param carrera
-	 * @return Un EnfasisAreaConocmientoDTO con los énfasis y areas de conocmiento de una Carrera, null si no encuentra la Carrera.
+	 * @return Un EnfasisAreaConocmientoDTO con los énfasis y 
+	 * areas de conocmiento de una Carrera, null si no encuentra la Carrera.
 	 */
 	EnfasisAreaConocimientoDTO getEnfasisAreaConocimiento(String carrera);
-	
 
 }

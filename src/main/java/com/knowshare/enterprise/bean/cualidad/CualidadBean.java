@@ -11,7 +11,8 @@ import org.springframework.stereotype.Component;
 import com.knowshare.dto.perfilusuario.CualidadDTO;
 
 /**
- * @author miguel
+ * {@link CualidadFacade}
+ * @author Miguel Montañez
  *
  */
 @Component

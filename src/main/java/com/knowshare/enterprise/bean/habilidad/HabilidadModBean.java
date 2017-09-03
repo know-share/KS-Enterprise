@@ -16,10 +16,9 @@ import com.knowshare.enterprise.repository.perfilusuario.HabilidadRepository;
 import com.knowshare.entities.academia.Carrera;
 import com.knowshare.entities.perfilusuario.Habilidad;
 
-
-
 /**
- * @author miguel
+ * {@link HabilidadModFacade}
+ * @author Miguel Montañez
  *
  */
 @Component
@@ -30,13 +29,6 @@ public class HabilidadModBean implements HabilidadModFacade{
 	
 	@Autowired
 	private MongoTemplate mongoTemplate;
-	
-	@Override
-	public void createHabilidad(String nombre) {
-		final Habilidad habilidad = new Habilidad();
-		habilidad.setNombre(nombre);
-		habilidadRepository.insert(habilidad);
-	}
 
 	@Override
 	public boolean update(HabilidadDTO habilidad) {
@@ -56,7 +48,7 @@ public class HabilidadModBean implements HabilidadModFacade{
 	@Override
 	public boolean create(HabilidadDTO habilidad) {
 		Habilidad habilidadOriginal = new Habilidad();
-		if(habilidadOriginal!=null) {
+		if(habilidad!=null) {
 			habilidadOriginal.setNombre(habilidad.getNombre());
 			habilidadOriginal.setTipo(habilidad.getTipo());
 			habilidadOriginal.setCarrera( new Carrera().setId(habilidad.getIdCarrera()));

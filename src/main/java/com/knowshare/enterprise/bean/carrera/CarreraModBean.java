@@ -16,6 +16,7 @@ import com.knowshare.dto.academia.CarreraDTO;
 import com.knowshare.enterprise.repository.academia.CarreraRepository;
 import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.academia.Carrera;
+import com.knowshare.entities.perfilusuario.Habilidad;
 
 /**
  * {@link CarreraModFacade}
@@ -37,13 +38,23 @@ public class CarreraModBean implements CarreraModFacade {
 		final Query query = Query
 				.query( Criteria.where("_id").is(carrera.getId()));
 		update.set("nombre", carrera.getNombre())
-			.set("facultad",carrera.getFacultad())
-			.set("enfasis",carrera.getEnfasis());
+			.set("facultad",carrera.getFacultad());
+		return mongoTemplate.updateFirst(query, update, Carrera.class).getN() > 0;
+	}
+	
+	@Override
+	public boolean updateEnfasis(CarreraDTO carrera) {
+		final Update update = new Update();
+		final Query query = Query
+				.query( Criteria.where("_id").is(carrera.getId()));
+		update.set("enfasis", carrera.getEnfasis());
 		return mongoTemplate.updateFirst(query, update, Carrera.class).getN() > 0;
 	}
 
 	@Override
 	public boolean delete(String carrera){
+		mongoTemplate.remove(new Query(Criteria.where("carrera.$id").is(carrera)), 
+				Habilidad.class);
 		return carreraRepository.removeById(carrera)==1;
 	}
 
@@ -58,6 +69,4 @@ public class CarreraModBean implements CarreraModFacade {
 		}
 		return false;
 	}
-	
-	
 }

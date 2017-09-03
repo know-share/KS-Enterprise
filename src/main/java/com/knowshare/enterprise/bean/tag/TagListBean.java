@@ -12,6 +12,7 @@ import com.knowshare.enterprise.repository.idea.TagRepository;
 import com.knowshare.entities.idea.Tag;
 
 /**
+ * {@link TagListFacade}
  * @author Miguel Montañez
  *
  */

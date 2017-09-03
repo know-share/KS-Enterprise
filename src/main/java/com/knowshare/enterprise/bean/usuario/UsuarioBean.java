@@ -14,7 +14,9 @@ import com.knowshare.dto.perfilusuario.ImagenDTO;
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
+import com.knowshare.entities.perfilusuario.Gusto;
 import com.knowshare.entities.perfilusuario.Usuario;
+import com.knowshare.enums.PreferenciaIdeaEnum;
 
 /**
  * {@link UsuarioFacade}
@@ -133,5 +135,25 @@ public class UsuarioBean implements UsuarioFacade {
 	@Override
 	public ImagenDTO getImage(String username) {
 		return this.usuarioListBean.getImage(username);
+	}
+
+	@Override
+	public boolean updatePreferenciaIdea(String username, PreferenciaIdeaEnum preferencia) {
+		return this.usuarioModBean.updatePreferenciaIdea(username, preferencia);
+	}
+
+	@Override
+	public boolean updateInsignias(String username) {
+		return this.usuarioModBean.updateInsignias(username);
+	}
+
+	@Override
+	public boolean promoteEstudiante(String username) {
+		return this.usuarioModBean.promoteEstudiante(username);
+	}
+
+	@Override
+	public boolean actualizarGustos(List<Gusto> gustos, String username) {
+		return this.usuarioModBean.actualizarGustos(gustos, username);
 	}
 }

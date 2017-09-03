@@ -5,6 +5,7 @@ package com.knowshare.test.enterprise.bean.carrera;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.knowshare.dto.academia.CarreraDTO;
 import com.knowshare.dto.academia.EnfasisAreaConocimientoDTO;
-import com.knowshare.enterprise.bean.carrera.CarreraListFacade;
+import com.knowshare.enterprise.bean.carrera.CarreraFacade;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
 /**
@@ -24,7 +25,7 @@ import com.knowshare.test.enterprise.general.AbstractTest;
 public class CarreraListBeanTest extends AbstractTest{
 	
 	@Autowired
-	private CarreraListFacade carreraListBean;
+	private CarreraFacade carreraListBean;
 	
 	@Test
 	public void test01GetAllCarreras(){
@@ -33,13 +34,24 @@ public class CarreraListBeanTest extends AbstractTest{
 			carreraMapTest(carreraDTO);
 		}
 		
-		assertEquals(2, carreras.size());
+		assertEquals(3, carreras.size());
 	}
 	
 	@Test
 	public void test02GetEnfasisAreaConocimiento(){
 		EnfasisAreaConocimientoDTO dto = carreraListBean
-				.getEnfasisAreaConocimiento("Ingeniería de sistemas");
+				.getEnfasisAreaConocimiento("");
+		assertNull(dto);
+		
+		dto = carreraListBean
+				.getEnfasisAreaConocimiento("idCarreraX");
+		assertNotNull(dto);
+		assertEquals(2, dto.getEnfasis().size());
+		assertEquals(2, dto.getAreaConocimiento().size());
+		
+		dto = carreraListBean
+				.getEnfasisAreaConocimiento("idCarreraSistemas");
+		assertNotNull(dto);
 		assertEquals(4, dto.getEnfasis().size());
 		assertEquals(3, dto.getAreaConocimiento().size());
 	}

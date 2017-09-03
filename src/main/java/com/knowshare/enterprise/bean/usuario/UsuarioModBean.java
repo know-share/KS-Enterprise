@@ -29,15 +29,18 @@ import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.academia.Carrera;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
+import com.knowshare.entities.perfilusuario.Gusto;
 import com.knowshare.entities.perfilusuario.ImageProfile;
 import com.knowshare.entities.perfilusuario.InfoUsuario;
 import com.knowshare.entities.perfilusuario.Usuario;
+import com.knowshare.enums.PreferenciaIdeaEnum;
 import com.knowshare.enums.TipoImagenEnum;
+import com.knowshare.enums.TipoUsuariosEnum;
 import com.mongodb.DBRef;
 
 /**
  * {@link UsuarioModFacade}
- * @author miguel
+ * @author Miguel Montañez
  *
  */
 @Component
@@ -209,9 +212,18 @@ public class UsuarioModBean implements UsuarioModFacade {
 		return mongoTemplate.updateFirst(query, update, Usuario.class).getN() > 0;
 	}
 	
+	/**
+	 * Crea referencias según una lista de carreras que llega como parámetro
+	 * @param carreras
+	 * @return Lista de referencias a {@link Carrera carrera}
+	 */
 	private List<DBRef> refsCarreras(List<Carrera> carreras){
 		final List<DBRef> dbrefs = new ArrayList<>();
-		carreras.forEach(c -> dbrefs.add(new DBRef("carrera", c.getId())));
+		if(carreras != null)
+			carreras.forEach(c -> {
+				if( null != c)
+					dbrefs.add(new DBRef("carrera", c.getId()));
+			});
 		return dbrefs;
 	}
 
@@ -249,7 +261,8 @@ public class UsuarioModBean implements UsuarioModFacade {
 					.set("semestre", usuario.getSemestre());
 				break;
 			case PROFESOR:
-				update.set("grupoInvestigacion", usuario.getGrupoInvestigacion());
+				update.set("grupoInvestigacion", usuario.getGrupoInvestigacion())
+					.set("disponible", usuario.isDisponible());
 			case EGRESADO:
 				update.set("nombre",usuario.getNombre())
 					.set("apellido", usuario.getApellido())
@@ -285,5 +298,36 @@ public class UsuarioModBean implements UsuarioModFacade {
 			}
 		}
 		return false;
+	}
+	
+	public boolean updatePreferenciaIdea(String username, PreferenciaIdeaEnum preferencia){
+		final Update update = new Update();
+		update.set("preferencias.preferenciaIdea", preferencia);
+		return mongoTemplate.updateFirst(new Query(Criteria.where("username").is(username)), 
+				update, Usuario.class).getN() > 0;
+	}
+	
+	public boolean updateInsignias(String username){
+		final Usuario usuario = usuarioRepository.findByUsernameIgnoreCase(username);
+		usuario.getInsignias()
+			.stream()
+			.forEach(ins -> ins.setVisto(true));
+		return (null != usuarioRepository.save(usuario));
+	}
+	
+	public boolean promoteEstudiante(String username){
+		final Usuario usuario = usuarioRepository.findByUsernameIgnoreCase(username);
+		if(usuario != null && usuario.getTipo().equals(TipoUsuariosEnum.ESTUDIANTE)){
+			usuario.setTipo(TipoUsuariosEnum.EGRESADO);
+			return null != usuarioRepository.save(usuario);
+		}
+		return false;
+	}
+	
+	public boolean actualizarGustos(List<Gusto> gustos, String username){
+		final Update update = new Update().set("gustos", gustos);
+		return mongoTemplate.updateFirst(new Query(Criteria.where("username").is(username)), 
+				update, 
+				Usuario.class).getN() > 0;
 	}
 }

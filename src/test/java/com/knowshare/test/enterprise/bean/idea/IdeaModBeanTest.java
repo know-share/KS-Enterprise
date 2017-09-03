@@ -19,7 +19,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import com.knowshare.dto.idea.IdeaDTO;
-import com.knowshare.enterprise.bean.idea.IdeaModFacade;
+import com.knowshare.enterprise.bean.idea.IdeaFacade;
 import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.idea.Idea;
 import com.knowshare.entities.idea.OperacionIdea;
@@ -36,7 +36,7 @@ import com.knowshare.test.enterprise.general.AbstractTest;
 public class IdeaModBeanTest extends AbstractTest {
 
 	@Autowired
-	private IdeaModFacade ideaModBean;
+	private IdeaFacade ideaModBean;
 	
 	private IdeaDTO dto;
 	
@@ -95,11 +95,30 @@ public class IdeaModBeanTest extends AbstractTest {
 		Idea ideaManaged = mongoTemplate.findById(idea.getId(), Idea.class);
 		assertNotNull(ideaManaged);
 		assertEquals(1, ideaManaged.getOperaciones().size());
+		
+		operacion = new OperacionIdea()
+				.setFecha(new Date())
+				.setTipo(TipoOperacionEnum.LIGHT)
+				.setUsername("username");
+		
+		ideaModBean.agregarOperacion(MapEntities.mapIdeaToDTO(idea), operacion);
+		
+		ideaManaged = mongoTemplate.findById(idea.getId(), Idea.class);
+		assertNotNull(ideaManaged);
+		assertEquals(2, ideaManaged.getOperaciones().size());
+		assertEquals(Long.valueOf(1), ideaManaged.getLights());
+		
+		ideaModBean.agregarOperacion(MapEntities.mapIdeaToDTO(idea), operacion);
+		
+		ideaManaged = mongoTemplate.findById(idea.getId(), Idea.class);
+		assertNotNull(ideaManaged);
+		assertEquals(1, ideaManaged.getOperaciones().size());
+		assertEquals(Long.valueOf(0), ideaManaged.getLights());
 	}
 	
 	@Test
 	public void test03Compartir(){
-		final IdeaDTO dto = ideaModBean
+		IdeaDTO dto = ideaModBean
 				.compartir(MapEntities.mapIdeaToDTO(idea), "Pablo.gaitan");
 		assertNotNull(dto);
 		
@@ -108,6 +127,27 @@ public class IdeaModBeanTest extends AbstractTest {
 		assertTrue(ideaManaged.isCompartida());
 		assertEquals("pablo.gaitan",ideaManaged.getUsuario().getUsername().toLowerCase());
 		assertNotEquals(idea.getId(), ideaManaged.getId());
+		
+		dto = ideaModBean
+				.compartir(dto, "Pablo.gaitan");
+		assertNotNull(dto);
+		
+		ideaManaged = mongoTemplate.findById(dto.getId(), Idea.class);
+		assertNotNull(ideaManaged);
+		assertTrue(ideaManaged.isCompartida());
+		assertEquals("pablo.gaitan",ideaManaged.getUsuario().getUsername().toLowerCase());
+		assertNotEquals(idea.getId(), ideaManaged.getId());
+	}
+	
+	@Test
+	public void test04CambiarEstado(){
+		Idea idea = mongoTemplate.findById(this.idea.getId(), Idea.class);
+		assertEquals("no tg", idea.getEstado());
+		idea.setEstado("tg");
+		
+		ideaModBean.cambiarEstado(MapEntities.mapIdeaToDTO(idea));
+		idea = mongoTemplate.findById(this.idea.getId(), Idea.class);
+		assertEquals("tg", idea.getEstado());
 	}
 
 }

@@ -12,7 +12,7 @@ import org.junit.AfterClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.knowshare.enterprise.bean.trabajogrado.TrabajoGradoListFacade;
+import com.knowshare.enterprise.bean.trabajogrado.TrabajoGradoFacade;
 import com.knowshare.entities.academia.TrabajoGrado;
 import com.knowshare.test.enterprise.general.AbstractTest;
 
@@ -23,7 +23,7 @@ import com.knowshare.test.enterprise.general.AbstractTest;
 public class TrabajoGradoListBeanTest extends AbstractTest{
 	
 	@Autowired
-	private TrabajoGradoListFacade tgListBean;
+	private TrabajoGradoFacade tgListBean;
 	
 	@Test
 	public void test01FindAll(){

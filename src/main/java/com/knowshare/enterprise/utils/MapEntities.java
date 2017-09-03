@@ -5,10 +5,13 @@ package com.knowshare.enterprise.utils;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.knowshare.dto.academia.CarreraDTO;
 import com.knowshare.dto.idea.IdeaDTO;
+import com.knowshare.dto.ludificacion.InsigniaDTO;
 import com.knowshare.dto.perfilusuario.CualidadDTO;
 import com.knowshare.dto.perfilusuario.HabilidadDTO;
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
@@ -17,6 +20,7 @@ import com.knowshare.entities.app.PreferenciasUsuario;
 import com.knowshare.entities.idea.Idea;
 import com.knowshare.entities.ludificacion.CualidadAval;
 import com.knowshare.entities.ludificacion.HabilidadAval;
+import com.knowshare.entities.ludificacion.InsigniaPreview;
 import com.knowshare.entities.perfilusuario.Cualidad;
 import com.knowshare.entities.perfilusuario.Habilidad;
 import com.knowshare.entities.perfilusuario.Usuario;
@@ -34,6 +38,11 @@ public class MapEntities {
 	
 	private MapEntities(){}
 	
+	/**
+	 * Mapea una lista de {@link Carrera Carreras} a {@link CarreraDTO CarrerasDTO}
+	 * @param carreras
+	 * @return Lista de {@link CarreraDTO CarrerasDTO}
+	 */
 	public static List<CarreraDTO> mapCarrerasToDTOs(List<Carrera> carreras){
 		final List<CarreraDTO> dtos = new ArrayList<>();
 		for (Carrera carrera : carreras)
@@ -41,6 +50,11 @@ public class MapEntities {
 		return dtos;
 	}
 	
+	/**
+	 * Mapea una {@link Carrera} a {@link CarreraDTO}
+	 * @param carrera
+	 * @return {@link CarreraDTO}
+	 */
 	public static CarreraDTO mapCarreraToDTO(Carrera carrera){
 		if(null == carrera)
 			return null;
@@ -52,6 +66,11 @@ public class MapEntities {
 				.setEnfasis(carrera.getEnfasis());
 	}
 	
+	/**
+	 * Mapea una {@link CarreraDTO} a {@link Carrera}
+	 * @param dto
+	 * @return {@link Carrera}
+	 */
 	public static Carrera mapDtoToCarrera(CarreraDTO dto){
 		if(null != dto)
 			return new Carrera().setId(dto.getId())
@@ -61,6 +80,11 @@ public class MapEntities {
 		return null;
 	}
 	
+	/**
+	 * Mapea una lista de {@link Carrera Carreras} a lista de String
+	 * @param carreras
+	 * @return lista de String, que contiene los nombres
+	 */
 	public static List<String> carrerasAfinesNames(List<Carrera> carreras){
 		final List<String> carrerasNames = new ArrayList<>();
 		if(null != carreras)
@@ -70,6 +94,11 @@ public class MapEntities {
 		return carrerasNames;
 	}
 	
+	/**
+	 * Mapea una lista de {@link Habilidad Habilidades} a {@link HabilidadDTO habilidadesDTO}
+	 * @param habilidades
+	 * @return Lista de {@link HabilidadDTO habilidadesDTO}
+	 */
 	public static List<HabilidadDTO> mapHabilidadesToDTOs(List<Habilidad> habilidades){
 		List<HabilidadDTO> dtos = new ArrayList<>();
 		for (Habilidad habilidad : habilidades) {
@@ -78,6 +107,11 @@ public class MapEntities {
 		return dtos;
 	}
 	
+	/**
+	 * Mapea una {@link Habilidad} a {@link HabilidadDTO}
+	 * @param habilidad
+	 * @return {@link HabilidadDTO}
+	 */
 	public static HabilidadDTO mapHabilidadToDTO(Habilidad habilidad){
 		final HabilidadDTO dto = new HabilidadDTO()
 				.setId(habilidad.getId())
@@ -89,12 +123,23 @@ public class MapEntities {
 		return dto;
 	}
 	
+	/**
+	 * Mapea una {@link HabilidadDTO} a {@link HabilidadAval}
+	 * @param habilidad
+	 * @return {@link HabilidadAval}
+	 */
 	public static HabilidadAval mapDtoToHabilidadAval(HabilidadDTO habilidad){
 		return new HabilidadAval()
 				.setCantidad(habilidad.getAvales() == null ? 0 : habilidad.getAvales())
-				.setHabilidad(new Habilidad().setId(habilidad.getId()));
+				.setHabilidad(new Habilidad().setId(habilidad.getId()))
+				.setNombre(habilidad.getNombre());
 	}
 	
+	/**
+	 * Mapea una lista de {@link HabilidadDTO habilidadesDTO} a {@link HabilidadAval habilidadesAval}
+	 * @param dtos
+	 * @return Lista de {@link HabilidadAval habilidadesAval}
+	 */
 	public static List<HabilidadAval> mapDtosToHabilidadAval(List<HabilidadDTO> dtos){
 		final List<HabilidadAval> habilidades = new ArrayList<>();
 		for(HabilidadDTO dto: dtos)
@@ -102,14 +147,11 @@ public class MapEntities {
 		return habilidades;
 	}
 	
-	/*public static Habilidad mapDtoToHabilidad(HabilidadDTO habilidad){
-		return new Habilidad()
-				.setTipo(habilidad.getTipo())
-				.setNombre(habilidad.getNombre())
-				.setId(habilidad.getId())
-				.setCarrera( new DBRef("carrera", habilidad.getCarrera()));
-	}*/
-	
+	/**
+	 * Mapea una lista de {@link CualidadDTO cualidades} a {@link CualidadAval cualidadesAval}
+	 * @param dtos
+	 * @return Lista de {@link CualidadAval cualidadesAval}
+	 */
 	public static List<CualidadAval> mapDtosToCualidadAval(List<CualidadDTO> dtos){
 		final List<CualidadAval> cualidades = new ArrayList<>();
 		for(CualidadDTO dto: dtos)
@@ -117,18 +159,34 @@ public class MapEntities {
 		return cualidades;
 	}
 	
+	/**
+	 * Mapea una {@link CualidadDTO} a {@link CualidadAval}
+	 * @param cualidad
+	 * @return {@link CualidadAval}
+	 */
 	public static CualidadAval mapDtoToCualidadAval(CualidadDTO cualidad){
 		return new CualidadAval()
 				.setCantidad(cualidad.getAvales() == null ? 0 : cualidad.getAvales())
-				.setCualidad(new Cualidad().setId(cualidad.getId()));
+				.setCualidad(new Cualidad().setId(cualidad.getId()))
+				.setNombre(cualidad.getNombre());
 	}
 	
+	/**
+	 * Mapea una {@link Cualidad} a {@link CualidadDTO}
+	 * @param cualidad
+	 * @return {@link CualidadDTO}
+	 */
 	public static CualidadDTO mapCualidadToDTO(Cualidad cualidad){
 		return new CualidadDTO().setId(cualidad.getId())
 				.setNombre(cualidad.getNombre())
 				.setTipo(cualidad.getTipo());
 	}
 	
+	/**
+	 * Mapea una lista de {@link Cualidad cualidades} a {@link CualidadDTO cualidadesDTO}
+	 * @param cualidades
+	 * @return Lista de {@link CualidadDTO cualidadesDTO}
+	 */
 	public static List<CualidadDTO> mapCualidadesToDTOs(List<Cualidad> cualidades){
 		List<CualidadDTO> dtos = new ArrayList<>();
 		for (Cualidad cualidad : cualidades) {
@@ -137,6 +195,11 @@ public class MapEntities {
 		return dtos;
 	}
 	
+	/**
+	 * Mapea una {@link Idea} a {@link IdeaDTO}
+	 * @param idea
+	 * @return {@link IdeaDTO}
+	 */
 	public static IdeaDTO mapIdeaToDTO (Idea idea){
 		IdeaDTO dto = new IdeaDTO();
 		dto.setId(idea.getId());
@@ -153,7 +216,6 @@ public class MapEntities {
 		dto.setUsuario(idea.getUsuario().getUsername());
 		dto.setCompartida(idea.isCompartida());
 		dto.setUsuarioOriginal(idea.getUsuarioOriginal());
-		//ya le dio memoria al arreglo del dto mkon?HP
 		dto.setIdeasProyecto(new ArrayList<>());	
 		if(idea.getTipo().equals(TipoIdeaEnum.PR)){
 			for (Idea i : idea.getIdeasProyecto()) {
@@ -164,6 +226,13 @@ public class MapEntities {
 		return dto;
 	}
 	
+	/**
+	 * Mapea una {@link IdeaDTO} a {@link Idea}
+	 * @param dto
+	 * @param usuario creador de la idea
+	 * @return {@link Idea}
+	 * @throws NoSuchAlgorithmException
+	 */
 	public static Idea mapDtoToIdea(IdeaDTO dto,Usuario usuario) throws NoSuchAlgorithmException{
 		Idea idea = new Idea();
 		idea.setId(dto.getId());
@@ -187,10 +256,18 @@ public class MapEntities {
 		idea.setUsuario(usuario);
 		idea.setCompartida(dto.isCompartida());
 		idea.setUsuarioOriginal(dto.getUsuarioOriginal());
-		idea.setTg(dto.getTg());
+		if(idea.getTipo().equals(TipoIdeaEnum.PC))
+			idea.setTg(dto.getTg());
 		return idea;
 	}
 	
+	/**
+	 * Mapea un {@link UsuarioDTO} a {@link Usuario}
+	 * (Usado solamente en el registro de usuarios)
+	 * @param dto
+	 * @return {@link Usuario}
+	 * @throws NoSuchAlgorithmException
+	 */
 	public static Usuario mapDtoToUsuario(UsuarioDTO dto) throws NoSuchAlgorithmException{
 		final List<HabilidadAval> habilidades = new ArrayList<>();
 		for (HabilidadDTO habilidad : dto.getHabilidades()) {
@@ -207,6 +284,7 @@ public class MapEntities {
 				.setCorreo(dto.getEmail())
 				.setUsername(dto.getUsername())
 				.setPassword(passwordHashed)
+				.setFechaRegistro(new Date())
 				.setGenero(dto.getGenero())
 				.setPersonalidad(dto.getPersonalidad())
 				.setEnfasis(dto.getEnfasis())
@@ -245,11 +323,18 @@ public class MapEntities {
 		return usuario;
 	}
 	
+	/**
+	 * Mapea un {@link UsuarioDTO} a {@link Usuario}
+	 * (Mapea algunos atributos importantes)
+	 * @param dto
+	 * @return {@link Usuario}
+	 */
 	public static Usuario mapDtoToUsuarioPartial(UsuarioDTO dto){
 		final List<HabilidadAval> habilidades = new ArrayList<>();
-		for (HabilidadDTO habilidad : dto.getHabilidades()) {
-			habilidades.add(mapDtoToHabilidadAval(habilidad));
-		}
+		if(dto.getHabilidades() != null)
+			for (HabilidadDTO habilidad : dto.getHabilidades()) {
+				habilidades.add(mapDtoToHabilidadAval(habilidad));
+			}
 		final List<Carrera> carreras = new ArrayList<>();
 		carreras.add(mapDtoToCarrera(dto.getCarrera()));
 		final Usuario usuario = new Usuario()
@@ -270,17 +355,27 @@ public class MapEntities {
 		return usuario;
 	}
 	
+	/**
+	 * Mapea atributos que solo posee un TipoUsuariosEnum.PROFESOR
+	 * @param usuario
+	 * @param dto
+	 */
 	public static void mapProfesor(Usuario usuario, UsuarioDTO dto){
 		List<CualidadAval> cualidades = new ArrayList<>();
 		for (CualidadDTO cualidad: dto.getCualidades()) {
 			cualidades.add(mapDtoToCualidadAval(cualidad));
 		}
 		usuario.setCualidadesProfesor(cualidades)
-			.setDisponibilidad("")
+			.setDisponible(dto.isDisponible())
 			.setGrupoInvestigacion(dto.getGrupoInvestigacion())
 			.setTrabajosGradoDirigidos(new ArrayList<>());
 	}
 	
+	/**
+	 * Mapea atributos que solo posee un TipoUsuariosEnum.ESTUDIANTE
+	 * @param usuario
+	 * @param dto
+	 */
 	public static void mapEstudiante(Usuario usuario, UsuarioDTO dto){
 		PreferenciasUsuario preferencias = usuario.getPreferencias();
 		preferencias
@@ -296,6 +391,11 @@ public class MapEntities {
 		}
 	}
 	
+	/**
+	 * Mapea una lista de {@link HabilidadAval habilidadesAval} a {@link HabilidadDTO habilidadesDTO}
+	 * @param habilidadesAvales
+	 * @return Lista de {@link HabilidadDTO habilidadesDTO}
+	 */
 	public static List<HabilidadDTO> mapAvalesHabilidad(List<HabilidadAval> habilidadesAvales){
 		List<HabilidadDTO> dtos = new ArrayList<>();
 		for(HabilidadAval aval : habilidadesAvales){
@@ -306,6 +406,11 @@ public class MapEntities {
 		return dtos;
 	}
 	
+	/**
+	 * Mapea una lista de {@link CualidadAval cualidadesAval} a {@link CualidadDTO cualidadesDTO}
+	 * @param cualidadesAvales
+	 * @return Lista de {@link CualidadDTO cualidadesDTO}
+	 */
 	public static List<CualidadDTO> mapAvalesCualidad(List<CualidadAval> cualidadesAvales){
 		List<CualidadDTO> dtos = new ArrayList<>();
 		for (CualidadAval aval: cualidadesAvales) {
@@ -316,6 +421,11 @@ public class MapEntities {
 		return dtos;
 	}
 	
+	/**
+	 * Mapea un {@link Usuario} a {@link UsuarioDTO}
+	 * @param usuario
+	 * @return {@link UsuarioDTO}
+	 */
 	public static UsuarioDTO mapUsuarioToDTO(Usuario usuario){
 		UsuarioDTO dto = new UsuarioDTO();
 		dto.setApellido(usuario.getApellido())
@@ -342,10 +452,13 @@ public class MapEntities {
 			.setSolicitudesAmistad(usuario.getSolicitudesAmistad())
 			.setTgDirigidos(usuario.getTrabajosGradoDirigidos())
 			.setFormacionAcademica(usuario.getFormacionesAcademicas())
+			.setPreferenciaIdea(usuario.getPreferencias().getPreferenciaIdea())
+			.setInsignias(mapInsigniasToDTOs(usuario.getInsignias()))
 			.setImagen(usuario.getImagen() != null);
 		switch(usuario.getTipo()){
 			case PROFESOR:
 				dto.setCualidades(mapAvalesCualidad(usuario.getCualidadesProfesor()));
+				dto.setDisponible(usuario.isDisponible());
 				break;
 			case ESTUDIANTE:
 				dto.setGustos(usuario.getGustos());
@@ -360,5 +473,28 @@ public class MapEntities {
 			
 		return dto;
 	}
+	
+	/**
+	 * Mapea una lista de {@link InsigniaPreview insignias} a {@link InsigniaDTO insigniasDTO}
+	 * @param insignias
+	 * @return Lista de {@link InsigniaDTO insigniasDTO}
+	 */
+	public static List<InsigniaDTO> mapInsigniasToDTOs(List<InsigniaPreview> insignias){
+		return insignias.stream()
+				.map(ins -> mapInsigniaToDTO(ins))
+				.collect(Collectors.toList());
+	}
 
+	/**
+	 * Mapea una {@link InsigniaPreview} a {@link InsigniaDTO}
+	 * @param insignia
+	 * @return {@link InsigniaDTO}
+	 */
+	public static InsigniaDTO mapInsigniaToDTO(InsigniaPreview insignia){
+		return new InsigniaDTO().setDescripcion(insignia.getInsignia().getDescripcion())
+				.setIconoRef(insignia.getInsignia().getIconoRef())
+				.setId(insignia.getInsignia().getId())
+				.setNombre(insignia.getInsignia().getNombre())
+				.setVisto(insignia.isVisto());
+	}
 }
