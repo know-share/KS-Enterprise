@@ -319,7 +319,8 @@ public class MapEntities {
 			.setInsignias(new ArrayList<>())
 			.setTrabajosGrado(new ArrayList<>())
 			.setSiguiendo(new ArrayList<>())
-			.setFormacionesAcademicas(new ArrayList<>());
+			.setFormacionesAcademicas(new ArrayList<>())
+			.setPreferenciaIdeas(new ArrayList<>());
 		return usuario;
 	}
 	

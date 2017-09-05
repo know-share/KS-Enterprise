@@ -14,6 +14,7 @@ import com.knowshare.dto.perfilusuario.ImagenDTO;
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
+import com.knowshare.entities.idea.Tag;
 import com.knowshare.entities.perfilusuario.Gusto;
 import com.knowshare.entities.perfilusuario.Usuario;
 import com.knowshare.enums.PreferenciaIdeaEnum;
@@ -155,5 +156,10 @@ public class UsuarioBean implements UsuarioFacade {
 	@Override
 	public boolean actualizarGustos(List<Gusto> gustos, String username) {
 		return this.usuarioModBean.actualizarGustos(gustos, username);
+	}
+
+	@Override
+	public void actualizarPreferenciaIdeas(List<Tag> tags, String username) {
+		this.usuarioModBean.actualizarPreferenciaIdeas(tags, username);
 	}
 }

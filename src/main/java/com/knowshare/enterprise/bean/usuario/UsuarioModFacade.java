@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.knowshare.dto.perfilusuario.UsuarioDTO;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
+import com.knowshare.entities.idea.Tag;
 import com.knowshare.entities.perfilusuario.Cualidad;
 import com.knowshare.entities.perfilusuario.Gusto;
 import com.knowshare.entities.perfilusuario.Habilidad;
@@ -166,4 +167,12 @@ public interface UsuarioModFacade {
 	 * correcta, de lo contrario, falso
 	 */
 	boolean actualizarGustos(List<Gusto> gustos, String username);
+	
+	/**
+	 * Actualiza las preferencias de idea después de haber dado
+	 * light sobre una idea.
+	 * @param tags a agregar
+	 * @param username
+	 */
+	void actualizarPreferenciaIdeas(List<Tag> tags, String username);
 }

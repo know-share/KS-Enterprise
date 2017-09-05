@@ -29,6 +29,7 @@ import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.academia.Carrera;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
+import com.knowshare.entities.idea.Tag;
 import com.knowshare.entities.perfilusuario.Gusto;
 import com.knowshare.entities.perfilusuario.ImageProfile;
 import com.knowshare.entities.perfilusuario.InfoUsuario;
@@ -329,5 +330,14 @@ public class UsuarioModBean implements UsuarioModFacade {
 		return mongoTemplate.updateFirst(new Query(Criteria.where("username").is(username)), 
 				update, 
 				Usuario.class).getN() > 0;
+	}
+	
+	public void actualizarPreferenciaIdeas(List<Tag> tags, String username){
+		final Update update = new Update();
+		for(Tag tag:tags)
+			update.addToSet("preferenciaIdeas", tag);
+		mongoTemplate.updateFirst(new Query(Criteria.where("username").is(username)), 
+				update, 
+				Usuario.class);
 	}
 }
