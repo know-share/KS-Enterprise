@@ -20,6 +20,7 @@ import com.knowshare.entities.idea.OperacionIdea;
 import com.knowshare.enums.TipoOperacionEnum;
 
 /**
+ * {@link IdeaModFacade}
  * @author Pablo Gaitán
  *
  */

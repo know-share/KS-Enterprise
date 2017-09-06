@@ -7,6 +7,8 @@ import com.knowshare.dto.idea.IdeaDTO;
 import com.knowshare.entities.idea.OperacionIdea;
 
 /**
+ * Se encarga de operaciones que hagan modificaciones sobre
+ * la entidad {@link Idea}.
  * @author Pablo Gaitán
  *
  */

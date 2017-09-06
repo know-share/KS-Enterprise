@@ -25,6 +25,4 @@ public class GustoBean implements GustoFacade{
 	public List<Gusto> getAllGustos() {
 		return this.gustoListBean.getAllGustos();
 	}
-	
-	
 }

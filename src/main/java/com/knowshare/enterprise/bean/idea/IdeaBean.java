@@ -13,6 +13,7 @@ import com.knowshare.entities.idea.OperacionIdea;
 import com.knowshare.entities.idea.Tag;
 
 /**
+ * {@link IdeaFacade}
  * @author Pablo Gaitan
  *
  */

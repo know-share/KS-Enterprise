@@ -17,6 +17,7 @@ import com.knowshare.entities.app.UserSession;
  */
 @Repository
 public interface UserSessionRepository extends MongoRepository<UserSession, ObjectId>{
+	
 	UserSession findByToken(String token);
 	
 	Long removeByToken(String token);
