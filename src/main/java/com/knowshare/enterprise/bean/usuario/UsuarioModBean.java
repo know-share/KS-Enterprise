@@ -160,12 +160,21 @@ public class UsuarioModBean implements UsuarioModFacade {
 	public boolean agregarTGDirigido(TrabajoGrado tg, String username){
 		final Usuario usuario = usuarioRepository.findByUsernameIgnoreCase(username);
 		final TrabajoGrado newTg = trabajoGradoRepository.insert(tg);
-		if(null == usuario.getTrabajosGradoDirigidos()){
-			final List<TrabajoGrado> tgs = new ArrayList<>();
-			tgs.add(newTg);
-			usuario.setTrabajosGradoDirigidos(tgs);
-		}else
-			usuario.getTrabajosGradoDirigidos().add(newTg);
+		
+		if(usuario.getTipo().equals(TipoUsuariosEnum.PROFESOR))
+			if(null == usuario.getTrabajosGradoDirigidos()){
+				final List<TrabajoGrado> tgs = new ArrayList<>();
+				tgs.add(newTg);
+				usuario.setTrabajosGradoDirigidos(tgs);
+			}else
+				usuario.getTrabajosGradoDirigidos().add(newTg);
+		else if(usuario.getTipo().equals(TipoUsuariosEnum.EGRESADO))
+			if(null == usuario.getTrabajosGrado()){
+				final List<TrabajoGrado> tgs = new ArrayList<>();
+				tgs.add(newTg);
+				usuario.setTrabajosGrado(tgs);
+			}else
+				usuario.getTrabajosGrado().add(newTg);
 		
 		return (null != usuarioRepository.save(usuario));
 	}

@@ -451,19 +451,20 @@ public class MapEntities {
 			.setSeguidores(usuario.getSeguidores())
 			.setSiguiendo(usuario.getSiguiendo())
 			.setSolicitudesAmistad(usuario.getSolicitudesAmistad())
-			.setTgDirigidos(usuario.getTrabajosGradoDirigidos())
 			.setFormacionAcademica(usuario.getFormacionesAcademicas())
 			.setPreferenciaIdea(usuario.getPreferencias().getPreferenciaIdea())
 			.setInsignias(mapInsigniasToDTOs(usuario.getInsignias()))
 			.setImagen(usuario.getImagen() != null);
 		switch(usuario.getTipo()){
 			case PROFESOR:
-				dto.setCualidades(mapAvalesCualidad(usuario.getCualidadesProfesor()));
-				dto.setDisponible(usuario.isDisponible());
+				dto.setCualidades(mapAvalesCualidad(usuario.getCualidadesProfesor()))
+					.setDisponible(usuario.isDisponible())
+					.setTgDirigidos(usuario.getTrabajosGradoDirigidos());
 				break;
 			case ESTUDIANTE:
 				dto.setGustos(usuario.getGustos());
 			case EGRESADO:
+				dto.setTgDirigidos(usuario.getTrabajosGrado());
 				if(usuario.getCarreras().size() > 1)
 					dto.setSegundaCarrera(mapCarreraToDTO(usuario.getCarreras().get(1)));
 				break;
