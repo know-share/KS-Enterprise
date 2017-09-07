@@ -494,7 +494,7 @@ public class MapEntities {
 	 */
 	public static InsigniaDTO mapInsigniaToDTO(InsigniaPreview insignia){
 		return new InsigniaDTO().setDescripcion(insignia.getInsignia().getDescripcion())
-				.setIconoRef(insignia.getInsignia().getIconoRef())
+				.setIconoRef(insignia.getInsignia().getId() + ".png")
 				.setId(insignia.getInsignia().getId())
 				.setNombre(insignia.getInsignia().getNombre())
 				.setVisto(insignia.isVisto());
