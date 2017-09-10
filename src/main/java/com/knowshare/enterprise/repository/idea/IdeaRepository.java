@@ -10,6 +10,7 @@ import com.knowshare.entities.idea.Idea;
 import java.util.List;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
@@ -35,4 +36,7 @@ public interface IdeaRepository extends MongoRepository<Idea,String>{
 	
 	@Query("{'usuario.$id' : {$in:?0}}")
 	List<Idea> findIdeaRed(List<ObjectId> ids);	
+	
+	@Query("{'usuario.$id' : {$in:?0},'tipo':'PC'}")
+	List<Idea> findIdeaContinuar(List<ObjectId> ids,Sort sort);
 }
