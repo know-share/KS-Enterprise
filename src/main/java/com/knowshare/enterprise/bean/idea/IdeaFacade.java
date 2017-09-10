@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.knowshare.dto.idea.IdeaDTO;
 import com.knowshare.entities.idea.OperacionIdea;
-import com.knowshare.entities.idea.Tag;
 
 /**
  * Reune los métodos de negocio de una entidad. Operaciones de
@@ -35,7 +34,5 @@ public interface IdeaFacade {
 	
 	IdeaDTO cambiarEstado(IdeaDTO dto);
 	
-	List<IdeaDTO> findRed(String username);
 	
-	List<IdeaDTO> findByTags(List<Tag> tags);
 }

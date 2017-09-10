@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.idea.IdeaDTO;
 import com.knowshare.entities.idea.OperacionIdea;
-import com.knowshare.entities.idea.Tag;
 
 /**
  * {@link IdeaFacade}
@@ -66,13 +65,5 @@ public class IdeaBean implements IdeaFacade{
 		return ideaMod.cambiarEstado(dto);
 	}
 
-	@Override
-	public List<IdeaDTO> findRed(String username) {
-		return ideaList.findRed(username);
-	}
-
-	@Override
-	public List<IdeaDTO> findByTags(List<Tag> tags) {
-		return ideaList.findByTags(tags);
-	}
+	
 }
