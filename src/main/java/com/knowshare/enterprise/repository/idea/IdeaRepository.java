@@ -39,4 +39,7 @@ public interface IdeaRepository extends MongoRepository<Idea,String>{
 	
 	@Query("{'usuario.$id' : {$in:?0},'tipo':'PC'}")
 	List<Idea> findIdeaContinuar(List<ObjectId> ids,Sort sort);
+	
+	@Query("{'usuario.$id' : {$in:?0},'tipo':'NU'}")
+	List<Idea> findIdeaNueva(List<ObjectId> ids,Sort sort);
 }

@@ -22,7 +22,7 @@ public interface IdeaFacade {
 	
 	List<IdeaDTO> find10(String username);
 	
-	List<IdeaDTO> findByUsuario(String username);
+	List<IdeaDTO> findByUsuario(String username,String usernameProfile);
 	
 	IdeaDTO findById(String id,String username);
 	

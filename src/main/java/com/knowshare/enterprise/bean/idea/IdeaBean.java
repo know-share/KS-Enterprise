@@ -37,8 +37,8 @@ public class IdeaBean implements IdeaFacade{
 		return ideaList.find10(username);
 	}
 	
-	public List<IdeaDTO> findByUsuario(String username){
-		return ideaList.findByUsuario(username);
+	public List<IdeaDTO> findByUsuario(String username, String usernameProfile){
+		return ideaList.findByUsuario(username,usernameProfile);
 	}
 
 	@Override

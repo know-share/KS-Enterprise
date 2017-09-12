@@ -39,16 +39,16 @@ public class IdeaListBeanTest extends AbstractTest{
 	
 	@Test
 	public void test01FindByUsuario(){
-		List<IdeaDTO> ideas = ideaBean.findByUsuario("Felipe-Bautista");
+		List<IdeaDTO> ideas = ideaBean.findByUsuario("Felipe-Bautista","MinMiguelM");
 		assertNotNull(ideas);
 		assertEquals(0, ideas.size());
 		
-		ideas = ideaBean.findByUsuario("pablo.gaitan");
+		ideas = ideaBean.findByUsuario("pablo.gaitan","Felipe-Bautista");
 		assertNotNull(ideas);
 		assertEquals(3, ideas.size());
 		assertEquals(Long.valueOf(2),ideas.get(0).getLights());
 		
-		ideas = ideaBean.findByUsuario("MinMiguelM");
+		ideas = ideaBean.findByUsuario("MinMiguelM","Felipe-Bautista");
 		assertNotNull(ideas);
 		assertEquals(2, ideas.size());
 		for(IdeaDTO idea:ideas){
