@@ -6,6 +6,7 @@ package com.knowshare.enterprise.utils;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -320,7 +321,7 @@ public class MapEntities {
 			.setTrabajosGrado(new ArrayList<>())
 			.setSiguiendo(new ArrayList<>())
 			.setFormacionesAcademicas(new ArrayList<>())
-			.setPreferenciaIdeas(new ArrayList<>());
+			.setPreferenciaIdeas(new HashMap<>());
 		return usuario;
 	}
 	
@@ -454,6 +455,7 @@ public class MapEntities {
 			.setFormacionAcademica(usuario.getFormacionesAcademicas())
 			.setPreferenciaIdea(usuario.getPreferencias().getPreferenciaIdea())
 			.setInsignias(mapInsigniasToDTOs(usuario.getInsignias()))
+			.setPreferenciaIdeasTag(usuario.getPreferenciaIdeas())
 			.setImagen(usuario.getImagen() != null);
 		switch(usuario.getTipo()){
 			case PROFESOR:

@@ -33,10 +33,6 @@ public class IdeaBean implements IdeaFacade{
 		return ideaMod.crearIdea(dto);
 	}
 	
-	public List<IdeaDTO> find10(String username){
-		return ideaList.find10(username);
-	}
-	
 	public List<IdeaDTO> findByUsuario(String username, String usernameProfile){
 		return ideaList.findByUsuario(username,usernameProfile);
 	}
@@ -64,6 +60,4 @@ public class IdeaBean implements IdeaFacade{
 	public IdeaDTO cambiarEstado(IdeaDTO dto) {
 		return ideaMod.cambiarEstado(dto);
 	}
-
-	
 }

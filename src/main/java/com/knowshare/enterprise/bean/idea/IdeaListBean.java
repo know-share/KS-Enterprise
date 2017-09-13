@@ -32,22 +32,6 @@ public class IdeaListBean implements IdeaListFacade{
 	
 	@Autowired
 	private UsuarioRepository usuRep;
-
-	
-	public List<IdeaDTO> find10(String username){
-		List<IdeaDTO> ret = new ArrayList<>();
-		List<Idea> lista = ideaRep.findAll();
-		IdeaDTO dto;
-		for (Idea idea : lista) {
-			dto = MapEntities.mapIdeaToDTO(idea);
-			if(isLight(idea, username)!=null)
-				dto.setIsLight(true);
-			else
-				dto.setIsLight(false);
-			ret.add(dto);
-		}
-		return ret;
-	}
 	
 	public List<IdeaDTO> findByUsuario(String username,String usernameProfile){
 		final Usuario usu = usuRep.findByUsernameIgnoreCase(usernameProfile);

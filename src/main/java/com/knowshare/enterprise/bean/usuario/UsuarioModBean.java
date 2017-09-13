@@ -10,6 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -342,11 +343,15 @@ public class UsuarioModBean implements UsuarioModFacade {
 	}
 	
 	public void actualizarPreferenciaIdeas(List<Tag> tags, String username){
-		final Update update = new Update();
-		for(Tag tag:tags)
-			update.addToSet("preferenciaIdeas", tag);
-		mongoTemplate.updateFirst(new Query(Criteria.where("username").is(username)), 
-				update, 
-				Usuario.class);
+		final Usuario usuario = usuarioRepository.findByUsernameIgnoreCase(username);
+		final Map<String,Integer> prefTags = usuario.getPreferenciaIdeas();
+		for(Tag tag: tags){
+			if(prefTags.containsKey(tag.getId()))
+				prefTags.put(tag.getId(), prefTags.get(tag.getId()) + 1);
+			else
+				prefTags.put(tag.getId(), 1);
+		}
+		usuario.setPreferenciaIdeas(prefTags);
+		usuarioRepository.save(usuario);
 	}
 }
