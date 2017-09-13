@@ -99,7 +99,7 @@ public class IdeaModBeanTest extends AbstractTest {
 		operacion = new OperacionIdea()
 				.setFecha(new Date())
 				.setTipo(TipoOperacionEnum.LIGHT)
-				.setUsername("username");
+				.setUsername("Pablo.gaitan");
 		
 		ideaModBean.agregarOperacion(MapEntities.mapIdeaToDTO(idea), operacion);
 		
