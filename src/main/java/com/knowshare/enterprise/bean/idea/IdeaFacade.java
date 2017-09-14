@@ -20,8 +20,6 @@ public interface IdeaFacade {
 	
 	IdeaDTO agregarOperacion(IdeaDTO dto, OperacionIdea operacion);
 	
-	List<IdeaDTO> find10(String username);
-	
 	List<IdeaDTO> findByUsuario(String username,String usernameProfile);
 	
 	IdeaDTO findById(String id,String username);
