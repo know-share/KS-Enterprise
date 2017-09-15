@@ -17,6 +17,7 @@ import com.knowshare.enterprise.repository.perfilusuario.UsuarioRepository;
 import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.idea.Idea;
 import com.knowshare.entities.idea.OperacionIdea;
+import com.knowshare.enums.TipoIdeaEnum;
 import com.knowshare.enums.TipoOperacionEnum;
 
 /**
@@ -91,6 +92,7 @@ public class IdeaModBean implements IdeaModFacade{
 		compartida.setTipo(dto.getTipo());
 		compartida.setFechaCreacion(new Date());
 		compartida.setUsuario(username);
+		compartida.setTg(dto.getTg());
 		if(!dto.isCompartida()){
 			compartida.setUsuarioOriginal(dto.getUsuario());
 		}else{

@@ -37,15 +37,18 @@ public interface IdeaRepository extends MongoRepository<Idea,String>{
 	@Query("{'usuario.$id' : {$in:?0}}")
 	List<Idea> findIdeaRed(List<ObjectId> ids);
 	
-	@Query("{'usuario.$id' : {$in:?0},'tipo':'PR'}")
-	List<Idea> findIdeaRedProyectos(List<ObjectId> ids);
+//	@Query("{'usuario.$id' : {$in:?0},'tipo':'PR'}")
+//	List<Idea> findIdeaRedProyectos(List<ObjectId> ids);
+//	
+//	@Query("{'usuario.$id' : {$in:?0},'tipo':'PE'}")
+//	List<Idea> findIdeaRedEmpezar(List<ObjectId> ids);
+//	
+//	@Query("{'usuario.$id' : {$in:?0},'tipo':'PC'}")
+//	List<Idea> findIdeaContinuar(List<ObjectId> ids,Sort sort);
+//	
+//	@Query("{'usuario.$id' : {$in:?0},'tipo':'NU'}")
+//	List<Idea> findIdeaNueva(List<ObjectId> ids,Sort sort);
 	
-	@Query("{'usuario.$id' : {$in:?0},'tipo':'PE'}")
-	List<Idea> findIdeaRedEmpezar(List<ObjectId> ids);
-	
-	@Query("{'usuario.$id' : {$in:?0},'tipo':'PC'}")
-	List<Idea> findIdeaContinuar(List<ObjectId> ids,Sort sort);
-	
-	@Query("{'usuario.$id' : {$in:?0},'tipo':'NU'}")
-	List<Idea> findIdeaNueva(List<ObjectId> ids,Sort sort);
+	@Query("{'usuario.$id' : {$in:?0},'tipo':'?1'}")
+	List<Idea> findIdea(List<ObjectId> ids,Sort sort,String tipo);
 }
