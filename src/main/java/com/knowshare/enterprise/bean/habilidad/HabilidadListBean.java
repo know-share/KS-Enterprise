@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
@@ -47,10 +45,6 @@ public class HabilidadListBean implements HabilidadListFacade{
 			habilidadesDto.add(MapEntities.mapHabilidadToDTO(habilidad));
 		}
 		return habilidadesDto;
-	}
-	
-	public Page<Habilidad> getAll(Integer page){
-		return habilidadRepository.findAll(new PageRequest(page, 10));
 	}
 
 	@Override

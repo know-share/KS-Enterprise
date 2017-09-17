@@ -3,7 +3,6 @@ package com.knowshare.enterprise.bean.habilidad;
 import java.util.List;
 
 import org.bson.types.ObjectId;
-import org.springframework.data.domain.Page;
 
 import com.knowshare.dto.perfilusuario.HabilidadDTO;
 import com.knowshare.entities.perfilusuario.Habilidad;
@@ -47,10 +46,4 @@ public interface HabilidadListFacade {
 	 * @return Lista de {@link HabilidadDTO habilidades}
 	 */
 	List<HabilidadDTO> getAll();
-	
-	/**
-	 * Method not tested, this is for testing purpose
-	 * @return
-	 */
-	Page<Habilidad> getAll(Integer page);
 }

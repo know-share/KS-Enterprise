@@ -79,7 +79,10 @@
 		"personalidad": {
 			"nombre":"ISFJ"
 		},
-		"preferenciaIdeas":{}
+		"preferenciaIdeas":{
+			"idTag2":1,
+			"idTag4":3
+		}
 	},{
 		"id":{"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":2},
 		"username": "pablo.gaitan",
