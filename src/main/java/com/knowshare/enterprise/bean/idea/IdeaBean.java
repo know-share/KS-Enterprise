@@ -6,6 +6,7 @@ package com.knowshare.enterprise.bean.idea;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.idea.IdeaDTO;
@@ -33,8 +34,9 @@ public class IdeaBean implements IdeaFacade{
 		return ideaMod.crearIdea(dto);
 	}
 	
-	public List<IdeaDTO> findByUsuario(String username, String usernameProfile){
-		return ideaList.findByUsuario(username,usernameProfile);
+	public Page<IdeaDTO> findByUsuario(String username, String usernameProfile,
+			Integer page,long timestamp){
+		return ideaList.findByUsuario(username,usernameProfile,page,timestamp);
 	}
 
 	@Override

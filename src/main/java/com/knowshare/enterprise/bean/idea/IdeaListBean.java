@@ -3,11 +3,20 @@
  */
 package com.knowshare.enterprise.bean.idea;
 
-
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.idea.IdeaDTO;
@@ -33,10 +42,26 @@ public class IdeaListBean implements IdeaListFacade{
 	@Autowired
 	private UsuarioRepository usuRep;
 	
-	public List<IdeaDTO> findByUsuario(String username,String usernameProfile){
+	@Autowired
+	private MongoTemplate mongoTemplate;
+	
+	private static final int PAGE_SIZE = 10;
+	
+	public Page<IdeaDTO> findByUsuario(String username,String usernameProfile,
+			Integer page,long timestamp){
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+		final Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		calendar.setTimeInMillis(timestamp);
 		final Usuario usu = usuRep.findByUsernameIgnoreCase(usernameProfile);
-		List<Idea> idea =  ideaRep.findIdeaByUsuario(usu.getId());
-		List<IdeaDTO> dots = new ArrayList<>();
+		final PageRequest request = 
+				new PageRequest(page, PAGE_SIZE,new Sort(Direction.DESC, "fechaCreacion"));
+		final Query query = new Query(
+				Criteria.where("fechaCreacion").lt(calendar.getTime())
+					.and("usuario.$id").is(usu.getId()))
+			.with(request);
+		final List<Idea> idea = mongoTemplate.find(query, Idea.class);
+		long total = mongoTemplate.count(query, Idea.class);
+		final List<IdeaDTO> dots = new ArrayList<>();
 		IdeaDTO dto;
 		for (Idea ide : idea) {
 			dto = MapEntities.mapIdeaToDTO(ide);
@@ -46,7 +71,7 @@ public class IdeaListBean implements IdeaListFacade{
 				dto.setIsLight(false);
 			dots.add(dto);
 		}
-		return dots;
+		return new PageImpl<>(dots, request, total);
 	}
 	
 	public OperacionIdea isLight(Idea idea, String username){

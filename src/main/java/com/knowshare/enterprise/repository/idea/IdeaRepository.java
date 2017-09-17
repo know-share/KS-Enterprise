@@ -10,6 +10,8 @@ import com.knowshare.entities.idea.Idea;
 import java.util.List;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
@@ -22,12 +24,6 @@ import org.springframework.data.mongodb.repository.Query;
 @Repository
 public interface IdeaRepository extends MongoRepository<Idea,String>{
 	
-	//@Query("{$limit: 10}")
-	List<Idea> findAll();
-	
-	@Query("{'usuario.$id' : ?0}")
-	List<Idea> findIdeaByUsuario(ObjectId username);
-	
 	@Query("{'usuario.$id' : ?0, 'tipo' : {$ne:'PR'}}")
 	List<Idea> findIdeaByUsuarioProyecto(ObjectId username);
 	
@@ -35,19 +31,7 @@ public interface IdeaRepository extends MongoRepository<Idea,String>{
 	Long countByUsuario(ObjectId id);
 	
 	@Query("{'usuario.$id' : {$in:?0}}")
-	List<Idea> findIdeaRed(List<ObjectId> ids);
-	
-//	@Query("{'usuario.$id' : {$in:?0},'tipo':'PR'}")
-//	List<Idea> findIdeaRedProyectos(List<ObjectId> ids);
-//	
-//	@Query("{'usuario.$id' : {$in:?0},'tipo':'PE'}")
-//	List<Idea> findIdeaRedEmpezar(List<ObjectId> ids);
-//	
-//	@Query("{'usuario.$id' : {$in:?0},'tipo':'PC'}")
-//	List<Idea> findIdeaContinuar(List<ObjectId> ids,Sort sort);
-//	
-//	@Query("{'usuario.$id' : {$in:?0},'tipo':'NU'}")
-//	List<Idea> findIdeaNueva(List<ObjectId> ids,Sort sort);
+	Page<Idea> findIdeaRed(List<ObjectId> ids,Pageable pageable);
 	
 	@Query("{'usuario.$id' : {$in:?0},'tipo':'?1'}")
 	List<Idea> findIdea(List<ObjectId> ids,Sort sort,String tipo);

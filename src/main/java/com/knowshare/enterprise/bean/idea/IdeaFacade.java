@@ -5,6 +5,8 @@ package com.knowshare.enterprise.bean.idea;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.knowshare.dto.idea.IdeaDTO;
 import com.knowshare.entities.idea.OperacionIdea;
 
@@ -20,7 +22,7 @@ public interface IdeaFacade {
 	
 	IdeaDTO agregarOperacion(IdeaDTO dto, OperacionIdea operacion);
 	
-	List<IdeaDTO> findByUsuario(String username,String usernameProfile);
+	Page<IdeaDTO> findByUsuario(String username,String usernameProfile,Integer page, long timestamp);
 	
 	IdeaDTO findById(String id,String username);
 	

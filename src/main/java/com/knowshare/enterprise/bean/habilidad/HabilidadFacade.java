@@ -44,18 +44,12 @@ public interface HabilidadFacade {
 	List<ObjectId> buscarPorNombre(String nombre);
 	
 	/**
-	 * para eliminar
-	 * @param page
-	 * @return
-	 */
-	Page<Habilidad> getAll(Integer page);
-	
-	/**
 	 * Obtiene todas las habilidades tanto TipoHabilidadEnum.PROFESIONALES
 	 * y TipoHabilidadEnum.PERSONALES del sistema
 	 * @return Lista de {@link HabilidadDTO habilidades}
 	 */
 	List<HabilidadDTO> getAll();
+	Page<Habilidad> getAll(Integer page);
 	
 	/**
 	 * Actualiza una habilidad

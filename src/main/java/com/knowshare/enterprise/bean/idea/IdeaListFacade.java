@@ -2,6 +2,8 @@ package com.knowshare.enterprise.bean.idea;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.knowshare.dto.idea.IdeaDTO;
 import com.knowshare.entities.idea.Idea;
 import com.knowshare.entities.idea.OperacionIdea;
@@ -15,7 +17,7 @@ import com.knowshare.entities.idea.OperacionIdea;
  */
 public interface IdeaListFacade {
 	
-	List<IdeaDTO> findByUsuario(String username, String usernameProfile);
+	Page<IdeaDTO> findByUsuario(String username, String usernameProfile,Integer page,long timestamp);
 	
 	OperacionIdea isLight(Idea idea, String username);
 	
