@@ -28,7 +28,7 @@ public interface IdeaFacade {
 	
 	IdeaDTO compartir(IdeaDTO dto,String username);
 	
-	List<IdeaDTO> findByUsuarioProyecto(String username);
+	Page<IdeaDTO> findByUsuarioProyecto(String username,Integer page,long timestamp);
 	
 	List<OperacionIdea> findOperaciones(String id,String tipo);
 	

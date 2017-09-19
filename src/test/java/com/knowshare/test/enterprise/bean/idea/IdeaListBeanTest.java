@@ -96,7 +96,8 @@ public class IdeaListBeanTest extends AbstractTest{
 	
 	@Test
 	public void test04FindByUsuarioProyecto(){
-		List<IdeaDTO> ideas = ideaBean.findByUsuarioProyecto("pablo.gaitan");
+		List<IdeaDTO> ideas = ideaBean.findByUsuarioProyecto("pablo.gaitan",0,1505618696840L)
+				.getContent();
 		assertNotNull(ideas);
 		assertEquals(1, ideas.size());
 		
@@ -104,7 +105,8 @@ public class IdeaListBeanTest extends AbstractTest{
 			assertNotEquals(TipoIdeaEnum.PR, idea.getTipo());
 		}
 		
-		ideas = ideaBean.findByUsuarioProyecto("MinMiguelM");
+		ideas = ideaBean.findByUsuarioProyecto("MinMiguelM",0,1505618696840L)
+				.getContent();
 		assertNotNull(ideas);
 		assertEquals(2, ideas.size());
 		

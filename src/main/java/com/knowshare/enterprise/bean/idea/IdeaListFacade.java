@@ -23,7 +23,7 @@ public interface IdeaListFacade {
 	
 	IdeaDTO findById(String id, String username);
 	
-	List<IdeaDTO> findByUsuarioProyecto(String username);
+	Page<IdeaDTO> findByUsuarioProyecto(String username,Integer page, long timestamp);
 	
 	List<OperacionIdea> findOperaciones(String id,String tipo);
 }
