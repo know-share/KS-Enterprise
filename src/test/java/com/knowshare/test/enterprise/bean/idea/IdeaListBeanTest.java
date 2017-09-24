@@ -39,16 +39,16 @@ public class IdeaListBeanTest extends AbstractTest{
 	
 	@Test
 	public void test01FindByUsuario(){
-		List<IdeaDTO> ideas = ideaBean.findByUsuario("Felipe-Bautista");
+		List<IdeaDTO> ideas = ideaBean.findByUsuario("MinMiguelM","Felipe-Bautista",0,0L).getContent();
 		assertNotNull(ideas);
 		assertEquals(0, ideas.size());
 		
-		ideas = ideaBean.findByUsuario("pablo.gaitan");
+		ideas = ideaBean.findByUsuario("Felipe-Bautista","pablo.gaitan",0,1505618696840L).getContent();
 		assertNotNull(ideas);
 		assertEquals(3, ideas.size());
 		assertEquals(Long.valueOf(2),ideas.get(0).getLights());
 		
-		ideas = ideaBean.findByUsuario("MinMiguelM");
+		ideas = ideaBean.findByUsuario("Felipe-Bautista","MinMiguelM",0,1505618696840L).getContent();
 		assertNotNull(ideas);
 		assertEquals(2, ideas.size());
 		for(IdeaDTO idea:ideas){
@@ -96,7 +96,8 @@ public class IdeaListBeanTest extends AbstractTest{
 	
 	@Test
 	public void test04FindByUsuarioProyecto(){
-		List<IdeaDTO> ideas = ideaBean.findByUsuarioProyecto("pablo.gaitan");
+		List<IdeaDTO> ideas = ideaBean.findByUsuarioProyecto("pablo.gaitan",0,1505618696840L)
+				.getContent();
 		assertNotNull(ideas);
 		assertEquals(1, ideas.size());
 		
@@ -104,7 +105,8 @@ public class IdeaListBeanTest extends AbstractTest{
 			assertNotEquals(TipoIdeaEnum.PR, idea.getTipo());
 		}
 		
-		ideas = ideaBean.findByUsuarioProyecto("MinMiguelM");
+		ideas = ideaBean.findByUsuarioProyecto("MinMiguelM",0,1505618696840L)
+				.getContent();
 		assertNotNull(ideas);
 		assertEquals(2, ideas.size());
 		

@@ -78,6 +78,10 @@
 		"insignias": [],
 		"personalidad": {
 			"nombre":"ISFJ"
+		},
+		"preferenciaIdeas":{
+			"idTag2":1,
+			"idTag4":3
 		}
 	},{
 		"id":{"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":2},
@@ -146,7 +150,8 @@
 		"insignias": [],
 		"personalidad": {
 			"nombre":"ENTP"
-		}
+		},
+		"preferenciaIdeas":{}
 	},{
 		"id":{"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3},
 		"username": "Felipe-Bautista",
@@ -233,6 +238,7 @@
 		],
 		"personalidad": {
 			"nombre":"ESFJ"
-		}
+		},
+		"preferenciaIdeas":{}
 	}
 ]

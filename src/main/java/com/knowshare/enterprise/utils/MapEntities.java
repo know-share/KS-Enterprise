@@ -6,6 +6,7 @@ package com.knowshare.enterprise.utils;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -319,7 +320,8 @@ public class MapEntities {
 			.setInsignias(new ArrayList<>())
 			.setTrabajosGrado(new ArrayList<>())
 			.setSiguiendo(new ArrayList<>())
-			.setFormacionesAcademicas(new ArrayList<>());
+			.setFormacionesAcademicas(new ArrayList<>())
+			.setPreferenciaIdeas(new HashMap<>());
 		return usuario;
 	}
 	
@@ -450,19 +452,21 @@ public class MapEntities {
 			.setSeguidores(usuario.getSeguidores())
 			.setSiguiendo(usuario.getSiguiendo())
 			.setSolicitudesAmistad(usuario.getSolicitudesAmistad())
-			.setTgDirigidos(usuario.getTrabajosGradoDirigidos())
 			.setFormacionAcademica(usuario.getFormacionesAcademicas())
 			.setPreferenciaIdea(usuario.getPreferencias().getPreferenciaIdea())
 			.setInsignias(mapInsigniasToDTOs(usuario.getInsignias()))
+			.setPreferenciaIdeasTag(usuario.getPreferenciaIdeas())
 			.setImagen(usuario.getImagen() != null);
 		switch(usuario.getTipo()){
 			case PROFESOR:
-				dto.setCualidades(mapAvalesCualidad(usuario.getCualidadesProfesor()));
-				dto.setDisponible(usuario.isDisponible());
+				dto.setCualidades(mapAvalesCualidad(usuario.getCualidadesProfesor()))
+					.setDisponible(usuario.isDisponible())
+					.setTgDirigidos(usuario.getTrabajosGradoDirigidos());
 				break;
 			case ESTUDIANTE:
 				dto.setGustos(usuario.getGustos());
 			case EGRESADO:
+				dto.setTgDirigidos(usuario.getTrabajosGrado());
 				if(usuario.getCarreras().size() > 1)
 					dto.setSegundaCarrera(mapCarreraToDTO(usuario.getCarreras().get(1)));
 				break;
@@ -492,7 +496,7 @@ public class MapEntities {
 	 */
 	public static InsigniaDTO mapInsigniaToDTO(InsigniaPreview insignia){
 		return new InsigniaDTO().setDescripcion(insignia.getInsignia().getDescripcion())
-				.setIconoRef(insignia.getInsignia().getIconoRef())
+				.setIconoRef(insignia.getInsignia().getId() + ".png")
 				.setId(insignia.getInsignia().getId())
 				.setNombre(insignia.getInsignia().getNombre())
 				.setVisto(insignia.isVisto());

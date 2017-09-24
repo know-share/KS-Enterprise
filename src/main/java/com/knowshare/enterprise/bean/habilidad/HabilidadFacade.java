@@ -6,10 +6,7 @@ package com.knowshare.enterprise.bean.habilidad;
 import java.util.List;
 
 import org.bson.types.ObjectId;
-import org.springframework.data.domain.Page;
-
 import com.knowshare.dto.perfilusuario.HabilidadDTO;
-import com.knowshare.entities.perfilusuario.Habilidad;
 
 /**
  * Reune los métodos de negocio de una entidad. Operaciones de
@@ -42,13 +39,6 @@ public interface HabilidadFacade {
 	 * @return Lista de los ids de las habilidades
 	 */
 	List<ObjectId> buscarPorNombre(String nombre);
-	
-	/**
-	 * para eliminar
-	 * @param page
-	 * @return
-	 */
-	Page<Habilidad> getAll(Integer page);
 	
 	/**
 	 * Obtiene todas las habilidades tanto TipoHabilidadEnum.PROFESIONALES

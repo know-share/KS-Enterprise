@@ -28,6 +28,7 @@ import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,6 +44,7 @@ import com.knowshare.enterprise.utils.UtilsPassword;
 import com.knowshare.entities.academia.AreaConocimiento;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
+import com.knowshare.entities.idea.Tag;
 import com.knowshare.entities.ludificacion.CualidadAval;
 import com.knowshare.entities.ludificacion.HabilidadAval;
 import com.knowshare.entities.ludificacion.InsigniaPreview;
@@ -219,8 +221,11 @@ public class UsuarioModBeanTest extends AbstractTest {
 		assertEquals(1, usuario.getAmigos().size());
 	}
 	
+	/**
+	 * Profesor
+	 */
 	@Test
-	public void test08AgregarTGDirigido(){
+	public void test08_01_AgregarTGDirigido(){
 		final TrabajoGrado tg = new TrabajoGrado()
 				.setNombre("TG for Profesor-Inserted")
 				.setNumEstudiantes(5)
@@ -233,6 +238,47 @@ public class UsuarioModBeanTest extends AbstractTest {
 				.find(new Query(Criteria.where("username").is(usuarioProfesor.getUsername())), Usuario.class)).get(0);
 		assertNotNull(usuario);
 		assertEquals(1, usuario.getTrabajosGradoDirigidos().size());
+		
+		mongoTemplate.updateFirst(new Query(Criteria.where("username").is(usuarioProfesor.getUsername())), 
+				new Update().set("trabajosGradoDirigidos", null), Usuario.class);
+		
+		res = usuarioModBean.agregarTGDirigido(new TrabajoGrado(), usuarioProfesor.getUsername());
+		assertTrue(res);
+		
+		usuario = ((List<Usuario>)mongoTemplate
+				.find(new Query(Criteria.where("username").is(usuarioProfesor.getUsername())), Usuario.class)).get(0);
+		assertNotNull(usuario);
+		assertEquals(1, usuario.getTrabajosGradoDirigidos().size());
+	}
+	
+	/**
+	 * Egresado
+	 */
+	@Test
+	public void test08_02_AgregarTG(){
+		final TrabajoGrado tg = new TrabajoGrado()
+				.setNombre("TG for Egresado-Inserted")
+				.setNumEstudiantes(5)
+				.setPeriodoFin("2017-3")
+				.setResumen("Summary for TG inserted.");
+		boolean res = usuarioModBean.agregarTGDirigido(tg, usuarioEgresado.getUsername());
+		assertTrue(res);
+		
+		Usuario usuario = ((List<Usuario>)mongoTemplate
+				.find(new Query(Criteria.where("username").is(usuarioEgresado.getUsername())), Usuario.class)).get(0);
+		assertNotNull(usuario);
+		assertEquals(1, usuario.getTrabajosGrado().size());
+		
+		mongoTemplate.updateFirst(new Query(Criteria.where("username").is(usuarioEgresado.getUsername())), 
+				new Update().set("trabajosGrado", null), Usuario.class);
+		
+		res = usuarioModBean.agregarTGDirigido(new TrabajoGrado(), usuarioEgresado.getUsername());
+		assertTrue(res);
+		
+		usuario = ((List<Usuario>)mongoTemplate
+				.find(new Query(Criteria.where("username").is(usuarioEgresado.getUsername())), Usuario.class)).get(0);
+		assertNotNull(usuario);
+		assertEquals(1, usuario.getTrabajosGrado().size());
 	}
 	
 	@Test
@@ -246,6 +292,17 @@ public class UsuarioModBeanTest extends AbstractTest {
 		assertTrue(res);
 		
 		Usuario usuario = ((List<Usuario>)mongoTemplate
+				.find(new Query(Criteria.where("username").is(usuarioProfesor.getUsername())), Usuario.class)).get(0);
+		assertNotNull(usuario);
+		assertEquals(1, usuario.getFormacionesAcademicas().size());
+		
+		mongoTemplate.updateFirst(new Query(Criteria.where("username").is(usuarioProfesor.getUsername())), 
+				new Update().set("formacionesAcademicas", null), Usuario.class);
+		
+		res = usuarioModBean.agregarFormacionAcademica(fa, usuarioProfesor.getUsername());
+		assertTrue(res);
+		
+		usuario = ((List<Usuario>)mongoTemplate
 				.find(new Query(Criteria.where("username").is(usuarioProfesor.getUsername())), Usuario.class)).get(0);
 		assertNotNull(usuario);
 		assertEquals(1, usuario.getFormacionesAcademicas().size());
@@ -463,6 +520,21 @@ public class UsuarioModBeanTest extends AbstractTest {
 				new Query(Criteria.where("username").is("Felipe-Bautista")), 
 				Usuario.class)
 					.getGustos().size());
+	}
+	
+	@Test
+	public void test21ActualizarPreferenciaIdeas(){
+		usuarioModBean.actualizarPreferenciaIdeas(Arrays.asList(new Tag().setId("idTag1"),
+				new Tag().setId("idTag2"),new Tag().setId("idTag4")), "MinMiguelM");
+		final Usuario usuario = mongoTemplate.findOne(new Query(Criteria.where("username")
+				.is("MinMiguelM")), Usuario.class);
+		
+		assertNotNull(usuario);
+		assertNotNull(usuario.getPreferenciaIdeas());
+		assertEquals(3, usuario.getPreferenciaIdeas().size());
+		assertEquals(Integer.valueOf(1), usuario.getPreferenciaIdeas().get("idTag1"));
+		assertEquals(Integer.valueOf(2), usuario.getPreferenciaIdeas().get("idTag2"));
+		assertEquals(Integer.valueOf(4), usuario.getPreferenciaIdeas().get("idTag4"));
 	}
 	
 	private void assertsImage(TipoImagenEnum type, String image){

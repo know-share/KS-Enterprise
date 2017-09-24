@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.idea.IdeaDTO;
+import com.knowshare.enterprise.bean.usuario.UsuarioFacade;
 import com.knowshare.enterprise.repository.idea.IdeaRepository;
 import com.knowshare.enterprise.repository.perfilusuario.UsuarioRepository;
 import com.knowshare.enterprise.utils.MapEntities;
@@ -19,6 +20,7 @@ import com.knowshare.entities.idea.OperacionIdea;
 import com.knowshare.enums.TipoOperacionEnum;
 
 /**
+ * {@link IdeaModFacade}
  * @author Pablo Gaitán
  *
  */
@@ -30,6 +32,9 @@ public class IdeaModBean implements IdeaModFacade{
 	 
 	@Autowired
 	private UsuarioRepository usuRep;
+	
+	@Autowired
+	private UsuarioFacade usuarioBean;
 	
 	@Autowired
 	private IdeaListFacade ideaList;
@@ -63,6 +68,7 @@ public class IdeaModBean implements IdeaModFacade{
 			}else{
 				idea.setLights(idea.getLights()+1);
 				operaciones.add(operacion);
+				this.usuarioBean.actualizarPreferenciaIdeas(idea.getTags(), operacion.getUsername());
 			}
 			idea.setOperaciones(operaciones);
 		}
@@ -85,6 +91,7 @@ public class IdeaModBean implements IdeaModFacade{
 		compartida.setTipo(dto.getTipo());
 		compartida.setFechaCreacion(new Date());
 		compartida.setUsuario(username);
+		compartida.setTg(dto.getTg());
 		if(!dto.isCompartida()){
 			compartida.setUsuarioOriginal(dto.getUsuario());
 		}else{

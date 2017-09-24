@@ -3,13 +3,15 @@
  */
 package com.knowshare.enterprise.bean.idea;
 
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -18,12 +20,12 @@ import org.springframework.stereotype.Component;
 import com.knowshare.dto.idea.IdeaDTO;
 import com.knowshare.enterprise.repository.idea.IdeaRepository;
 import com.knowshare.enterprise.repository.perfilusuario.UsuarioRepository;
+import com.knowshare.enterprise.utils.DateUtils;
 import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.idea.Idea;
 import com.knowshare.entities.idea.OperacionIdea;
-import com.knowshare.entities.idea.Tag;
-import com.knowshare.entities.perfilusuario.InfoUsuario;
 import com.knowshare.entities.perfilusuario.Usuario;
+import com.knowshare.enums.TipoIdeaEnum;
 import com.knowshare.enums.TipoOperacionEnum;
 
 /**
@@ -43,25 +45,21 @@ public class IdeaListBean implements IdeaListFacade{
 	@Autowired
 	private MongoTemplate mongoTemplate;
 	
-	public List<IdeaDTO> find10(String username){
-		List<IdeaDTO> ret = new ArrayList<>();
-		List<Idea> lista = ideaRep.findAll();
-		IdeaDTO dto;
-		for (Idea idea : lista) {
-			dto = MapEntities.mapIdeaToDTO(idea);
-			if(isLight(idea, username)!=null)
-				dto.setIsLight(true);
-			else
-				dto.setIsLight(false);
-			ret.add(dto);
-		}
-		return ret;
-	}
+	private static final int PAGE_SIZE = 10;
+	private static final String FECHA_CREACION = "fechaCreacion";
 	
-	public List<IdeaDTO> findByUsuario(String username){
-		final Usuario usu = usuRep.findByUsernameIgnoreCase(username);
-		List<Idea> idea =  ideaRep.findIdeaByUsuario(usu.getId());
-		List<IdeaDTO> dots = new ArrayList<>();
+	public Page<IdeaDTO> findByUsuario(String username,String usernameProfile,
+			Integer page,long timestamp){
+		final Usuario usu = usuRep.findByUsernameIgnoreCase(usernameProfile);
+		final PageRequest request = 
+				new PageRequest(page, PAGE_SIZE,new Sort(Direction.DESC, FECHA_CREACION));
+		final Query query = new Query(
+				Criteria.where(FECHA_CREACION).lt(DateUtils.getDate(timestamp))
+					.and("usuario.$id").is(usu.getId()))
+			.with(request);
+		final List<Idea> idea = mongoTemplate.find(query, Idea.class);
+		long total = mongoTemplate.count(query, Idea.class);
+		final List<IdeaDTO> dots = new ArrayList<>();
 		IdeaDTO dto;
 		for (Idea ide : idea) {
 			dto = MapEntities.mapIdeaToDTO(ide);
@@ -71,7 +69,7 @@ public class IdeaListBean implements IdeaListFacade{
 				dto.setIsLight(false);
 			dots.add(dto);
 		}
-		return dots;
+		return new PageImpl<>(dots, request, total);
 	}
 	
 	public OperacionIdea isLight(Idea idea, String username){
@@ -98,16 +96,25 @@ public class IdeaListBean implements IdeaListFacade{
 	}
 
 	@Override
-	public List<IdeaDTO> findByUsuarioProyecto(String username) {
+	public Page<IdeaDTO> findByUsuarioProyecto(String username,Integer page,
+			long timestamp) {
 		final Usuario usu = usuRep.findByUsernameIgnoreCase(username);
-		List<Idea> idea =  ideaRep.findIdeaByUsuarioProyecto(usu.getId());
+		final PageRequest request = 
+				new PageRequest(page, PAGE_SIZE,new Sort(Direction.DESC, FECHA_CREACION));
+		final Query query = new Query(
+				Criteria.where(FECHA_CREACION).lt(DateUtils.getDate(timestamp))
+					.and("usuario.$id").is(usu.getId())
+					.and("tipo").ne(TipoIdeaEnum.PR.name()))
+			.with(request);
+		final List<Idea> ideas = mongoTemplate.find(query, Idea.class);
+		long total = mongoTemplate.count(query, Idea.class);
 		List<IdeaDTO> dots = new ArrayList<>();
 		IdeaDTO dto;
-		for (Idea ide : idea) {
+		for (Idea ide : ideas) {
 			dto = MapEntities.mapIdeaToDTO(ide);
 			dots.add(dto);
 		}
-		return dots;
+		return new PageImpl<>(dots, request, total);
 	}
 	
 	public List<OperacionIdea> findOperaciones(String id,String tipo){
@@ -128,37 +135,4 @@ public class IdeaListBean implements IdeaListFacade{
 		}
 		return ret;
 	}
-
-	@Override
-	public List<IdeaDTO> findRed(String username) {
-		final Usuario usu = usuRep.findByUsernameIgnoreCase(username);
-		List<InfoUsuario> red = usu.getAmigos();
-		red.addAll(usu.getSiguiendo());
-		List<String> usernamesRed = new ArrayList<>();
-		for (InfoUsuario inf : red)
-			usernamesRed.add(inf.getUsername());
-		List<ObjectId> usuariosId = usuRep.findUsuariosByUsername(usernamesRed)
-				.stream()
-				.map(Usuario::getId)
-				.collect(Collectors.toList());
-		List<Idea> ideas = ideaRep.findIdeaRed(usuariosId);
-		List<IdeaDTO> dtos = new ArrayList<>();
-		for (Idea i : ideas) {
-			dtos.add(MapEntities.mapIdeaToDTO(i));
-		}
-		return dtos;
-	}
-
-	@Override
-	public List<IdeaDTO> findByTags(List<Tag> tags) {
-		final Query query = new Query(Criteria.where("tags")
-				.all(tags));
-		List<Idea> ideas = mongoTemplate.find(query, Idea.class);
-		List<IdeaDTO> dtos = new ArrayList<>();
-		for (Idea i : ideas) {
-			dtos.add(MapEntities.mapIdeaToDTO(i));
-		}
-		return dtos;
-	}
-	
 }

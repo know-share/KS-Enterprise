@@ -6,13 +6,14 @@ package com.knowshare.enterprise.bean.idea;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.idea.IdeaDTO;
 import com.knowshare.entities.idea.OperacionIdea;
-import com.knowshare.entities.idea.Tag;
 
 /**
+ * {@link IdeaFacade}
  * @author Pablo Gaitan
  *
  */
@@ -33,12 +34,9 @@ public class IdeaBean implements IdeaFacade{
 		return ideaMod.crearIdea(dto);
 	}
 	
-	public List<IdeaDTO> find10(String username){
-		return ideaList.find10(username);
-	}
-	
-	public List<IdeaDTO> findByUsuario(String username){
-		return ideaList.findByUsuario(username);
+	public Page<IdeaDTO> findByUsuario(String username, String usernameProfile,
+			Integer page,long timestamp){
+		return ideaList.findByUsuario(username,usernameProfile,page,timestamp);
 	}
 
 	@Override
@@ -51,8 +49,9 @@ public class IdeaBean implements IdeaFacade{
 	}
 
 	@Override
-	public List<IdeaDTO> findByUsuarioProyecto(String username) {
-		return ideaList.findByUsuarioProyecto(username);
+	public Page<IdeaDTO> findByUsuarioProyecto(String username,Integer page,
+			long timestamp) {
+		return ideaList.findByUsuarioProyecto(username,page,timestamp);
 	}
 
 	@Override
@@ -63,15 +62,5 @@ public class IdeaBean implements IdeaFacade{
 	@Override
 	public IdeaDTO cambiarEstado(IdeaDTO dto) {
 		return ideaMod.cambiarEstado(dto);
-	}
-
-	@Override
-	public List<IdeaDTO> findRed(String username) {
-		return ideaList.findRed(username);
-	}
-
-	@Override
-	public List<IdeaDTO> findByTags(List<Tag> tags) {
-		return ideaList.findByTags(tags);
 	}
 }

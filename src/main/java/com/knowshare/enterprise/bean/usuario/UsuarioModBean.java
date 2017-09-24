@@ -10,6 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,7 @@ import com.knowshare.enterprise.utils.MapEntities;
 import com.knowshare.entities.academia.Carrera;
 import com.knowshare.entities.academia.FormacionAcademica;
 import com.knowshare.entities.academia.TrabajoGrado;
+import com.knowshare.entities.idea.Tag;
 import com.knowshare.entities.perfilusuario.Gusto;
 import com.knowshare.entities.perfilusuario.ImageProfile;
 import com.knowshare.entities.perfilusuario.InfoUsuario;
@@ -159,12 +161,21 @@ public class UsuarioModBean implements UsuarioModFacade {
 	public boolean agregarTGDirigido(TrabajoGrado tg, String username){
 		final Usuario usuario = usuarioRepository.findByUsernameIgnoreCase(username);
 		final TrabajoGrado newTg = trabajoGradoRepository.insert(tg);
-		if(null == usuario.getTrabajosGradoDirigidos()){
-			final List<TrabajoGrado> tgs = new ArrayList<>();
-			tgs.add(newTg);
-			usuario.setTrabajosGradoDirigidos(tgs);
-		}else
-			usuario.getTrabajosGradoDirigidos().add(newTg);
+		
+		if(usuario.getTipo().equals(TipoUsuariosEnum.PROFESOR))
+			if(null == usuario.getTrabajosGradoDirigidos()){
+				final List<TrabajoGrado> tgs = new ArrayList<>();
+				tgs.add(newTg);
+				usuario.setTrabajosGradoDirigidos(tgs);
+			}else
+				usuario.getTrabajosGradoDirigidos().add(newTg);
+		else if(usuario.getTipo().equals(TipoUsuariosEnum.EGRESADO))
+			if(null == usuario.getTrabajosGrado()){
+				final List<TrabajoGrado> tgs = new ArrayList<>();
+				tgs.add(newTg);
+				usuario.setTrabajosGrado(tgs);
+			}else
+				usuario.getTrabajosGrado().add(newTg);
 		
 		return (null != usuarioRepository.save(usuario));
 	}
@@ -329,5 +340,18 @@ public class UsuarioModBean implements UsuarioModFacade {
 		return mongoTemplate.updateFirst(new Query(Criteria.where("username").is(username)), 
 				update, 
 				Usuario.class).getN() > 0;
+	}
+	
+	public void actualizarPreferenciaIdeas(List<Tag> tags, String username){
+		final Usuario usuario = usuarioRepository.findByUsernameIgnoreCase(username);
+		final Map<String,Integer> prefTags = usuario.getPreferenciaIdeas();
+		for(Tag tag: tags){
+			if(prefTags.containsKey(tag.getId()))
+				prefTags.put(tag.getId(), prefTags.get(tag.getId()) + 1);
+			else
+				prefTags.put(tag.getId(), 1);
+		}
+		usuario.setPreferenciaIdeas(prefTags);
+		usuarioRepository.save(usuario);
 	}
 }
