@@ -27,7 +27,7 @@ public interface IdeaRepository extends MongoRepository<Idea,String>{
 	@Query("{'usuario.$id' : ?0, 'tipo' : {$ne:'PR'}}")
 	List<Idea> findIdeaByUsuarioProyecto(ObjectId username);
 	
-	@Query(value="{'usuario.$id':?0}",count=true)
+	@Query(value="{'usuario.$id':?0, 'compartida':false}",count=true)
 	Long countByUsuario(ObjectId id);
 	
 	@Query("{'usuario.$id' : {$in:?0}}")
