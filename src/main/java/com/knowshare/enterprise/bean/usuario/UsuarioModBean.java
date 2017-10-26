@@ -141,6 +141,8 @@ public class UsuarioModBean implements UsuarioModFacade {
 		actual.getSolicitudesAmistad().remove(objetivo.getUsername());
 		
 		if(action.equalsIgnoreCase("accept")){
+			if(actual.getAmigos().stream().filter(a -> a.getUsername().equalsIgnoreCase(objetivo.getUsername())).count() > 0)
+				return usuarioRepository.save(actual) != null;
 			final InfoUsuario obj = new InfoUsuario()
 					.setUsername(objetivo.getUsername())
 					.setNombre(objetivo.getNombre() +" "+objetivo.getApellido())
