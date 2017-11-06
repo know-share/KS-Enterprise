@@ -1,0 +1,15 @@
+com.knowshare.enterprise.bean.carrera
+com.knowshare.enterprise.bean.cualidad
+com.knowshare.enterprise.bean.gusto
+com.knowshare.enterprise.bean.habilidad
+com.knowshare.enterprise.bean.idea
+com.knowshare.enterprise.bean.personalidad
+com.knowshare.enterprise.bean.tag
+com.knowshare.enterprise.bean.trabajogrado
+com.knowshare.enterprise.bean.usuario
+com.knowshare.enterprise.repository.academia
+com.knowshare.enterprise.repository.app
+com.knowshare.enterprise.repository.idea
+com.knowshare.enterprise.repository.ludificacion
+com.knowshare.enterprise.repository.perfilusuario
+com.knowshare.enterprise.utils
